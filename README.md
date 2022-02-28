@@ -166,7 +166,7 @@ Although there is no GDB-like debugging tool for STC 8051 MCU, you can still use
 
 ## Flashing/Programming
 
-**NOTE, you need press RESET key on your development board when programming**
+**you need to press RESET key on your development board when programming**
 
 Every STC MCU have a bootloader(BSL) which support UART programming, usually **P3.0 pin is RX and P3.1 pin is TX**. the protocol is un-documented but can be analyzed.
 
