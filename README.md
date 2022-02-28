@@ -49,7 +49,7 @@ Unfortunately, most 8051 products are lack of debugging support, although a few 
 ## SDCC compiler
 There are 2 common used C compiler for 8051 MCU, one is C51 (with keil IDE), a commercial close-source compiler provided by ARM. and one is [SDCC](http://sdcc.sourceforge.net), an opensource high quality 8bit c compiler.
 
-I do not want to compare SDCC and C51 here, there are also not much difference between them. In my opinions, I prefer the opensource one. for [syntax differences between SDCC and C51](https://github.com/cjacker/opensource-toolchain-8051/blob/main/difference-between-c51-and-sdcc.md), I will write another note, please refer to it.
+I do not want to compare SDCC and C51 here, there are also not much difference between them. In my opinions, I prefer the opensource one. for [syntax differences between SDCC and C51](https://github.com/cjacker/opensource-toolchain-8051/blob/main/difference-between-c51-and-sdcc.md), I will write a note, please refer to it.
 
 Most linux dist. today already ship SDCC in their repositories, please use APT or YUM to install it according to the dist you use.
 
