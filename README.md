@@ -84,9 +84,9 @@ Although there is no GDB-like debugging tool for STC 8051 MCU, you can still use
 A close source isp tool for windows named 'STC-ISP' is provided by STCmcu officially. It can be supported by wine under Linux.
 You can use it as you like, just install wine from your dist repositories and use `winetricks -q mfc42` to install the mfc dll. you may also need to link '/dev/ttyUSB0' or '/dev/ttyACM0' (depending on the USB/UART adapter) to '~/.wine/dosdevices/com1', then the com device can be used by wine and stc-isp to find your USB/UART adaper.
 
-There are 2 opensourced ISP tool you can use under linux. 
+There are 2 open source ISP tool you can use under linux. 
 
-One is [stcgal](https://github.com/grigorig/stcgal), it suppport STC models from STC89 series to STC15 series very well, but lack of supporting for the latest STC8[A|C|F|G|H] series. 
+One is [stcgal](https://github.com/grigorig/stcgal), it suppport STC models from STC89 series to STC15 series very well, but lack of supporting for the latest STC8[A|C|F|G|H] series.
 
 The other one is a modified version of [stcflash](https://github.com/sms-wyt/stcflash), it support STC8[A|C|F|G|H] series very well. 
 
