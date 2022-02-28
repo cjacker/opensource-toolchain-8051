@@ -190,7 +190,7 @@ flashing/programming with stcgal:
 make download
 ```
 
-flashing/programming with stcflash:
+flashing/programming with stcflash for STC8X series:
 ```
 make download8x
 ```
