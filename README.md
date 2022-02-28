@@ -253,6 +253,8 @@ sudo stcflash -p /dev/ttyUSB0 blink.bin
 
 There is also a [Project and Makefile template](https://github.com/cjacker/opensource-toolchain-8051/tree/main/blink) provied in this repo, with this well-defined Project/Makefile template, you can start your 8051 development under Linux very quickly. 
 
+Please have a look at the Makefile, and you may also need to understand the meaning of '--iram-size'/'--xram-size'/'--code-size' and other details before starting a real project, but these will not be mentioned in this tutorial.
+
 build:
 ```
 make 
