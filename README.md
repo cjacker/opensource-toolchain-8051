@@ -168,10 +168,12 @@ Although there is no GDB-like debugging tool for STC 8051 MCU, you can still use
 
 **NOTE, you need press RESET key on your development board when programming**
 
+Every STC MCU have a bootloader(BSL) which support UART programming, usually **P3.0 pin is RX and P3.1 pin is TX**. the protocol is un-documented but can be analyzed.
+
 A close source isp tool for windows named 'STC-ISP' is provided by STCmcu officially. It can be supported by wine under Linux.
 You can use it as you like, just install wine from your dist repositories and use `winetricks -q mfc42` to install the mfc dll. you may also need to link '/dev/ttyUSB0' or '/dev/ttyACM0' (depending on the USB/UART adapter) to '~/.wine/dosdevices/com1', then the com device can be used by wine and stc-isp to find the USB/UART adaper.
 
-There are 2 open source ISP tool you can use under linux. 
+There are 2 open source ISP tool you can use with linux. 
 
 ### stcgal
 [stcgal](https://github.com/grigorig/stcgal) suppport most STC MCUs from STC89 series to STC15 series very well, but lack of supporting for the latest STC8[A|C|F|G|H] series.
