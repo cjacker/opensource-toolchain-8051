@@ -215,7 +215,7 @@ sudo stcgal -p /dev/ttyUSB0 blink.bin
 
 ### stcflash
 
-A modified version of [stcflash](https://github.com/sms-wyt/stcflash) support most STC8[A|C|F|G|H] series very well. 
+A modified version of [stcflash](https://github.com/sms-wyt/stcflash) support most MCUS of STC8[A|C|F|G|H] series very well. 
 ```
 usage: stcflash [-h] [-p PORT] [-l LOWBAUD] [-hb HIGHBAUD] [-r {89,12c5a,12c52,12cx052,8,15,auto}] [-a AISPBAUD] [-m AISPMAGIC] [-v]
                 [-e] [-ne]
