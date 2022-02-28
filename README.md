@@ -71,7 +71,7 @@ For example:
 
 ```
 // led.c
-// turn on the led, P21->LED->GND
+// turn on the led, P21->1 ko resistor->LED->GND
 
 // define the P21 IO pin register
 __sbit __at (0xa0+1) P21;
@@ -121,7 +121,7 @@ makebin led.bin
 There is also a header `softdelay.h` provided and pre-define some widely used softdelay functions, such as `delay200ms()`, you can used directly in your codes. for example:
 ```
 // blink.c
-// blink the led every 200ms, P21->LED->GND
+// blink the led every 200ms, P21->1k o resistor->LED->GND
 
 #define STC89
 #include <stc51.h>
@@ -166,18 +166,92 @@ Although there is no GDB-like debugging tool for STC 8051 MCU, you can still use
 
 ## Flashing/Programming
 
+**NOTE, you need press RESET key on your development board when programming**
+
 A close source isp tool for windows named 'STC-ISP' is provided by STCmcu officially. It can be supported by wine under Linux.
 You can use it as you like, just install wine from your dist repositories and use `winetricks -q mfc42` to install the mfc dll. you may also need to link '/dev/ttyUSB0' or '/dev/ttyACM0' (depending on the USB/UART adapter) to '~/.wine/dosdevices/com1', then the com device can be used by wine and stc-isp to find the USB/UART adaper.
 
 There are 2 open source ISP tool you can use under linux. 
 
-One is [stcgal](https://github.com/grigorig/stcgal), it suppport STC models from STC89 series to STC15 series very well, but lack of supporting for the latest STC8[A|C|F|G|H] series.
+### stcgal
+[stcgal](https://github.com/grigorig/stcgal) suppport most STC MCUs from STC89 series to STC15 series very well, but lack of supporting for the latest STC8[A|C|F|G|H] series.
 
-The other one is a modified version of [stcflash](https://github.com/sms-wyt/stcflash), it support STC8[A|C|F|G|H] series very well. 
+```
+usage: stcgal [-h] [-e] [-a] [-r RESETCMD] [-P {stc89,stc12a,stc12b,stc12,stc15a,stc15,stc8,usb15,auto}] [-p PORT] [-b BAUD]
+              [-l HANDSHAKE] [-o OPTION] [-t TRIM] [-D] [-V]
+              [code_image] [eeprom_image]
+
+stcgal 1.6 - an STC MCU ISP flash tool
+(C) 2014-2018 Grigori Goronzy and others
+https://github.com/grigorig/stcgal
+
+positional arguments:
+  code_image            code segment file to flash (BIN/HEX)
+  eeprom_image          eeprom segment file to flash (BIN/HEX)
+
+options:
+  -h, --help            show this help message and exit
+  -e, --erase           only erase flash memory
+  -a, --autoreset       cycle power automatically by asserting DTR
+  -r RESETCMD, --resetcmd RESETCMD
+                        shell command for board power-cycling (instead of DTR assertion)
+  -P {stc89,stc12a,stc12b,stc12,stc15a,stc15,stc8,usb15,auto}, --protocol {stc89,stc12a,stc12b,stc12,stc15a,stc15,stc8,usb15,auto}
+                        protocol version (default: auto)
+  -p PORT, --port PORT  serial port device
+  -b BAUD, --baud BAUD  transfer baud rate (default: 19200)
+  -l HANDSHAKE, --handshake HANDSHAKE
+                        handshake baud rate (default: 2400)
+  -o OPTION, --option OPTION
+                        set option (can be used multiple times, see documentation)
+  -t TRIM, --trim TRIM  RC oscillator frequency in kHz (STC15+ series only)
+  -D, --debug           enable debug output
+  -V, --version         print version info and exit
+```
+
+for example:
+```
+sudo stcgal -p /dev/ttyUSB0 blink.bin
+```
+
+### stcflash
+
+A modified version of [stcflash](https://github.com/sms-wyt/stcflash) support most STC8[A|C|F|G|H] series very well. 
+```
+usage: stcflash [-h] [-p PORT] [-l LOWBAUD] [-hb HIGHBAUD] [-r {89,12c5a,12c52,12cx052,8,15,auto}] [-a AISPBAUD] [-m AISPMAGIC] [-v]
+                [-e] [-ne]
+                [image]
+
+Stcflash, a command line programmer for STC 8051 microcontroller. https://github.com/laborer/stcflash
+
+positional arguments:
+  image                 code image (bin/hex)
+
+options:
+  -h, --help            show this help message and exit
+  -p PORT, --port PORT  serial port device (default: /dev/ttyUSB0)
+  -l LOWBAUD, --lowbaud LOWBAUD
+                        initial baud rate (default: 2400)
+  -hb HIGHBAUD, --highbaud HIGHBAUD
+                        initial baud rate (default: 115200)
+  -r {89,12c5a,12c52,12cx052,8,15,auto}, --protocol {89,12c5a,12c52,12cx052,8,15,auto}
+                        protocol to use for programming
+  -a AISPBAUD, --aispbaud AISPBAUD
+                        baud rate for AutoISP (default: 4800)
+  -m AISPMAGIC, --aispmagic AISPMAGIC
+                        magic word for AutoISP
+  -v, --verbose         be verbose
+  -e, --erase_eeprom    erase data eeprom during next download(experimental)
+  -ne, --not_erase_eeprom
+                        do not erase data eeprom next download(experimental)
+```
+for exmaple:
+```
+sudo stcflash -p /dev/ttyUSB0 blink.bin
+```
 
 ## Project templates
 
-There is also a [Makefile and project template]() provied in this repo, with this well-defined Makefile/Project template, you can start your 8051 development under Linux very quickly. 
+There is also a [Project and Makefile template](https://github.com/cjacker/opensource-toolchain-8051/tree/main/blink) provied in this repo, with this well-defined Project/Makefile template, you can start your 8051 development under Linux very quickly. 
 
 build:
 ```
@@ -186,12 +260,12 @@ make
 
 flashing/programming with stcgal:
 ```
-make download
+make flash
 ```
 
 flashing/programming with stcflash for STC8X series:
 ```
-make download8x
+make flash8x
 ```
 
 ## Additions
