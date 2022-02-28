@@ -30,4 +30,4 @@ You can use `typedef` to re-define it.
 
 ## C function headers.
 * Keil C51 support old-style function parameter declaration as `void a(int a, b, c)`, the following type declaration can be omitted.
-* SDCC does NOT support this form.
+* SDCC does **NOT** support this form.
