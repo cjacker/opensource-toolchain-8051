@@ -65,7 +65,7 @@ If the installation prefix isn't set to standard dir (such as '/usr' or '/usr/lo
 
 ## SDK
 
-There is no standard SDK or libraries required for 8051 development. since it's very simple, 8051 'SDK' usually means a set of pre-defined registers of your MCU model and some wrap routines for common-use, for example, 'bit-bang' I2C protocol. So you can start 8051 development without install anything except SDCC compiler.
+There is no standard SDK or libraries required for 8051 development. since it's very simple, 8051 'SDK' usually means a set of pre-defined registers of your MCU model and some pre-defined routines for common-use, for example, 'bit-bang' I2C protocol. So you can start 8051 development without install anything except SDCC compiler.
 
 For example:
 
