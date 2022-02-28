@@ -73,7 +73,6 @@ For example:
 // led.c
 // turn on the led, P21->LED->GND
 
-
 // define the P21 IO pin register
 __sbit __at (0xa0+1) P21;
 
@@ -100,7 +99,7 @@ The [stc headers within this repo](https://github.com/cjacker/opensource-toolcha
 For example, above codes can be write as:
 ```
 // define STC MCU model corresponding to your development board.
-// for more models supported, refer to stc51.h
+// refer to stc51.h for more information.
 #define STC89
 
 // meta header
@@ -112,14 +111,14 @@ void main()
     while(1);
 }
 ```
-
 and build:
 ```
 sdcc -mmcs51 -I./stc-headers led.c
 packihx led.ihx led.hex
 makebin led.bin
 ```
-There is also a `softdelay.h` provided and pre-define some widely used soft delay functions, suchas `delay200ms()`, you can used directly in your codes. for example:
+
+There is also a header `softdelay.h` provided and pre-define some widely used softdelay functions, such as `delay200ms()`, you can used directly in your codes. for example:
 ```
 // blink.c
 // blink the led every 200ms, P21->LED->GND
@@ -136,7 +135,6 @@ void main()
     }
 }
 ```
-
 
 If you have STC8H development board. the codes should be:
 ```
@@ -159,6 +157,7 @@ void main()
 }
 ```
 
+**NOTE, every model may have some new registers with special features, PLEASE READ the DATASHEET before use it!!!**
 ## ~~Debugging~~
 
 As mentioned above, most 8051 MCUs do **NOT** support debugging, a few models today support IAP, but lack of opensource tools, and also not widely used by developers. Implementing a remote debugger for 8051 should not be a tough job, but it seems nobody has interest on it. Maybe it is really simple enough so that a debugger is not mandary:-
