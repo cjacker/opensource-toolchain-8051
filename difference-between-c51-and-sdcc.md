@@ -25,8 +25,8 @@ within the source file of `main` function if the ISR implemented in a sperate C 
 You can use `typedef` to re-define it.
 
 ## pre-defined functions and libraries
-* Keil has some pre-defined functions, such as: _nop_(), cror(), etc. you should include 'intrins.h' header.
-* With SDCC, there are also some pre-defined functions, such as: NOP(), but you should include 'compiler.h' header.
+* Keil has some pre-defined functions, such as: `_nop_()`, `cror()`, etc. you should include 'intrins.h' header.
+* With SDCC, there are also some pre-defined functions, such as: `NOP()`, but you should include 'compiler.h' header.
 
 ## C function headers.
 * Keil C51 support old-style function parameter declaration as `void a(int a, b, c)`, the following type declaration can be omitted.
