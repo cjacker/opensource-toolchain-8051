@@ -40,7 +40,7 @@ Before you start 8051 development, you need:
 
 Opensource toolchain for 8051 (actually for any MCU not limited to 8051) consists of below components:
 * Compiler
-* Debugger
+* ~~Debugger~~
 * SDK
 * Flashing/Programming tool
 
@@ -71,18 +71,18 @@ For developers' convenient, the compilers usually provide pre-defined headers fo
 
 The [stc headers in this repo]() provide a set of headers suite for SDCC compiler for different STC 8051 MCUs, you can use it directly. these headers come from STC-ISP, the ISP tool provided by official vender and converted to the format SDCC supported using [keil2sdcc](https://github.com/ywaby/keil2sdcc) with modifications manually.
 
-There is also a [Makefile and project template]() provied in this repos, with this well-defined Makefile/Project template, you can start your 8051 development under Linux very quickly.
+There is also a [Makefile and project template]() provied in this repo, with this well-defined Makefile/Project template, you can start your 8051 development under Linux very quickly.
 
-## Debugging
+## ~~Debugging~~
 
-As mentioned above, most 8051 MCUs do **NOT** support debugging, a few models today support IAP, but lack of opensource tools, and also not widely used by developers. Implementing a remote debugger for 8051 should not be a tough job, but it seems nobody has interest on it. Maybe it is really simple enough so that a debugger is not needed:-
+As mentioned above, most 8051 MCUs do **NOT** support debugging, a few models today support IAP, but lack of opensource tools, and also not widely used by developers. Implementing a remote debugger for 8051 should not be a tough job, but it seems nobody has interest on it. Maybe it is really simple enough so that a debugger is not mandary:-
 
 Although there is no GDB-like debugging tool for STC 8051 MCU, you can still use UART printf and other way to do some debugging.
 
 ## Flashing/Programming
 
 A close source isp tool for windows named 'STC-ISP' is provided by STCmcu officially. It can be supported by wine under Linux.
-You can use it as you like, just install wine from your dist repositories and use `winetricks -q mfc42` to install the mfc dll. you may also need to link '/dev/ttyUSB0' or '/dev/ttyACM0' (depending on the USB/UART adapter) to '~/.wine/dosdevices/com1', then the com device can be used by wine and stc-isp to find your USB/UART adaper.
+You can use it as you like, just install wine from your dist repositories and use `winetricks -q mfc42` to install the mfc dll. you may also need to link '/dev/ttyUSB0' or '/dev/ttyACM0' (depending on the USB/UART adapter) to '~/.wine/dosdevices/com1', then the com device can be used by wine and stc-isp to find the USB/UART adaper.
 
 There are 2 open source ISP tool you can use under linux. 
 
