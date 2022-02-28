@@ -95,9 +95,63 @@ makebin led.bin
 
 For developers' convenient, the compilers usually provide pre-defined headers for basic models, for example, reg51.h/reg52.h provided by Keil C51 and 8051.h provided by SDCC. But it's not enough to cover all resources/registers on chip of defferent models, especially models with improvements, enhancements and addtitions. you can define them by yourself in sources files (use `__sfr` and `__sbit` of SDCC) or use pre-defined headers.
 
-The [stc headers in this repo]() provide a set of headers suite for SDCC compiler for different STC 8051 MCUs, you can use it directly. these headers come from STC-ISP, the ISP tool provided by official vender and converted to the format SDCC supported using [keil2sdcc](https://github.com/ywaby/keil2sdcc) with modifications manually.
+The [stc headers within this repo](https://github.com/cjacker/opensource-toolchain-8051/tree/main/stc-headers) provide a set of headers suite for SDCC compiler for different STC 8051 MCUs, you can use it directly. these headers come from STC-ISP, the ISP tool provided by official vender and converted to the format SDCC supported using [keil2sdcc](https://github.com/ywaby/keil2sdcc) with modifications manually.
 
-There is also a [Makefile and project template]() provied in this repo, with this well-defined Makefile/Project template, you can start your 8051 development under Linux very quickly.
+For example, above codes can be write as:
+```
+// define STC MCU model corresponding to your development board.
+// for more models supported, refer to stc51.h
+#define STC89
+
+// meta header
+#include <stc51.h>
+
+void main()
+{
+    P21 = 1;
+    while(1);
+}
+```
+and build:
+```
+sdcc -mmcs51 -I./stc-headers led.c
+packihx led.ihx led.hex
+makebin led.bin
+```
+There is also a `softdelay.h` provided and pre-define some widely used soft delay functions, suchas `delay200ms()`, you can used directly in your codes. for example:
+```
+// blink.c
+// blink the led every 200ms, P21->LED->GND
+
+#define STC89
+#include <stc51.h>
+#include <softdelay.h>
+
+void main()
+{
+    while(1) {
+        P21 = !P21;
+        delay200ms();
+    }
+}
+```
+
+There is also a [Makefile and project template]() provied in this repo, with this well-defined Makefile/Project template, you can start your 8051 development under Linux very quickly. 
+
+build:
+```
+make 
+```
+
+flashing/programming with stcgal:
+```
+make download
+```
+
+flashing/programming with stcflash:
+```
+make download8x
+```
 
 ## ~~Debugging~~
 
