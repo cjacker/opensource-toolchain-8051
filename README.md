@@ -21,9 +21,18 @@ The voltage range usually is: c/f for 3.5-5.5v voltage range, l/le for 2.0-3.6v 
 
 The ram/rom size descriptions and suffix are not same meanings for defferent generations, but it follow the same rules for different models of same generation. you should refer to datasheet for details.
 
-For example, STC89C516AD means STC 89 series, 3.5-5.5v voltage range, 64k rom size(516, 5 has no meaning, 16 means 16x4 rom size), with AD support.
+For example, STC89C516AD means STC 89 series, 3.5-5.5v voltage range, 64k rom size(516, 5 has no meaning, 16 means 16x4 rom size), with AD support, it's a 12T 8051 MCU.
 
 Since STC 8051 is the most famouse and popular 8051 MCU in China, this tutorial will focus on STC 8051. there are no much different between 8051 products from different vendors, so you can also refer to this tutorial even you use chip from other vendors.
+
+# Hardware requirements
+
+Before you start the 8051 development, you need:
+
+* A development board with STC 8051 MCU. I suggest you buy the earliest model such as STC89C52 or buy the latest model such as STC8H8K64U if you have no idea which one you should choose to learn.
+* A USB to UART adapter if there is no one on board. it's used for flashing/programming. a lot of development board today already have one USB/UART chip on board, usually it's CH340 series.
+
+
 
 # Toolchain overview
 Opensource toolchain for 8051 (actually for any MCU not limited to 8051) consists of below components:
@@ -32,10 +41,14 @@ Opensource toolchain for 8051 (actually for any MCU not limited to 8051) consist
 * SDK
 * Flashing/Programming tool
 
-Unfortunately, most 8051 products lack of debugging support, although a little models today support IAP, but it's depend on commercial software solution and not widely used by developers. for STC 8051, the opensource toolchain is SDCC(compiler) + stcgal/stcflash(ISP tool).
+Unfortunately, most 8051 products are lack of debugging support, although a little models today support IAP, but it's depend on commercial software solution and not widely used by developers. for STC 8051, the opensource toolchain is SDCC(compiler) + stcgal/stcflash(ISP tool).
 
 ## SDCC compiler
-Please refer to [SDCC](http://sdcc.sourceforge.net/) for more information, most linux dist. today already ship SDCC in their repositories, please use APT or YUM to install it according to your dist.
+There are 2 common used C compiler for 8051 MCU, one is C51 (with keil IDE), a commercial close-source compiler provided by ARM, and one is SDCC, an opensource high quality 8bit c compiler.
+
+I do not want to compare SDCC vs C51 here, there are also not much difference between them. In my opinions, I prefer the opensource one.
+
+Please refer to [SDCC](http://sdcc.sourceforge.net/) for more information, most linux dist today already ship SDCC in their repositories, please use APT or YUM to install it according to your dist.
 
 If you really want to build it yourself, at least you need make/bison/flex/libtool/g++/boost development package/zlib development package and other various packages installed and the building process is very simple:
 
@@ -45,13 +58,26 @@ make
 make install
 ```
 
-If the prefix isn't set to standard dir (such as '/usr'), you need add the your `<prefix>/bin` dir to PATH env.
+If the prefix isn't set to standard dir (such as '/usr'), you need add your `<prefix>/bin` dir to PATH env.
 
 ## SDK
-There is no standard SDK for 8051, since it's very simple, a 8051 SDK usually means a set of pre-defined registers of your MCU model and some wrap routines for common-use. So you can start 8051 development without install anything except SDCC compiler.
+There is no standard SDK required for 8051 development. since it's very simple, 8051 'SDK' usually means a set of pre-defined registers of your MCU model and some wrap routines for common-use. So you can start 8051 development without install anything except SDCC compiler.
 
-For developers' convenient, you can find some predefined headers (mostly the defination of registers) for some common 8051 models, for example, reg51.h/reg52.h provided by Keil C51 (commercial software for Windows provided by ARM) and 8051.h provided by SDCC. 
+For developers' convenient, the compilers usually provide pre-defined headers for basic models, for example, reg51.h/reg52.h provided by Keil C51 and 8051.h provided by SDCC. But it's not enough to cover all resources/registers on chip of defferent models.
+
+[stc headers project]() provide a set of headers suite for SDCC compiler for different STC 8051 MCUs, you can use it directly. these headers is come from STC-ISP, the ISP tool provided by official vender and converted to the format SDCC supported using keil2sdcc with modifications manually.
+
+## Debugging
+As mentioned above, most 8051 MCUs do NOT support debugging, a little models today support IAP, but lack of opensource tools, and also not widely used by Developer.
+
+Although there is no GDB-like debugging tool for STC 8051 MCU, you can still use UART printf and other way to do some debugging job.
 
 
+## Flashing/Programming
+A isp tool for windows named 'STC-ISP' is provided by STC officially. It can be supported by wine with mfc42u.dll under Linux.
+You can use it as you like, just install wine from your dist repositories and use `winetricks -q mfc42` to install the mfc dll. you may also link /dev/ttyUSB0 or /dev/ttyACM0 to your ~/.wine/dosdevices/com1. then the com interface can be used by wine and stc-isp to find your USB/UART adaper.
 
+There are 2 opensourced ISP tool you can used under linux. One is [stcgal](https://github.com/grigorig/stcgal), it suppport STC models from STC89 series to STC15 series very well, but lack of supporting for the latest STC8[A|C|F|G|H] series. The other one is a modified version of [stcflash](https://github.com/sms-wyt/stcflash), it support STC8[A|C|F|G|H] series very well. you can choose to use one of theme depending on the MCU model.
+
+By the way, these is also a opensource ISP tool for CH5xx 8051 series, please refer to [ch552tool](https://github.com/MarsTechHAN/ch552tool).
 
