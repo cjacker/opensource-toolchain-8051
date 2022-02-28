@@ -1,5 +1,5 @@
 #ifndef _STC51_H
-#define _STC51_h
+#define _STC51_H
 typedef unsigned char uint8;
 typedef unsigned short uint16;
 typedef unsigned int uint32;
