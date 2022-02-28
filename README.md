@@ -67,7 +67,33 @@ If the installation prefix isn't set to standard dir (such as '/usr' or '/usr/lo
 
 There is no standard SDK or libraries required for 8051 development. since it's very simple, 8051 'SDK' usually means a set of pre-defined registers of your MCU model and some wrap routines for common-use, for example, 'bit-bang' I2C protocol. So you can start 8051 development without install anything except SDCC compiler.
 
-For developers' convenient, the compilers usually provide pre-defined headers for basic models, for example, reg51.h/reg52.h provided by Keil C51 and 8051.h provided by SDCC. But it's not enough to cover all resources/registers on chip of defferent models, especially models with improvements, enhancements and addtitions. you can define them by yourself in sources files (use `sbit` for SDCC) or use pre-defined headers.
+For example:
+
+```
+// led.c
+// turn on the led, P21->LED->GND
+
+
+// define the P21 IO pin register
+__sbit __at (0xa0+1) P21;
+
+void main()
+{
+    // send logic 1
+    P21 = 1;
+    // loop
+    while(1);
+}
+```
+
+led.c can be compiled by SDCC like this:
+```
+sdcc -mmcs51 led.c
+packihx led.ihx led.hex
+makebin led.bin
+```
+
+For developers' convenient, the compilers usually provide pre-defined headers for basic models, for example, reg51.h/reg52.h provided by Keil C51 and 8051.h provided by SDCC. But it's not enough to cover all resources/registers on chip of defferent models, especially models with improvements, enhancements and addtitions. you can define them by yourself in sources files (use `__sfr` and `__sbit` of SDCC) or use pre-defined headers.
 
 The [stc headers in this repo]() provide a set of headers suite for SDCC compiler for different STC 8051 MCUs, you can use it directly. these headers come from STC-ISP, the ISP tool provided by official vender and converted to the format SDCC supported using [keil2sdcc](https://github.com/ywaby/keil2sdcc) with modifications manually.
 
