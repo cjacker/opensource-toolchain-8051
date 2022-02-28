@@ -112,6 +112,7 @@ void main()
     while(1);
 }
 ```
+
 and build:
 ```
 sdcc -mmcs51 -I./stc-headers led.c
@@ -136,21 +137,26 @@ void main()
 }
 ```
 
-There is also a [Makefile and project template]() provied in this repo, with this well-defined Makefile/Project template, you can start your 8051 development under Linux very quickly. 
 
-build:
+If you have STC8H development board. the codes should be:
 ```
-make 
-```
+// blink.c
 
-flashing/programming with stcgal:
-```
-make download
-```
+#define STC8H
+#include <stc51.h>
+#include <softdelay.h>
 
-flashing/programming with stcflash:
-```
-make download8x
+void main()
+{
+#if defined(STC8H)
+    P2M0 = 0;
+    P2M1 = 0;
+#endif
+    while(1) {
+        P21 = !P21;
+        delay200ms();
+    }
+}
 ```
 
 ## ~~Debugging~~
@@ -169,6 +175,25 @@ There are 2 open source ISP tool you can use under linux.
 One is [stcgal](https://github.com/grigorig/stcgal), it suppport STC models from STC89 series to STC15 series very well, but lack of supporting for the latest STC8[A|C|F|G|H] series.
 
 The other one is a modified version of [stcflash](https://github.com/sms-wyt/stcflash), it support STC8[A|C|F|G|H] series very well. 
+
+## Project templates
+
+There is also a [Makefile and project template]() provied in this repo, with this well-defined Makefile/Project template, you can start your 8051 development under Linux very quickly. 
+
+build:
+```
+make 
+```
+
+flashing/programming with stcgal:
+```
+make download
+```
+
+flashing/programming with stcflash:
+```
+make download8x
+```
 
 ## Additions
 
