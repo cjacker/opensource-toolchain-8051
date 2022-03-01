@@ -279,5 +279,5 @@ make flash8x
 
 ## Additions
 
-By the way, these is also a opensource ISP tool for CH5xx 8051 series, please refer to [ch552tool](https://github.com/MarsTechHAN/ch552tool).
+By the way, these is also a opensource ISP tool for WCH CH5xx 8051 series, please refer to [ch552tool](https://github.com/MarsTechHAN/ch552tool).
 
