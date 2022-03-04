@@ -18,13 +18,13 @@ The model name conventions of STC 8051 is different for every different generati
 
 The generation of STC 8051 include 89/90/10/11/12/15 and 8[A|C|F|G|H].
 
-The voltage range usually is 'c' or 'f' for 3.5-5.5v voltage range, 'l' or 'le' for 2.0-3.6v voltage range and 'w' for 2.0-5.5 wide voltage range. but the latest STC 8[A|C|F|G|H] series and some special modules does NOT follow this rule. 
+The voltage range usually is 'c' or 'f' for 3.5-5.5v voltage range, 'l' or 'le' for 2.0-3.6v voltage range and 'w' for 2.0-5.5 wide voltage range. but the latest STC 8[A|C|F|G|H] series and some special modules does NOT follow these rules. 
 
-The ram/rom size descriptions and the suffix are not same meanings for different generation, but it follow the same rules for different models of same generation. Again, please refer to corresponding datasheet for details.
+The ram/rom size descriptions and the suffix are not same meanings for different generation, but it follow the same rule for different models of same generation. Again, please refer to corresponding datasheet for details.
 
-For example, STC89C516AD means STC 89 series, 'C' means 3.5-5.5v voltage range, '16' means 64k rom size(5 of 516 has no meaning, 16 means 16x4 rom size), with 'AD' support, it's a ['12T'](https://en.wikipedia.org/wiki/Instruction_cycle) 8051 MCU. STC also provide 6T and 1T MCU.
+For example, STC89C516AD, the '89' means STC 89 series, 'C' means 3.5-5.5v voltage range, '16' means 64k rom size(5 of 516 has no meaning, 16 means 16x4k rom size), with 'AD' support, it's a ['12T'](https://en.wikipedia.org/wiki/Instruction_cycle) 8051 MCU. STC also provide 6T and 1T MCU.
 
-Since STC 8051 is the most famous and popular 8051 MCU in China, this tutorial will mostly focus on STC 8051. there is not so much different between 8051 MCUs from different vendors, so you can also refer to this tutorial even use chips from other vendor.
+Since STC 8051 is the most famous and popular 8051 MCU in China, this tutorial will mostly focus on STC 8051. there is not so much different between 8051 MCUs from different vendors, so you can also refer to this tutorial even use chips from other vendors.
 
 By the way, STCmcu also have STC16 series MCU, it's 16bit 80251, and without opensource toolchain support up to this tutorial written.
 
@@ -33,27 +33,27 @@ By the way, STCmcu also have STC16 series MCU, it's 16bit 80251, and without ope
 Before you start 8051 development, you need:
 
 * A development board with STC 8051 MCU. 
-  * I suggest you buy the earliest model such as STC89C52 or buy the latest model such as STC8H8K64U if you have no idea which one should choose to learn.
+  * I suggest you buy the earliest model such as STC89C52 or buy the latest model such as STC8H8K64U if you have no idea which one should choose to start learning.
 
 * A USB to UART adapter if there is no one on board. 
   * it's used for flashing/programming. a lot of development board today already have one USB/UART chip on board, usually it's CH340 series.
 
 # Toolchain overview
 
-Opensource toolchain for 8051 (actually for any MCU not limited to 8051) consists of below components:
+Opensource toolchain for 8051 consists of below components:
 * Compiler
 * ~~Debugger~~
 * SDK
 * Flashing/Programming tool
 
-Unfortunately, most 8051 products are lack of debugging support, although a few models today support IAP, but it's depend on commercial software solution and not widely used by developers. for STC 8051, the opensource toolchain is SDCC(compiler) + stcgal/stcflash(ISP tool).
+Unfortunately, most 8051 products are lack of debugging support even under windows, although a few models today support IAP, but it's depend on specific commercial software solution and not widely used by developers. for STC 8051, the opensource toolchain is SDCC(compiler) + stcgal/stcflash(ISP tool).
 
 # SDCC compiler
-There are 2 common used C compiler for 8051 MCU, one is Keil C51 , a commercial closesource compiler provided by ARM. and one is [SDCC](http://sdcc.sourceforge.net), an opensource high quality 8bit c compiler.
+There are 2 widely used C compiler for 8051 MCU, one is Keil C51 , a commercial close source compiler provided by ARM. and one is [SDCC](http://sdcc.sourceforge.net), an opensource c compiler.
 
 I do not want to compare SDCC and C51 here, there are also not much difference between them. In my opinions, I prefer the opensource one. for [syntax differences between SDCC and C51](https://github.com/cjacker/opensource-toolchain-8051/blob/main/difference-between-c51-and-sdcc.md), I aleady wrote a brief note, please refer to it.
 
-Most linux dist already ship SDCC in their repositories, you can use APT/YUM or other package management tool to install it according to the dist you use. If you really want to build it yourself, at least you need make/bison/flex/libtool/g++/boost development package/zlib development package and other various packages installed and the building process is very simple:
+Most linux dist already ship SDCC in their repositories, you can use APT/YUM or other package management tools to install it according to the dist you use. If you really want to build it yourself, at least you need make/bison/flex/libtool/g++/boost development package/zlib development package and other various packages installed and the building process is very simple:
 
 ```
 ./configure --prefix=<where you want to install SDCC>
@@ -73,7 +73,7 @@ For example:
 
 ```
 // led.c
-// turn on the led, P21->1 ko resistor->LED->GND
+// turn on the led. P21->Resistor->LED->GND
 
 // define the P21 IO pin register
 __sbit __at (0xa0+1) P21;
@@ -90,8 +90,8 @@ void main()
 led.c can be compiled by SDCC like this:
 ```
 sdcc -mmcs51 led.c
-packihx led.ihx led.hex
-makebin led.bin
+packihx led.ihx > led.hex
+makebin lex.hex led.bin
 ```
 
 ## STC headers
@@ -117,8 +117,8 @@ void main()
 and build:
 ```
 sdcc -mmcs51 -I./stc-headers led.c
-packihx led.ihx led.hex
-makebin led.bin
+packihx led.ihx >led.hex
+makebin led.hex led.bin
 ```
 
 There is also a header `softdelay.h` provided and pre-define some widely used softdelay functions, such as `delay200ms()`, you can used directly in your codes. for example:
@@ -160,23 +160,23 @@ void main()
 }
 ```
 
-**NOTE, every model may have some new registers with special features, PLEASE READ the DATASHEET before use it!!!**
+**NOTE, every model may have some special registers with special features, PLEASE READ the DATASHEET before use it!!!**
 
 # ~~Debugging~~
 
-As mentioned above, most 8051 MCUs do **NOT** support remote debugging, a few models today support IAP, but lack of opensource tools, and also not widely used by developers. Implementing a remote debugger for 8051 should not be a tough job, but it seems nobody has interest on it. Maybe it is really simple enough so that a debugger is not mandary:-
+As mentioned above, most 8051 MCUs do **NOT** support remote debugging, a few models support IAP, but lack of opensource tools, and also not widely used by developers. Implementing a remote debugger for 8051 should not be a tough job, but it seems nobody has interest on it. Maybe it is really simple enough so that a debugger is not mandary:-
 
 Although there is no GDB-like debugging tool for STC 8051 MCU, you can still use UART printf and other way to do some debugging.
 
 # Flashing/Programming
 
-**you need to press RESET key on your development board when programming**
+**RESET key on your development board need to be pressed when flashing**
 
-Every STC MCU have a bootloader(BSL) which support UART programming, usually **the P3.0 pin is RX and P3.1 pin is TX**, most development board already integrate a USB to UART chip on board, you just need to find a USB cable to connect it to PC. the STC UART flashing protocol is un-documented but can be analyzed.
+Every STC MCU have a bootloader(BSL) which support UART flashing, usually **the P3.0 pin is RX and P3.1 pin is TX**, most development board already integrate a USB to UART chip on board, you just need to use a USB cable to connect it to PC. the STC UART flashing protocol is un-documented but can be analyzed.
 
 A close source isp tool for windows named 'STC-ISP' is provided by STCmcu officially. It can be run with wine under Linux. you need install wine  and use `winetricks -q mfc42` to install the mfc dll. you may also need to link '/dev/ttyUSB0' or '/dev/ttyACM0' (depending on the USB/UART adapter) to '~/.wine/dosdevices/com1', then the com device can be used by wine and stc-isp to find the USB/UART adaper.
 
-The STC-ISP tool is useful if you want to adjust some options not supported by opensource isp tool.
+The STC-ISP tool is useful if you want to adjust some config options not supported by opensource isp tool.
 
 There are 2 open source ISP tool you can use with linux. 
 
@@ -258,7 +258,7 @@ sudo stcflash -p /dev/ttyUSB0 blink.bin
 
 ## Project templates
 
-With [Project and Makefile template](https://github.com/cjacker/opensource-toolchain-8051/tree/main/blink) in this repo, you can start your 8051 development under Linux very quickly. 
+With [Project and Makefile template](https://github.com/cjacker/opensource-toolchain-8051/tree/main/blink) in this repo, you can start 8051 development under Linux very quickly. 
 
 Please have a look at the Makefile, and you may also need to understand the meaning of '--iram-size'/'--xram-size'/'--code-size' and other details before starting a real project.
 
@@ -267,12 +267,12 @@ build:
 make 
 ```
 
-flashing/programming with stcgal:
+flashing with stcgal:
 ```
 make flash
 ```
 
-flashing/programming with stcflash for STC8X series:
+flashing with stcflash for STC8X series:
 ```
 make flash8x
 ```
