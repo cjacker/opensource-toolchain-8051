@@ -26,7 +26,7 @@ For example, STC89C516AD, the '89' means STC 89 series, 'C' means 3.5-5.5v volta
 
 Since STC 8051 is the most famous and popular 8051 MCU in China, this tutorial will mostly focus on STC 8051. there is not so much different between 8051 MCUs from different vendors, so you can also refer to this tutorial even use chips from other vendors.
 
-By the way, STCmcu also have STC16 series MCU, it's 16bit 80251, and without opensource toolchain support up to this tutorial written.
+By the way, STCmcu also have STC16/STC32 80251 series MCU,  and without opensource toolchain support up to this tutorial written. But you still can use 8051 opensource toolchains with such 80251 MCU, it's binary compatible.
 
 # Hardware requirements
 
