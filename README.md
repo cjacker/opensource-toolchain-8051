@@ -4,7 +4,7 @@ The [Intel MCS-51](https://en.wikipedia.org/wiki/Intel_8051) (commonly termed 80
 
 8051 are first-generation microcontrollers that sparked the modern embedded-system era and established the basic concepts for almost all microcontrollers. In the early 1980s, 8051 microcontrollers were first introduced by Intel. Later other manufacturers like Philips (NXP), Atmel (now Microchip), Silicon Labs, Maxim, etc took the 8051 architecture and introduced their variants of 8051s. 
 
-Today there are hundreds of companies (Such as STC, WCH, Nuvoton, etc.) which still manufactures this old school legendary MCU. some of them have even added more features like ADCs, communication peripherals like SPI and I2C, etc that were not originally incepted or integrated. 
+Today there are hundreds of companies (Such as Silicon Labs, Maxim, STC, Nuvoton, WCH, etc.) which still manufactures this old school legendary MCU. some of them have even added more features like ADCs, communication peripherals like SPI and I2C, etc that were not originally incepted or integrated. 
 
 # STC 8051 MCU
 
@@ -32,11 +32,15 @@ By the way, STCmcu also have STC16/STC32 80251 series MCU,  and without opensour
 
 Before you start 8051 development, you need:
 
-* A development board with STC 8051 MCU. 
+* A development board with 8051 MCU, (here I prefer STC 8051 MCU)
   * I suggest you buy the earliest model such as STC89C52 or buy the latest model such as STC8H8K64U if you have no idea which one should choose to start learning.
 
 * A USB to UART adapter if there is no one on board. 
   * it's used for flashing/programming. a lot of development board today already have one USB/UART chip on board, usually it's CH340 series.
+
+**NOTE**:
+* for C8051Fx, you need U-ECx adapter to program.
+* for Nuvoton, you need Nu Link adatper to program.
 
 # Toolchain overview
 
@@ -46,10 +50,12 @@ Opensource toolchain for 8051 consists of below components:
 * SDK
 * Flashing/Programming tool
 
-Unfortunately, most 8051 products are lack of debugging support even under windows, although a few models today support IAP, but it's depend on specific commercial software solution and not widely used by developers. for STC 8051, the opensource toolchain is SDCC(compiler) + stcgal/stcflash(ISP tool).
+Unfortunately, most 8051 products are lack of debugging support even under windows, although a few models today support IAP, but it's depend on specific commercial software solution. for STC 8051, the opensource toolchain is SDCC(compiler) + stcgal/stcflash(ISP tool).
 
 # SDCC compiler
 There are 2 widely used C compiler for 8051 MCU, one is Keil C51 , a commercial close source compiler provided by ARM. and one is [SDCC](http://sdcc.sourceforge.net), an opensource c compiler.
+
+By the way, if you prefer using **assmemblly language**, [naken_asm](https://github.com/mikeakohn/naken_asm/) is a good choice to start, I also made a set of patches  for it to support STC 8051 MCU better.
 
 I do not want to compare SDCC and C51 here, there are also not much difference between them. In my opinions, I prefer the opensource one. for [syntax differences between SDCC and C51](https://github.com/cjacker/opensource-toolchain-8051/blob/main/difference-between-c51-and-sdcc.md), I aleady wrote a brief note, please refer to it.
 
@@ -168,7 +174,7 @@ As mentioned above, most 8051 MCUs do **NOT** support remote debugging, a few mo
 
 Although there is no GDB-like debugging tool for STC 8051 MCU, you can still use UART printf and other way to do some debugging.
 
-# Flashing/Programming
+# Flashing/Programming for STC 8051
 
 **RESET key on your development board need to be pressed when flashing**
 
@@ -276,6 +282,14 @@ flashing with stcflash for STC8X series:
 ```
 make flash8x
 ```
+
+# Flashing/Programming for Silicon Labs 8051
+
+# Flashing/Programming for Maxim 8051
+
+# Flashing/Programming for Nuvoton 8051
+
+# Flashing/Programming for WCH 8051
 
 ## Additions
 
