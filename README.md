@@ -46,11 +46,9 @@ Before you start 8051 development, you need:
 
 Opensource toolchain for 8051 consists of below components:
 * Compiler
-* ~~Debugger~~
+* Debugger
 * SDK
 * Flashing/Programming tool
-
-Unfortunately, most 8051 products are lack of debugging support even under windows, although a few models today support IAP, but it's depend on specific commercial software solution. for STC 8051, the opensource toolchain is SDCC(compiler) + stcgal/stcflash(ISP tool).
 
 # SDCC compiler
 There are 2 widely used C compiler for 8051 MCU, one is Keil C51 , a commercial close source compiler provided by ARM. and one is [SDCC](http://sdcc.sourceforge.net), an opensource c compiler.
@@ -168,11 +166,23 @@ void main()
 
 **NOTE, every model may have some special registers with special features, PLEASE READ the DATASHEET before use it!!!**
 
-# ~~Debugging~~
+# Debugging
 
-As mentioned above, most 8051 MCUs do **NOT** support remote debugging, a few models support IAP, but lack of opensource tools, and also not widely used by developers. Implementing a remote debugger for 8051 should not be a tough job, but it seems nobody has interest on it. Maybe it is really simple enough so that a debugger is not mandary:-
+There is no standard debugging tool such as gdb for 8051 MCUs from various different vendors. you can take SDCC manual (Chapter 5. Debugging) as refrence to find a debugging way you can use with your 8051 MCU. gennerally:
 
-Although there is no GDB-like debugging tool for STC 8051 MCU, you can still use UART printf and other way to do some debugging.
+* Debugging on a simulator:
+
+you can use `sdcdb` debugger and `ucsim-51` simulator shipped with SDCC.
+
+* Debugging on target using an on-target monitor:
+
+you need program a monitor firmware to your MCU first, good examples of monitors are [paulmon](https://www.pjrc.com/tech/8051/paulmon2.html) and [cmon51](http://cmon51.sourceforge.net/), but you need modified the codes to match your MCU's resources and settings.
+
+* Debugging on target using an ICE (in circuit emulator):
+
+an ICE device is usually a little bit expensive. for Silicon Labs C8051Fx series, you can use U-ECx adapters with `newcdb` provided by 'e2drv'.
+
+And always, you can use 'printf' via UART:-)
 
 # Flashing/Programming for STC 8051
 
@@ -283,15 +293,19 @@ flashing with stcflash for STC8X series:
 make flash8x
 ```
 
-# Flashing/Programming for Silicon Labs 8051
+# Flashing/Programming for WCH 8051
+These are various opensource ISP tool for WCH CH5xx 8051 series, the most complete one is ch552tool, please refer to [ch552tool](https://github.com/MarsTechHAN/ch552tool).
 
-# Flashing/Programming for Maxim 8051
+# Flashing/Programming for Atmel (now MicroChip) 8051
+avrdude
+
+dfu-programmer
+
+# Flashing/Programming for Silicon Labs 8051
+e2-new
+
+# Flashing/Programming for Dallas (now Maxim) 8051
+a python script
 
 # Flashing/Programming for Nuvoton 8051
-
-# Flashing/Programming for WCH 8051
-
-## Additions
-
-By the way, these is also a opensource ISP tool for WCH CH5xx 8051 series, please refer to [ch552tool](https://github.com/MarsTechHAN/ch552tool).
-
+nuvoprog
