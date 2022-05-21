@@ -55,7 +55,7 @@ Unfortunately, most 8051 products are lack of debugging support even under windo
 # SDCC compiler
 There are 2 widely used C compiler for 8051 MCU, one is Keil C51 , a commercial close source compiler provided by ARM. and one is [SDCC](http://sdcc.sourceforge.net), an opensource c compiler.
 
-By the way, if you prefer using **assmemblly language**, [naken_asm](https://github.com/mikeakohn/naken_asm/) is a good choice to start, I also made a set of patches  for it to support STC 8051 MCU better.
+By the way, if you prefer using **assemblly language**, [naken_asm](https://github.com/mikeakohn/naken_asm/) is a good choice to start, I also made a set of patches  for it to support STC 8051 MCU better.
 
 I do not want to compare SDCC and C51 here, there are also not much difference between them. In my opinions, I prefer the opensource one. for [syntax differences between SDCC and C51](https://github.com/cjacker/opensource-toolchain-8051/blob/main/difference-between-c51-and-sdcc.md), I aleady wrote a brief note, please refer to it.
 
