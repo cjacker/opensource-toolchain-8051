@@ -280,11 +280,6 @@ These are various opensource ISP tool for WCH CH5xx 8051 series, the most comple
 ```
 sudo ch55xtool -f firmwire.bin -r
 ```
-If you use the Makefile from project template, just type:
-```
-make flashch55x
-```
-
 
 ## for Silicon Labs C8051Fxx
 As metioned above, C8051Fxx series 8051 MCU from Silicon Labs requires a special ICE device to program and debug. these MCUs support either JTAG or C2 protocol. you need to acquire such a device (usally an USB adapter) first and wire it up before you continue reading .
