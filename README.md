@@ -184,7 +184,9 @@ an ICE device is usually a little bit expensive. for Silicon Labs C8051Fx series
 
 And always, you can use 'printf' via UART:-)
 
-# Flashing/Programming for STC51 (from STC)
+# Programming
+
+## for STC51 (from STC)
 
 **RESET key on your development board need to be pressed when flashing**
 
@@ -196,7 +198,7 @@ The STC-ISP tool is useful if you want to adjust some config options not support
 
 There are 2 open source ISP tool you can use with linux. 
 
-## stcgal
+### stcgal
 [stcgal](https://github.com/grigorig/stcgal) suppport most STC MCUs from STC89 series to STC15 series very well, but lack of supporting for the latest STC8[A|C|F|G|H] series.
 
 ```
@@ -272,7 +274,33 @@ for exmaple:
 sudo stcflash -p /dev/ttyUSB0 blink.bin
 ```
 
-## Project templates
+
+## for WCH CH55x
+These are various opensource ISP tool for WCH CH5xx 8051 series, the most complete one is [ch552tool](https://github.com/MarsTechHAN/ch552tool). it can support CH551/CH552/CH553/CH554/CH559 with various bootloader version. the usage is very simple:
+```
+sudo ch55xtool -f firmwire.bin -r
+```
+If you use the Makefile from project template, just type:
+```
+make flashch55x
+```
+
+## for Atmel AT89C5x (now MicroChip)
+avrdude
+
+dfu-programmer
+
+## for Silicon Labs C8051Fxx
+e2-new
+
+## for Dallas DS89Cxx (now Maxim)
+a python script
+
+# for Nuvoton NE76Exxx
+nuvoprog
+
+
+# Project templates
 
 With [Project and Makefile template](https://github.com/cjacker/opensource-toolchain-8051/tree/main/blink) in this repo, you can start 8051 development under Linux very quickly. 
 
@@ -283,36 +311,21 @@ build:
 make 
 ```
 
-flashing with stcgal:
+flashing STC51 with stcgal:
 ```
 make flashstc
 ```
 
-flashing with stcflash for STC8X series:
+flashing STC8x series with stcflash:
 ```
 make flashstc8x
 ```
 
-# Flashing/Programming for WCH CH55x
-These are various opensource ISP tool for WCH CH5xx 8051 series, the most complete one is [ch552tool](https://github.com/MarsTechHAN/ch552tool). it can support CH551/CH552/CH553/CH554/CH559 with various bootloader version. the usage is very simple:
+flashing Silicon Labs C8051Fxx:
 ```
-sudo ch55xtool -f firmwire.bin -r
-```
-If you use the Makefile from project template, just type:
-```
-make flashch55x
+make flashc8051f
 ```
 
-# Flashing/Programming for at89c5x (from Atmel, now MicroChip)
-avrdude
+etc.
 
-dfu-programmer
 
-# Flashing/Programming for C8051Fx (from Silicon Labs)
-e2-new
-
-# Flashing/Programming for Dallas (now Maxim) 8051
-a python script
-
-# Flashing/Programming for Nuvoton 8051
-nuvoprog
