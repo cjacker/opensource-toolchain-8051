@@ -1,6 +1,6 @@
 // blink led, P34->Resistor->LED->GND
 
-#define C8051F120
+#define STC89 
 
 #if defined(STC89)
 	#include <stc51.h>
