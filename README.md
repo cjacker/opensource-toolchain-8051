@@ -285,13 +285,76 @@ If you use the Makefile from project template, just type:
 make flashch55x
 ```
 
+
+## for Silicon Labs C8051Fxx
+As metioned above, C8051Fxx series 8051 MCU from Silicon Labs requires a special ICE device to program and debug. these MCUs support either JTAG or C2 protocol. you need to acquire such a device (usally an USB adapter) first and wire it up before you continue reading .
+
+[ec2-new](https://github.com/paragonRobotics/ec2-new) is a fork of [e2drv](http://ec2drv.sourceforge.net/), an opensource project to support EC2 debugger.
+
+ec2tools contain programs that use the core library to perform various actions.
+
+* ec2test-any - test the opperation of a micro / debugger combination
+* ec2readflash - read the target flash memory.
+* ec2writeflash - write to the target flash memory.
+* ec2device - identify connected microprocessor
+* ec3adapters - list all USB debug adaptors and their serial numbers (for both EC3 and toolstick debuggers)
+* ec2readfw - read the debugger firmware image
+* ec2-update-fw - write new firmware into the debugger
+
+newcdb is the text-based interactive debugger, which can be used to fully debug programs
+
+* flash firmware to devices
+* inspect all registers, SFRs, RAM, code, and XRAM
+* modify all registers, SFRs, RAM, and XRAM
+* set breakpoints
+* run, stop, and step through programs
+
+**Build and Installation:**
+
+```
+git clone https://github.com/paragonRobotics/ec2-new.git
+cd ec2-new
+autoreconf -ivf
+./configure --prefix=/usr/local
+make
+sudo make install
+```
+
+**Program:**
+
+```
+sudo ec2writeflash --port USB --hex xxx.hex --run
+```
+**Debug:**
+
+```
+$ sudo newcdb
+(newcdb) set target SL51
+current target <none>
+selecting target SL51
+(newcdb) set target port USB
+set port 'USB'
+(newcdb) set target connect
+NOT C2, Trying JTAG
+Debug adaptor ver = 0x19
+(newcdb) file firmware
+Clearing all breakpoints.
+Clearing all breakpoints in target.
+Debug adaptor ver = 0x19
+Loading file 'firmware.ihx'
+Writing to flash with auto erase as necessary
+        Writing 167 bytes at 0x0000
+Erasing scratchpaderasing scratchpad sector at addr=0x00000
+erasing scratchpad sector at addr=0x00080
+Flash write successful.
+(newcdb) r
+```
+
 ## for Atmel AT89C5x (now MicroChip)
 avrdude
 
 dfu-programmer
 
-## for Silicon Labs C8051Fxx
-e2-new
 
 ## for Dallas DS89Cxx (now Maxim)
 a python script
