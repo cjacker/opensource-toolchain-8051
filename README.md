@@ -39,8 +39,8 @@ Before you start 8051 development, you need:
   * it's used for flashing/programming. a lot of development board today already have one USB/UART chip on board, usually it's CH340 series.
 
 **NOTE**:
-* for C8051Fx, you need U-ECx adapter to program.
-* for Nuvoton, you need Nu Link adatper to program.
+* for C8051Fx from Silicon Labs, you need U-ECx adapter to program.
+* for CH55x from Nuvoton, you need Nu Link adatper to program.
 
 # Toolchain overview
 
@@ -293,8 +293,11 @@ flashing with stcflash for STC8X series:
 make flash8x
 ```
 
-# Flashing/Programming for WCH 8051
-These are various opensource ISP tool for WCH CH5xx 8051 series, the most complete one is ch552tool, please refer to [ch552tool](https://github.com/MarsTechHAN/ch552tool).
+# Flashing/Programming for WCH CH55x
+These are various opensource ISP tool for WCH CH5xx 8051 series, the most complete one is [ch552tool](https://github.com/MarsTechHAN/ch552tool). it can support CH551/CH552/CH553/CH554/CH559 with various bootloader version. the usage is very simple:
+```
+sudo ch55xtool -f firmwire.bin -r
+```
 
 # Flashing/Programming for Atmel (now MicroChip) 8051
 avrdude
