@@ -184,7 +184,7 @@ an ICE device is usually a little bit expensive. for Silicon Labs C8051Fx series
 
 And always, you can use 'printf' via UART:-)
 
-# Flashing/Programming for STC 8051
+# Flashing/Programming for STC51 (from STC)
 
 **RESET key on your development board need to be pressed when flashing**
 
@@ -285,12 +285,12 @@ make
 
 flashing with stcgal:
 ```
-make flash
+make flashstc
 ```
 
 flashing with stcflash for STC8X series:
 ```
-make flash8x
+make flashstc8x
 ```
 
 # Flashing/Programming for WCH CH55x
@@ -298,13 +298,17 @@ These are various opensource ISP tool for WCH CH5xx 8051 series, the most comple
 ```
 sudo ch55xtool -f firmwire.bin -r
 ```
+If you use the Makefile from project template, just type:
+```
+make flashch55x
+```
 
-# Flashing/Programming for Atmel (now MicroChip) 8051
+# Flashing/Programming for at89c5x (from Atmel, now MicroChip)
 avrdude
 
 dfu-programmer
 
-# Flashing/Programming for Silicon Labs 8051
+# Flashing/Programming for C8051Fx (from Silicon Labs)
 e2-new
 
 # Flashing/Programming for Dallas (now Maxim) 8051

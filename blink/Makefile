@@ -4,6 +4,8 @@ packihx := packihx
 makebin := makebin
 stcgal := stcgal
 stcflash := stcflash
+ch55xtool := ch55xtool
+ec2writeflash := ec2writeflash
 
 # sdcc flags
 # notes ： Please adjust '--iram-size'/'--xram-size'/'--code-size' according to your chip ）
@@ -15,7 +17,7 @@ sdcc_flags := -mmcs51
 # sdcc_flags := -mmcs51 --iram-size 256 --xram-size 8192 --code-size 65536 --stack-auto
 
 # source files
-SRCS = main.c 
+SRCS = main.c
 
 # include path, since include dir at parent dir.
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
@@ -48,12 +50,17 @@ $(outdir)/%.hex: $(outdir)/%.ihx | $(outdir)
 $(outdir)/%.bin: $(outdir)/%.hex | $(outdir)
 	$(makebin) -p $(outdir)/$(outname).hex $(outdir)/$(outname).bin
 
-# call stcgal/stcflash to flash
-flash: $(outdir)/$(outname).bin
+flashstc: $(outdir)/$(outname).bin
 	sudo $(stcgal) build/$(outname).bin
 
-flash8x: $(outdir)/$(outname).bin
+flashstc8x: $(outdir)/$(outname).bin
 	sudo $(stcflash) build/$(outname).bin
+
+flashch55x: $(outdir)/$(outname).bin
+	sudo $(ch55xtool) -f build/$(outname).bin
+
+flashc8051f:
+	sudo $(ec2writeflash) --port USB --hex build/$(outname).hex --run
 
 # clean project
 .PHONY : clean
