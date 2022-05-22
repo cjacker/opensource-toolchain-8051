@@ -296,7 +296,7 @@ e2-new
 ## for Dallas DS89Cxx (now Maxim)
 a python script
 
-# for Nuvoton NE76Exxx
+## for Nuvoton NE76Exxx
 nuvoprog
 
 
