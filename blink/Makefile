@@ -6,6 +6,7 @@ stcgal := stcgal
 stcflash := stcflash
 ch55xtool := ch55xtool
 ec2writeflash := ec2writeflash
+nuvoprog := nuvoprog
 
 # sdcc flags
 # notes ： Please adjust '--iram-size'/'--xram-size'/'--code-size' according to your chip ）
@@ -62,6 +63,8 @@ flashch55x: $(outdir)/$(outname).bin
 flashc8051f:
 	sudo $(ec2writeflash) --port USB --hex build/$(outname).hex --run
 
+flashn76e003:
+	sudo $(nuvoprog) program -t n76e003 -i build/firmware.ihx -c @config.json
 # clean project
 .PHONY : clean
 clean :
