@@ -8,17 +8,17 @@ Today there are hundreds of companies (Such as Silicon Labs, Maxim, STC, Nuvoton
 
 # Hardware requirements
 
-Before you start 8051 development, you need:
+Before starting 8051 development, you need:
 
-* A development board with 8051 MCU, (here I prefer STC 8051 MCU)
-  * I suggest you buy the earliest model such as STC89C52 or buy the latest model such as STC8H8K64U if you have no idea which one should choose to start learning.
+* A development board with 8051 MCU, (here I prefer STC51)
+  * the earliest model such as STC89C52 or the latest model such as STC8H8K64U if you have no idea which one to choose.
 
-* A USB to UART adapter if there is no one on board. 
-  * it's used for flashing/programming. a lot of development board today already have one USB/UART chip on board, usually it's CH340 series.
+* A USB UART adapter if there is no one on board. 
+  * it's used for flashing/programming. a lot of development board already have one integrated on board, such as CH340 series.
 
 **NOTE**:
-* for C8051Fx from Silicon Labs, you need U-ECx adapter to program.
-* for CH55x from Nuvoton, you need Nu Link adatper to program.
+* for C8051Fx from Silicon Labs, you need U-EC ICE adapter to program and debug.
+* for N76E from Nuvoton, you need Nu Link adatper to program.
 
 # Toolchain overview
 
@@ -26,14 +26,14 @@ Opensource toolchain for 8051 consists of below components:
 * Compiler
 * Debugger
 * SDK
-* Flashing/Programming tool
+* Programming tool
 
 # SDCC compiler
-There are 2 widely used C compiler for 8051 MCU, one is Keil C51 , a commercial close source compiler provided by ARM. and one is [SDCC](http://sdcc.sourceforge.net), an opensource c compiler.
+If you prefer using **8051 assemblly language**, [naken_asm](https://github.com/mikeakohn/naken_asm/) or [as31](http://wiki.erazor-zone.de/wiki:projects:linux:as31) can be used except SDCC.
 
-By the way, if you prefer using **assemblly language**, [naken_asm](https://github.com/mikeakohn/naken_asm/) is a good choice to start, I also made a set of patches  for it to support STC 8051 MCU better.
+There are 2 widely used C compiler for 8051 MCU, one is Keil C51, a commercial close source compiler provided by ARM. and one is [SDCC](http://sdcc.sourceforge.net), an opensource c compiler.
 
-I do not want to compare SDCC and C51 here, there are also not much difference between them. In my opinions, I prefer the opensource one. for [syntax differences between SDCC and C51](https://github.com/cjacker/opensource-toolchain-8051/blob/main/difference-between-c51-and-sdcc.md), I aleady wrote a brief note, please refer to it.
+I do not want to compare SDCC and C51 here, there are not much difference between them. In my opinions, I prefer the opensource one. for [syntax differences between SDCC and C51](https://github.com/cjacker/opensource-toolchain-8051/blob/main/difference-between-c51-and-sdcc.md), I aleady wrote a brief note, please refer to it.
 
 Most linux dist already ship SDCC in their repositories, you can use APT/YUM or other package management tools to install it according to the dist you use. If you really want to build it yourself, at least you need make/bison/flex/libtool/g++/boost development package/zlib development package and other various packages installed and the building process is very simple:
 
@@ -76,7 +76,7 @@ packihx led.ihx > led.hex
 makebin lex.hex led.bin
 ```
 
-## STC headers
+## STC headers fro STC51
 For developers' convenient, the compilers usually provide pre-defined headers for basic models, for example, reg51.h/reg52.h provided by Keil C51 and 8051.h provided by SDCC. But it's not enough to cover all resources/registers on chip of defferent models, especially models with improvements, enhancements and addtitions. you can define them by yourself in sources files (use `__sfr` and `__sbit` of SDCC) or use pre-defined headers.
 
 The [stc headers within this repo](https://github.com/cjacker/opensource-toolchain-8051/tree/main/stc-headers) provide a set of headers suite for SDCC compiler for different STC 8051 MCUs, you can use it directly. these headers come from STC-ISP, the ISP tool provided by official vender and converted to the format SDCC supported using [keil2sdcc](https://github.com/ywaby/keil2sdcc) with modifications manually.
@@ -142,7 +142,7 @@ void main()
 }
 ```
 
-**NOTE, every model may have some special registers with special features, PLEASE READ the DATASHEET before use it!!!**
+**NOTE, every model may have special registers with special features, PLEASE READ the DATASHEET before use it!!!**
 
 # Debugging
 
@@ -154,11 +154,11 @@ you can use `sdcdb` debugger and `ucsim-51` simulator shipped with SDCC.
 
 * Debugging on target using an on-target monitor:
 
-you need program a monitor firmware to your MCU first, good examples of monitors are [paulmon](https://www.pjrc.com/tech/8051/paulmon2.html) and [cmon51](http://cmon51.sourceforge.net/), but you need modified the codes to match your MCU's resources and settings.
+you need program a monitor firmware to your MCU first, good examples of monitors are [paulmon](https://www.pjrc.com/tech/8051/paulmon2.html) and [cmon51](http://cmon51.sourceforge.net/), but you may need modified the codes to match your MCU's resources and settings.
 
 * Debugging on target using an ICE (in circuit emulator):
 
-an ICE device is usually a little bit expensive. for Silicon Labs C8051Fx series, you can use U-ECx adapters with `newcdb` provided by 'e2drv'.
+an ICE device is usually a little bit expensive. for Silicon Labs C8051Fx series, you can use U-EC ICE adapters with `newcdb` provided by 'e2drv'.
 
 And always, you can use 'printf' via UART:-)
 
@@ -170,9 +170,7 @@ And always, you can use 'printf' via UART:-)
 
 Every STC MCU have a bootloader(BSL) which support UART flashing, usually **the P3.0 pin is RX and P3.1 pin is TX**, most development board already integrate a USB to UART chip on board, you just need to use a USB cable to connect it to PC. the STC UART flashing protocol is un-documented but can be analyzed.
 
-A close source isp tool for windows named 'STC-ISP' is provided by STCmcu officially. It can be run with wine under Linux. you need install wine  and use `winetricks -q mfc42` to install the mfc dll. you may also need to link '/dev/ttyUSB0' or '/dev/ttyACM0' (depending on the USB/UART adapter) to '~/.wine/dosdevices/com1', then the com device can be used by wine and stc-isp to find the USB/UART adaper.
-
-The STC-ISP tool is useful if you want to adjust some config options not supported by opensource isp tool.
+A close source isp tool for windows named 'STC-ISP' is provided by STCmcu officially. It can be run with wine under Linux. you need install wine  and use `winetricks -q mfc42` to install the mfc dll. you may also need to link '/dev/ttyUSB0' or '/dev/ttyACM0' (depending on the USB/UART adapter) to '~/.wine/dosdevices/com1', then the com device can be used by wine and stc-isp to find the USB/UART adaper. The STC-ISP tool is useful if you want to adjust some config options not supported by opensource isp tool.
 
 There are 2 open source ISP tool you can use with linux. 
 
