@@ -340,7 +340,9 @@ go get -u github.com/erincandescent/nuvoprog
 ```
 
 Progamm:
-
+```
+sudo nuvoprog program -t n76e003 -i build/firmware.ihx -c @config.json
+```
 
 
 # Project templates
