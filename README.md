@@ -250,7 +250,6 @@ for exmaple:
 sudo stcflash -p /dev/ttyUSB0 blink.bin
 ```
 
-
 ## for WCH CH55x
 These are various opensource ISP tool for WCH CH5xx 8051 series, the most complete one is [ch552tool](https://github.com/MarsTechHAN/ch552tool). it can support CH551/CH552/CH553/CH554/CH559 with various bootloader version. the usage is very simple:
 ```
@@ -330,8 +329,18 @@ dfu-programmer
 ## for Dallas DS89Cxx (now Maxim)
 a python script
 
-## for Nuvoton NE76Exxx
-nuvoprog
+## for Nuvoton N76Exxx
+To program Nuvoton N76E series 8051 MCU, you need have a Nu-link adapter (from offcial EVB or standalone version) and wire up 5 pins: VCC/DAT/CLK/RST/GND.
+
+[nuvoprog](https://github.com/erincandescent/nuvoprog) is an open source tool for programming Nuvoton microcontollers.
+
+Installation:
+```
+go get -u github.com/erincandescent/nuvoprog
+```
+
+Progamm:
+
 
 
 # Project templates
