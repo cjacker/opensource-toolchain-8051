@@ -339,7 +339,7 @@ a python script
 ## for Nuvoton N76Exxx
 To program Nuvoton N76E series 8051 MCU, you need have a Nu-link adapter (from offcial EVB or standalone version) and wire up 5 pins: VCC/DAT/CLK/RST/GND.
 
-[nuvoprog](https://github.com/erincandescent/nuvoprog) is an open source tool for programming Nuvoton microcontollers. I make a fork to add N76E616 support.
+[nuvoprog](https://github.com/erincandescent/nuvoprog) is an open source tool for programming Nuvoton microcontollers. I make a fork to add N76E616/N76E885 support.
 
 Installation:
 ```
@@ -352,7 +352,7 @@ Program:
 sudo nuvoprog program -t n76e003 -i build/firmware.ihx -c @config.json
 ```
 
-Please refer to blink demo for details of 'config.json'. If you have n76e616 board, change 'n76e003' to 'n76e616'.
+Please refer to blink demo for details of 'config.json'.
 
 
 # Project templates
