@@ -4,7 +4,7 @@ packihx := packihx
 makebin := makebin
 stcgal := stcgal
 stcflash := stcflash
-ch55xtool := ch55xtool
+ch55x-isptool := ch55x-isptool
 ec2writeflash := ec2writeflash
 nuvoprog := nuvoprog
 
@@ -58,13 +58,17 @@ flashstc8x: $(outdir)/$(outname).bin
 	sudo $(stcflash) build/$(outname).bin
 
 flashch55x: $(outdir)/$(outname).bin
-	sudo $(ch55xtool) -f build/$(outname).bin
+	sudo $(ch55x-isptool) build/$(outname).bin
 
 flashc8051f:
 	sudo $(ec2writeflash) --port USB --hex build/$(outname).hex --run
 
 flashn76e003:
-	sudo $(nuvoprog) program -t n76e003 -i build/firmware.ihx -c @config.json
+	sudo $(nuvoprog) program -t n76e003 -i build/firmware.ihx -c @config_n76e003.json
+
+flashn76e616:
+	sudo $(nuvoprog) program -t n76e616 -i build/firmware.ihx -c @config_n76e616.json
+
 # clean project
 .PHONY : clean
 clean :

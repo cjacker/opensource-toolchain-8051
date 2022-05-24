@@ -1,0 +1,12 @@
+{
+    "boot_select": "aprom",
+    "ocd_enabled": true,
+    "reset_pin_disabled": false,
+    "locked": false,
+    "ldrom_size": "0kb",
+    "bod_disabled": false,
+    "bod_voltage": "2v2",
+    "iap_enabled_in_brownout": false,
+    "bod_reset_disabled": false,
+    "wdt": "disabled"
+}

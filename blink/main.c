@@ -1,6 +1,6 @@
 // blink led, Pin->Resistor->LED->GND
 
-#define STC89 
+#define CH552
 
 #if defined(STC89)
   #include <stc51.h>
@@ -14,9 +14,17 @@
 #elif defined(C8051F320)
   #include <C8051F320.h>
   #define LED P0_6
+#elif defined(N76E616)
+  // my 616 dev board have 2 leds on board.
+  #include <n76e616.h>
+  #define LED P21
+  #define LED1 P22
 #elif defined(N76E003)
   #include <n76e003.h>
   #define LED P12
+#elif defined(CH552)
+  #include <ch552.h>
+  #define LED P32
 #endif
 
 // not accurate since different MCU/different Clock
@@ -34,6 +42,7 @@ void main()
   // set P34 to Push_Pull
   P3M0 = 0x10;
   P3M1 = 0x00;
+
 #elif defined(C8051F120)
   // disable watchdog
   EA = 0;
@@ -57,10 +66,16 @@ void main()
 #elif defined(N76E003)
   P1M1 = 0;
   P1M2 = 0;
+#elif defined(N76E616)
+  P2M1 = 0;
+  P2M2 = 0;
 #endif
  
   while(1) {
     LED = !LED;
+#if defined(N76E616)
+    LED1 = !LED1;
+#endif
     delay(500);
   }
 }
