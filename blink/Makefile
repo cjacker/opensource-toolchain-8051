@@ -69,6 +69,9 @@ flashn76e003:
 flashn76e616:
 	sudo $(nuvoprog) program -t n76e616 -i build/firmware.ihx -c @config_n76e616.json
 
+flashn76e885:
+	sudo $(nuvoprog) program -t n76e885 -i build/firmware.ihx -c @config_n76e885.json
+
 # clean project
 .PHONY : clean
 clean :
