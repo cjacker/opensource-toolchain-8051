@@ -1,6 +1,6 @@
 // blink led, Pin->Resistor->LED->GND
 
-#define CH552
+#define STC89
 
 #if defined(STC89)
   #include <stc51.h>
