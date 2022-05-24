@@ -24,7 +24,7 @@ SRCS = main.c
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 current_dir := $(dir $(mkfile_path))
 
-INCS = -I$(current_dir)/../stc-headers
+INCS = -I$(current_dir)/../headers
 
 # Specify the output hex File path and file name 
 outdir = build
