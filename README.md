@@ -47,7 +47,7 @@ If the installation prefix isn't set to standard dir (such as '/usr' or '/usr/lo
 
 # SDK
 
-There is no standard SDK or libraries required to start 8051 development. since it's very simple, 8051 'SDK' usually means a set of pre-defined registers of your MCU model and some pre-defined routines for common-use, for example, 'bit-bang' I2C protocol. So you can start 8051 development without install anything except SDCC compiler.
+There is no standard SDK or libraries required to start 8051 development. since 8051 'SDK' usually means a set of pre-defined registers of your MCU model,  So you can start 8051 development without install anything except SDCC compiler.
 
 ## Baremetal programming
 
@@ -76,10 +76,10 @@ packihx led.ihx > led.hex
 makebin lex.hex led.bin
 ```
 
-## STC headers fro STC51
+## Headers
 For developers' convenient, the compilers usually provide pre-defined headers for basic models, for example, reg51.h/reg52.h provided by Keil C51 and 8051.h provided by SDCC. But it's not enough to cover all resources/registers on chip of defferent models, especially models with improvements, enhancements and addtitions. you can define them by yourself in sources files (use `__sfr` and `__sbit` of SDCC) or use pre-defined headers.
 
-The [stc headers within this repo](https://github.com/cjacker/opensource-toolchain-8051/tree/main/stc-headers) provide a set of headers suite for SDCC compiler for different STC 8051 MCUs, you can use it directly. these headers come from STC-ISP, the ISP tool provided by official vender and converted to the format SDCC supported using [keil2sdcc](https://github.com/ywaby/keil2sdcc) with modifications manually.
+The [headers within this repo](https://github.com/cjacker/opensource-toolchain-8051/tree/main/headers) provide a set of headers suite for SDCC compiler for different MCUs that not provided by SDCC, include all STC 8051 models, WCH ch552/ch554/ch559 and Nuvoto n76e003/n76e616, these headers come from official demo packages or ISP tools, and be converted to the format SDCC supported using [keil2sdcc](https://github.com/ywaby/keil2sdcc) with modifications manually.
 
 For example, above codes can be write as:
 ```
@@ -87,7 +87,7 @@ For example, above codes can be write as:
 // refer to stc51.h for more information.
 #define STC89
 
-// meta header
+// meta header for stc51
 #include <stc51.h>
 
 void main()
@@ -103,7 +103,7 @@ packihx led.ihx >led.hex
 makebin led.hex led.bin
 ```
 
-There is also a header `softdelay.h` provided and pre-define some widely used softdelay functions, such as `delay200ms()`, you can used directly in your codes. for example:
+There is also a header `softdelay.h` provided for STC 8051 MCUs and pre-define some widely used softdelay functions, such as `delay200ms()`, you can used directly in your codes. for example:
 ```
 // blink.c
 // blink the led every 200ms, P21->1k o resistor->LED->GND
@@ -142,7 +142,7 @@ void main()
 }
 ```
 
-**NOTE, every model may have special registers with special features, PLEASE READ the DATASHEET before use it!!!**
+**NOTE, every MCU model may have special registers with special features, PLEASE READ the DATASHEET before use it!!!**
 
 # Debugging
 
@@ -251,10 +251,17 @@ sudo stcflash -p /dev/ttyUSB0 blink.bin
 ```
 
 ## for WCH CH55x
-These are various opensource ISP tool for WCH CH5xx 8051 series, the most complete one is [ch552tool](https://github.com/MarsTechHAN/ch552tool). it can support CH551/CH552/CH553/CH554/CH559 with various bootloader version. the usage is very simple:
+These are various opensource ISP tool for WCH CH5xx 8051 series, I prefer the c++ one [ch55x-isptool](https://github.com/cjacker/ch55x-isptool), I make a fork and add more ch55x models support. 
 ```
-sudo ch55xtool -f firmwire.bin -r
+git clone https://github.com/cjacker/ch55x-isptool.git
+cd ch55x-isptool
+make
+sudo make install DESTDIR=/usr
+
+sudo ch55x-isptool firmwire.bin
 ```
+
+Another good isp tool is [ch552tool](https://github.com/MarsTechHAN/ch552tool). it written by python and can support CH551/CH552/CH553/CH554/CH559 with various bootloader version.
 
 ## for Silicon Labs C8051Fxx
 As metioned above, C8051Fxx series 8051 MCU from Silicon Labs requires a special ICE device to program and debug. these MCUs support either JTAG or C2 protocol. you need to acquire such a device (usally an USB adapter) first and wire it up before you continue reading .
