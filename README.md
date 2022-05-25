@@ -78,9 +78,9 @@ makebin lex.hex led.bin
 ## Headers
 For developers' convenient, the compilers usually provide pre-defined headers for some basic models, for example, reg51.h/reg52.h provided by Keil C51 and 8051.h provided by SDCC. But it's not enough to cover all resources/registers on chip of defferent models, especially models with improvements, enhancements and addtitions. you can define them by yourself in sources files (use `__sfr` and `__sbit` of SDCC) or use pre-defined headers.
 
-The [headers within this repo](https://github.com/cjacker/opensource-toolchain-8051/tree/main/headers) provide a set of headers not provided by SDCC, include all STC 8051 models, WCH ch552/ch554/ch559 and Nuvoto n76e003/n76e616, these headers usually come from official demo packages or ISP tools, and be converted to the format SDCC supported using [keil2sdcc](https://github.com/ywaby/keil2sdcc) with modifications manually.
+The [headers within this repo](https://github.com/cjacker/opensource-toolchain-8051/tree/main/headers) provide a set of headers not provided by SDCC, include all STC 8051 models, WCH ch552/ch554/ch559 and Nuvoto n76e003/n76e616/n76e885, these headers usually come from official demo packages or ISP tools, and be converted to the format SDCC supported using [keil2sdcc](https://github.com/ywaby/keil2sdcc) with modifications manually.
 
-For example, above codes can be write as:
+For example, above codes can be writen as:
 ```
 // define STC MCU model corresponding to your development board.
 // refer to stc51.h for more information.
@@ -95,7 +95,9 @@ void main()
     while(1);
 }
 ```
+
 and build:
+
 ```
 sdcc -mmcs51 -I./stc-headers led.c
 packihx led.ihx >led.hex
@@ -103,6 +105,7 @@ makebin led.hex led.bin
 ```
 
 There is also a header `softdelay.h` provided for STC 8051 MCUs and pre-define some widely used softdelay functions, such as `delay200ms()`, you can used directly in your codes. for example:
+
 ```
 // blink.c
 // blink the led every 200ms, P21->1k o resistor->LED->GND
@@ -121,6 +124,7 @@ void main()
 ```
 
 If you have STC8H development board. the codes should be:
+
 ```
 // blink.c
 
@@ -131,7 +135,7 @@ If you have STC8H development board. the codes should be:
 void main()
 {
 #if defined(STC8H)
-    P2M0 = 0;
+    P2M0 = 1;
     P2M1 = 0;
 #endif
     while(1) {
@@ -159,15 +163,13 @@ you need program a monitor firmware to your MCU first, good examples of monitors
 
 an ICE device is usually a little bit expensive. for Silicon Labs C8051Fx series, you can use U-EC ICE adapters with `newcdb` provided by 'e2drv'.
 
-And always, you can use 'printf' via UART:-)
+And you can always use 'printf' via UART:-)
 
 # Programming
 
 ## for STC51 (from STC)
 
-**RESET key on your development board need to be pressed when flashing**
-
-Every STC MCU have a bootloader(BSL) which support UART flashing, usually **the P3.0 pin is RX and P3.1 pin is TX**, most development board already integrate a USB to UART chip on board, you just need to use a USB cable to connect it to PC. the STC UART flashing protocol is un-documented but can be analyzed.
+Every STC MCU have a bootloader(BSL) which support UART flashing, usually **the P3.0 pin is RX and P3.1 pin is TX**, most development board already integrate a USB to UART chip on board, you just need to use a USB cable to connect it to PC. 
 
 A close source isp tool for windows named 'STC-ISP' is provided by STCmcu officially. It can be run with wine under Linux. you need install wine  and use `winetricks -q mfc42` to install the mfc dll. you may also need to link '/dev/ttyUSB0' or '/dev/ttyACM0' (depending on the USB/UART adapter) to '~/.wine/dosdevices/com1', then the com device can be used by wine and stc-isp to find the USB/UART adaper. The STC-ISP tool is useful if you want to adjust some config options not supported by opensource isp tool.
 
@@ -215,7 +217,7 @@ sudo stcgal -p /dev/ttyUSB0 blink.bin
 
 ### stcflash
 
-A modified version of [stcflash](https://github.com/sms-wyt/stcflash) support most MCUs of STC8[A|C|F|G|H] series very well. 
+A modified version of [stcflash](https://github.com/sms-wyt/stcflash) support most MCUs of the latest STC8[A|C|F|G|H] series very well. 
 ```
 usage: stcflash [-h] [-p PORT] [-l LOWBAUD] [-hb HIGHBAUD] [-r {89,12c5a,12c52,12cx052,8,15,auto}] [-a AISPBAUD] [-m AISPMAGIC] [-v]
                 [-e] [-ne]
@@ -251,6 +253,7 @@ sudo stcflash -p /dev/ttyUSB0 blink.bin
 
 ## for WCH CH55x
 These are various opensource ISP tool for WCH CH5xx 8051 series, I prefer the c++ one [ch55x-isptool](https://github.com/cjacker/ch55x-isptool), I make a fork and add more ch55x models support. 
+
 ```
 git clone https://github.com/cjacker/ch55x-isptool.git
 cd ch55x-isptool
