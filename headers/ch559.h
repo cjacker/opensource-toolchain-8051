@@ -287,10 +287,10 @@ __sfr __at (0xCF) GPIO_IE;// GPIO interrupt enable
 #define bIE_RXD0_LO 0x01// enable interrupt by RXD0 low level / falling edge
 
 /*  FlashROM and Data-Flash Registers  */
-__sfr16 __at (0x84) ROM_ADDR;// address for flash-ROM, little-endian
+// _sfr16 __at (0x84) ROM_ADDR;// address for flash-ROM, little-endian
 __sfr __at (0x84) ROM_ADDR_L;// address low byte for flash-ROM
 __sfr __at (0x85) ROM_ADDR_H;// address high byte for flash-ROM
-__sfr16 __at (0x8E) ROM_DATA;// data for flash-ROM writing, little-endian
+// _sfr16 __at (0x8E) ROM_DATA;// data for flash-ROM writing, little-endian
 __sfr __at (0x8E) ROM_DATA_L;// data low byte for flash-ROM writing
 __sfr __at (0x8F) ROM_DATA_H;// data high byte for flash-ROM writing
 __sfr __at (0x86) ROM_CTRL;// WriteOnly: flash-ROM control
@@ -609,10 +609,10 @@ __sfr __at (0xC9) T2MOD;// timer 2 mode and timer 0/1/2 clock mode
 //   11: from rising edge to rising edge
 #define T2OE 0x02// enable timer2 generated clock output: 0=disable output, 1=enable clock output at T2 pin, frequency = TF2/2
 #define bT2_CAP1_EN 0x01// enable T2 trigger function for capture 1 of timer2 if RCLK=0 & TCLK=0 & CP_RL2=1 & C_T2=0 & T2OE=0
-__sfr16 __at (0xCA) RCAP2;// reload & capture value, little-endian
+// _sfr16 __at (0xCA) RCAP2;// reload & capture value, little-endian
 __sfr __at (0xCA) RCAP2L;// low byte of reload & capture value
 __sfr __at (0xCB) RCAP2H;// high byte of reload & capture value
-__sfr16 __at (0xCC) T2COUNT;// counter, little-endian
+// _sfr16 __at (0xCC) T2COUNT;// counter, little-endian
 //sfr16 T2CAP1        = 0xCC;        // ReadOnly: capture 1 value for timer2
 #define T2CAP1 T2COUNT
 __sfr __at (0xCC) TL2;// low byte of timer 2 count
@@ -631,7 +631,7 @@ __sfr __at (0xA3) T3_SETUP;// timer 3 setup
 #define bT3_CAP_IN 0x04// ReadOnly: current capture input level after noise filtrating
 #define bT3_CAP_CLK 0x02// force no minimum pulse width limit for capture input if T3_CK_SE=1
 #define bT3_EN_CK_SE 0x01// enable to accessing divisor setting register, else enable to accessing current count register
-__sfr16 __at (0xA4) T3_COUNT;// ReadOnly: current count value, little-endian
+// _sfr16 __at (0xA4) T3_COUNT;// ReadOnly: current count value, little-endian
 __sfr __at (0xA4) T3_COUNT_L;// ReadOnly: current count low byte
 __sfr __at (0xA5) T3_COUNT_H;// ReadOnly: current count high byte
 //sfr16 T3_CK_SE      = 0xA4;         // clock divisor setting, little-endian, lower 12 bits valid only
@@ -640,7 +640,7 @@ __sfr __at (0xA5) T3_COUNT_H;// ReadOnly: current count high byte
 #define T3_CK_SE_L T3_COUNT_L
 //sfr T3_CK_SE_H      = 0xA5;         // clock divisor setting high byte, lower 4 bits valid only
 #define T3_CK_SE_H T3_COUNT_H
-__sfr16 __at (0xA6) T3_END;// end value for count, little-endian
+// _sfr16 __at (0xA6) T3_END;// end value for count, little-endian
 __sfr __at (0xA6) T3_END_L;// low byte of end value for count
 __sfr __at (0xA7) T3_END_H;// high byte of end value for count
 __sfr __at (0xA9) T3_STAT;// timer 3 status
@@ -666,10 +666,10 @@ __sfr __at (0xAA) T3_CTRL;// timer 3 control
 #define bT3_CLR_ALL 0x02// force clear FIFO and count of timer3
 #define bT3_MOD_CAP 0x01// timer3 mode: 0=timer or PWM, 1=capture
 __sfr __at (0xAB) T3_DMA_CN;// DMA remainder word count, automatic decreasing after DMA
-__sfr16 __at (0xAC) T3_DMA;// DMA address, must even address, little-endian, automatic increasing after DMA
+// _sfr16 __at (0xAC) T3_DMA;// DMA address, must even address, little-endian, automatic increasing after DMA
 __sfr __at (0xAC) T3_DMA_AL;// DMA address low byte, automatic increasing after DMA
 __sfr __at (0xAD) T3_DMA_AH;// DMA address high byte, automatic increasing after DMA
-__sfr16 __at (0xAE) T3_FIFO;// FIFO word, little-endian
+// _sfr16 __at (0xAE) T3_FIFO;// FIFO word, little-endian
 __sfr __at (0xAE) T3_FIFO_L;// FIFO low byte
 __sfr __at (0xAF) T3_FIFO_H;// FIFO high byte
 
@@ -853,7 +853,7 @@ __sfr __at (0x97) SER1_ADDR;// UART1 slave address for multi-device communicatio
 #define SER1_DIV SER1_ADDR
 
 /*  ADC Registers  */
-__sfr16 __at (0xEC) ADC_DMA;// DMA address, must even address, little-endian, automatic increasing after DMA
+// _sfr16 __at (0xEC) ADC_DMA;// DMA address, must even address, little-endian, automatic increasing after DMA
 __sfr __at (0xEC) ADC_DMA_AL;// DMA address low byte, automatic increasing after DMA
 __sfr __at (0xED) ADC_DMA_AH;// DMA address high byte, automatic increasing after DMA
 __sfr __at (0xEE) ADC_DMA_CN;// DMA remainder word count, automatic decreasing after DMA
@@ -889,7 +889,7 @@ __sfr __at (0xF2) ADC_CTRL;// ADC control
 //   11: automatic switch between AIN6 and AIN7
 #define MASK_ADC_CYCLE 0x0F// bit mask of ADC cycle (ADC clock number): 0=manual sample, others=set cycle number for automatic sample
 __sfr __at (0xF3) ADC_CHANN;// ADC channel seletion
-__sfr16 __at (0xF4) ADC_FIFO;// ReadOnly: FIFO word, little-endian
+// _sfr16 __at (0xF4) ADC_FIFO;// ReadOnly: FIFO word, little-endian
 __sfr __at (0xF4) ADC_FIFO_L;// ReadOnly: FIFO low byte
 __sfr __at (0xF5) ADC_FIFO_H;// ReadOnly: FIFO high byte
 __sfr __at (0xF6) ADC_SETUP;// ADC setup
@@ -1047,7 +1047,7 @@ __sfr __at (0xE4) UDEV_CTRL;// USB device physical port control
 #define bUH_PORT_EN 0x01// enable USB hub port: 0=disable, 1=enable port, automatic disabled if USB device detached
 __sfr __at (0xE5) UHUB1_CTRL;// USB hub1 control
 #define bUH1_DISABLE 0x80// disable USB hub1 pin: 0=enable hub1 and using HP/HM pin, 1=disable hub1 and releasing HP/HM pin
-__sfr16 __at (0xE6) USB_DMA;// ReadOnly: current DMA address, little-endian
+// _sfr16 __at (0xE6) USB_DMA;// ReadOnly: current DMA address, little-endian
 __sfr __at (0xE6) USB_DMA_AL;// ReadOnly: current DMA address low byte
 __sfr __at (0xE7) USB_DMA_AH;// ReadOnly: current DMA address high byte
 //sfr UH_SETUP        = 0xD2;         // host aux setup

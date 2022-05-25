@@ -284,10 +284,10 @@ __sfr __at (0xC7) GPIO_IE;// GPIO interrupt enable
 #define bIE_RXD0_LO 0x01// enable interrupt by RXD0 low level / falling edge
 
 /*  FlashROM and Data-Flash Registers  */
-__sfr16 __at (0x84) ROM_ADDR;// address for flash-ROM, little-endian
+// _sfr16 __at (0x84) ROM_ADDR;// address for flash-ROM, little-endian
 __sfr __at (0x84) ROM_ADDR_L;// address low byte for flash-ROM
 __sfr __at (0x85) ROM_ADDR_H;// address high byte for flash-ROM
-__sfr16 __at (0x8E) ROM_DATA;// data for flash-ROM writing, little-endian
+// _sfr16 __at (0x8E) ROM_DATA;// data for flash-ROM writing, little-endian
 __sfr __at (0x8E) ROM_DATA_L;// data low byte for flash-ROM writing, data byte for Data-Flash reading/writing
 __sfr __at (0x8F) ROM_DATA_H;// data high byte for flash-ROM writing
 __sfr __at (0x86) ROM_CTRL;// WriteOnly: flash-ROM control
@@ -510,13 +510,13 @@ __sfr __at (0xC9) T2MOD;// timer 2 mode and timer 0/1/2 clock mode
 //   11: from rising edge to rising edge
 #define T2OE 0x02// enable timer2 generated clock output: 0=disable output, 1=enable clock output at T2 pin, frequency = TF2/2
 #define bT2_CAP1_EN 0x01// enable T2 trigger function for capture 1 of timer2 if RCLK=0 & TCLK=0 & CP_RL2=1 & C_T2=0 & T2OE=0
-__sfr16 __at (0xCA) RCAP2;// reload & capture value, little-endian
+// _sfr16 __at (0xCA) RCAP2;// reload & capture value, little-endian
 __sfr __at (0xCA) RCAP2L;// low byte of reload & capture value
 __sfr __at (0xCB) RCAP2H;// high byte of reload & capture value
-__sfr16 __at (0xCC) T2COUNT;// counter, little-endian
+// _sfr16 __at (0xCC) T2COUNT;// counter, little-endian
 __sfr __at (0xCC) TL2;// low byte of timer 2 count
 __sfr __at (0xCD) TH2;// high byte of timer 2 count
-__sfr16 __at (0xCE) T2CAP1;// ReadOnly: capture 1 value for timer2
+// _sfr16 __at (0xCE) T2CAP1;// ReadOnly: capture 1 value for timer2
 __sfr __at (0xCE) T2CAP1L;// ReadOnly: capture 1 value low byte for timer2
 __sfr __at (0xCF) T2CAP1H;// ReadOnly: capture 1 value high byte for timer2
 
@@ -612,7 +612,7 @@ __sfr __at (0xC3) TKEY_CTRL;// touch-key control
 //   101: TIN4(P1.6)
 //   110: TIN5(P1.7)
 //   111: enable touch-key but disable all channel
-__sfr16 __at (0xC4) TKEY_DAT;// ReadOnly: touch-key data, little-endian
+// _sfr16 __at (0xC4) TKEY_DAT;// ReadOnly: touch-key data, little-endian
 __sfr __at (0xC4) TKEY_DATL;// ReadOnly: low byte of touch-key data
 __sfr __at (0xC5) TKEY_DATH;// ReadOnly: high byte of touch-key data
 #define bTKD_CHG 0x80// ReadOnly: indicate control changed, current data maybe invalid
@@ -730,10 +730,10 @@ __sfr __at (0xE2) USB_CTRL;// USB base control
 __sfr __at (0xE3) USB_DEV_AD;// USB device address, lower 7 bits for USB device address
 #define bUDA_GP_BIT 0x80// general purpose bit
 #define MASK_USB_ADDR 0x7F// bit mask for USB device address
-__sfr16 __at (0xE4) UEP2_DMA;// endpoint 2 buffer start address, little-endian
+// _sfr16 __at (0xE4) UEP2_DMA;// endpoint 2 buffer start address, little-endian
 __sfr __at (0xE4) UEP2_DMA_L;// endpoint 2 buffer start address low byte
 __sfr __at (0xE5) UEP2_DMA_H;// endpoint 2 buffer start address high byte
-__sfr16 __at (0xE6) UEP3_DMA;// endpoint 3 buffer start address, little-endian
+// _sfr16 __at (0xE6) UEP3_DMA;// endpoint 3 buffer start address, little-endian
 __sfr __at (0xE6) UEP3_DMA_L;// endpoint 3 buffer start address low byte
 __sfr __at (0xE7) UEP3_DMA_H;// endpoint 3 buffer start address high byte
 __sfr __at (0xEA) UEP4_1_MOD;// endpoint 4/1 mode
@@ -763,10 +763,10 @@ __sfr __at (0xEB) UEP2_3_MOD;// endpoint 2/3 mode
 #define bUEP2_RX_EN 0x08// enable USB endpoint 2 receiving (OUT)
 #define bUEP2_TX_EN 0x04// enable USB endpoint 2 transmittal (IN)
 #define bUEP2_BUF_MOD 0x01// buffer mode of USB endpoint 2
-__sfr16 __at (0xEC) UEP0_DMA;// endpoint 0 buffer start address, little-endian
+// _sfr16 __at (0xEC) UEP0_DMA;// endpoint 0 buffer start address, little-endian
 __sfr __at (0xEC) UEP0_DMA_L;// endpoint 0 buffer start address low byte
 __sfr __at (0xED) UEP0_DMA_H;// endpoint 0 buffer start address high byte
-__sfr16 __at (0xEE) UEP1_DMA;// endpoint 1 buffer start address, little-endian
+// _sfr16 __at (0xEE) UEP1_DMA;// endpoint 1 buffer start address, little-endian
 __sfr __at (0xEE) UEP1_DMA_L;// endpoint 1 buffer start address low byte
 __sfr __at (0xEF) UEP1_DMA_H;// endpoint 1 buffer start address high byte
 
