@@ -14,28 +14,27 @@ Before starting 8051 development, you need:
   * the earliest model such as STC89C52 or the latest model such as STC8H8K64U if you have no idea which one to choose.
 
 * A USB UART adapter if there is no one on board. 
-  * it's used for flashing/programming. a lot of development board already have one integrated on board, such as CH340 series.
+  * it's used for programming the MCU. a lot of development board already have one integrated on board, usually the CH34x chip.
 
 **NOTE**:
-* for C8051Fx from Silicon Labs, you need U-EC ICE adapter to program and debug.
-* for N76E from Nuvoton, you need Nu Link adatper to program.
+* for C8051Fx from Silicon Labs, you need U-ECx ICE adapter(with jtag and c2 protocol support) to program and debug.
+* for N76E from Nuvoton, you need Nu Link adatper (or Nu Link Me from the official EVB) to program.
 
 # Toolchain overview
 
-Opensource toolchain for 8051 consists of below components:
-* Compiler
-* Debugger
-* SDK
-* Programming tool
-
-# SDCC compiler
-If you prefer using **8051 assemblly language**, [naken_asm](https://github.com/mikeakohn/naken_asm/) or [as31](http://wiki.erazor-zone.de/wiki:projects:linux:as31) can be used except SDCC.
+* Compiler: SDCC for C, naken_asm/as31 for ASM
+* Debugger: varirous way, different for each manufactor.
+* SDK: Headers for each MCU.
+* Programming tool: various, different for each manufactor.
+* 
+# Compiler
+If you prefer using **8051 assemblly language**, [naken_asm](https://github.com/mikeakohn/naken_asm/) or [as31](http://wiki.erazor-zone.de/wiki:projects:linux:as31) can be used.
 
 There are 2 widely used C compiler for 8051 MCU, one is Keil C51, a commercial close source compiler provided by ARM. and one is [SDCC](http://sdcc.sourceforge.net), an opensource c compiler.
 
-I do not want to compare SDCC and C51 here, there are not much difference between them. In my opinions, I prefer the opensource one. for [syntax differences between SDCC and C51](https://github.com/cjacker/opensource-toolchain-8051/blob/main/difference-between-c51-and-sdcc.md), I aleady wrote a brief note, please refer to it.
+I do not want to compare SDCC and C51 here, there are not much difference between them. I wrote a brief note about [syntax differences between SDCC and C51](https://github.com/cjacker/opensource-toolchain-8051/blob/main/difference-between-c51-and-sdcc.md).
 
-Most linux dist already ship SDCC in their repositories, you can use APT/YUM or other package management tools to install it according to the dist you use. If you really want to build it yourself, at least you need make/bison/flex/libtool/g++/boost development package/zlib development package and other various packages installed and the building process is very simple:
+Most linux dist already ship SDCC in their repositories, you can the pkg management tools to install it. If you really want to build it yourself, at least you need make/bison/flex/libtool/g++/boost development package/zlib development package and other various packages installed and the building process is very simple:
 
 ```
 ./configure --prefix=<where you want to install SDCC>
@@ -43,7 +42,7 @@ make
 make install
 ```
 
-If the installation prefix isn't set to standard dir (such as '/usr' or '/usr/local), you need add the `<prefix>/bin` dir to PATH env.
+If the installation prefix isn't set to standard dir (standard dir means '/usr' or '/usr/local), you need add the `<prefix>/bin` dir to PATH env.
 
 # SDK
 
@@ -77,9 +76,9 @@ makebin lex.hex led.bin
 ```
 
 ## Headers
-For developers' convenient, the compilers usually provide pre-defined headers for basic models, for example, reg51.h/reg52.h provided by Keil C51 and 8051.h provided by SDCC. But it's not enough to cover all resources/registers on chip of defferent models, especially models with improvements, enhancements and addtitions. you can define them by yourself in sources files (use `__sfr` and `__sbit` of SDCC) or use pre-defined headers.
+For developers' convenient, the compilers usually provide pre-defined headers for some basic models, for example, reg51.h/reg52.h provided by Keil C51 and 8051.h provided by SDCC. But it's not enough to cover all resources/registers on chip of defferent models, especially models with improvements, enhancements and addtitions. you can define them by yourself in sources files (use `__sfr` and `__sbit` of SDCC) or use pre-defined headers.
 
-The [headers within this repo](https://github.com/cjacker/opensource-toolchain-8051/tree/main/headers) provide a set of headers suite for SDCC compiler for different MCUs that not provided by SDCC, include all STC 8051 models, WCH ch552/ch554/ch559 and Nuvoto n76e003/n76e616, these headers come from official demo packages or ISP tools, and be converted to the format SDCC supported using [keil2sdcc](https://github.com/ywaby/keil2sdcc) with modifications manually.
+The [headers within this repo](https://github.com/cjacker/opensource-toolchain-8051/tree/main/headers) provide a set of headers not provided by SDCC, include all STC 8051 models, WCH ch552/ch554/ch559 and Nuvoto n76e003/n76e616, these headers usually come from official demo packages or ISP tools, and be converted to the format SDCC supported using [keil2sdcc](https://github.com/ywaby/keil2sdcc) with modifications manually.
 
 For example, above codes can be write as:
 ```
