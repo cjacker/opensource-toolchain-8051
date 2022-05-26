@@ -6,35 +6,35 @@ The [Intel MCS-51](https://en.wikipedia.org/wiki/Intel_8051) (commonly termed 80
 
 Today there are hundreds of companies (Such as Silicon Labs, Maxim, STC, Nuvoton, WCH, etc.) which still manufactures this old school legendary MCU. some of them have even added more features like ADCs, communication peripherals like SPI and I2C, etc that were not originally incepted or integrated. 
 
-# Hardware requirements
+# Hardware prerequist
 
 Before starting 8051 development, you need:
 
-* A development board with 8051 MCU, (here I prefer STC51)
-  * the earliest model such as STC89C52 or the latest model such as STC8H8K64U if you have no idea which one to choose.
+* 8051 development board
+  + Here I suggest STC 8051 series and prefer the earlest model STC89C52, it's fully compatible with original intel 8051 and no additional hardwares/adapters required.
 
-* A USB UART adapter if there is no one on board. 
-  * it's used for programming the MCU. a lot of development board already have one integrated on board, usually the CH34x chip.
+* USB to TTL adapter if there is no one integrated on dev board. 
+  + Here I suggest CH340. it's used for programming the MCU.
 
 **NOTE**:
-* for C8051Fx from Silicon Labs, you need U-ECx ICE adapter(with jtag and c2 protocol support) to program and debug.
-* for N76E from Nuvoton, you need Nu Link adatper (or Nu Link Me from the official EVB) to program.
+
+* for C8051F series from Silicon Labs, you need U-EC ICE adapter(with jtag and c2 protocol support) to program and debug.
+* for N76E from Nuvoton, you need Nu Link adatper (or Nu Link Me from the official EVB) to program (lack of opensource debugging support now).
 
 # Toolchain overview
 
 * Compiler: SDCC for C, naken_asm/as31 for ASM
-* Debugger: varirous way, different for each manufactor.
 * SDK: Headers for each MCU.
+* Debugger: varirous way, different for each manufactor.
 * Programming tool: various, different for each manufactor.
-* 
+
 # Compiler
+
 If you prefer using **8051 assemblly language**, [naken_asm](https://github.com/mikeakohn/naken_asm/) or [as31](http://wiki.erazor-zone.de/wiki:projects:linux:as31) can be used.
 
-There are 2 widely used C compiler for 8051 MCU, one is Keil C51, a commercial close source compiler provided by ARM. and one is [SDCC](http://sdcc.sourceforge.net), an opensource c compiler.
+There are 2 widely used C compiler for 8051 MCU, one is Keil C51, a commercial close source compiler provided by ARM. and one is [SDCC](http://sdcc.sourceforge.net), an opensource c compiler.There are not much differences between them. I wrote a brief note here about [syntax differences between SDCC and C51](https://github.com/cjacker/opensource-toolchain-8051/blob/main/difference-between-c51-and-sdcc.md).
 
-I do not want to compare SDCC and C51 here, there are not much difference between them. I wrote a brief note about [syntax differences between SDCC and C51](https://github.com/cjacker/opensource-toolchain-8051/blob/main/difference-between-c51-and-sdcc.md).
-
-Most linux dist already ship SDCC in their repositories, you can the pkg management tools to install it. If you really want to build it yourself, at least you need make/bison/flex/libtool/g++/boost development package/zlib development package and other various packages installed and the building process is very simple:
+Most linux dist already ship SDCC in their repositories, you can use the pkg management tools to install it. If you really want to build it yourself, at least you need make/bison/flex/libtool/g++/boost development package/zlib development package and other various packages installed and the building process is very simple:
 
 ```
 ./configure --prefix=<where you want to install SDCC>
@@ -46,7 +46,7 @@ If the installation prefix isn't set to standard dir (standard dir means '/usr' 
 
 # SDK
 
-There is no standard SDK or libraries required to start 8051 development. since 8051 'SDK' usually means a set of pre-defined registers of your MCU model,  So you can start 8051 development without install anything except SDCC compiler.
+Since 8051 'SDK' usually means a set of pre-defined registers of your MCU model, there are no standard SDKs or libraries required to start 8051 development, you can start 8051 development without install anything except SDCC compiler.
 
 ## Baremetal programming
 
@@ -69,6 +69,7 @@ void main()
 ```
 
 led.c can be compiled by SDCC like this:
+
 ```
 sdcc -mmcs51 led.c
 packihx led.ihx > led.hex
@@ -76,17 +77,19 @@ makebin lex.hex led.bin
 ```
 
 ## Headers
+
 For developers' convenient, the compilers usually provide pre-defined headers for some basic models, for example, reg51.h/reg52.h provided by Keil C51 and 8051.h provided by SDCC. But it's not enough to cover all resources/registers on chip of defferent models, especially models with improvements, enhancements and addtitions. you can define them by yourself in sources files (use `__sfr` and `__sbit` of SDCC) or use pre-defined headers.
 
-The [headers within this repo](https://github.com/cjacker/opensource-toolchain-8051/tree/main/headers) provide a set of headers not provided by SDCC, include all STC 8051 models, WCH ch552/ch554/ch559 and Nuvoto n76e003/n76e616/n76e885, these headers usually come from official demo packages or ISP tools, and be converted to the format SDCC supported using [keil2sdcc](https://github.com/ywaby/keil2sdcc) with modifications manually.
+The [headers within this repo](https://github.com/cjacker/opensource-toolchain-8051/tree/main/headers) provide a set of headers not provided by SDCC, include all STC 8051 models, WCH ch552/ch554/ch559 and Nuvoto n76e003/n76e616/n76e885, these headers usually come from vendor's official demo packages, and be converted to the format SDCC supported using [keil2sdcc](https://github.com/ywaby/keil2sdcc) with modifications manually.
 
 For example, above codes can be writen as:
+
 ```
 // define STC MCU model corresponding to your development board.
 // refer to stc51.h for more information.
 #define STC89
 
-// meta header for stc51
+// meta header for stc51 series
 #include <stc51.h>
 
 void main()
@@ -105,6 +108,7 @@ makebin led.hex led.bin
 ```
 
 There is also a header `softdelay.h` provided for STC 8051 MCUs and pre-define some widely used softdelay functions, such as `delay200ms()`, you can used directly in your codes. for example:
+
 
 ```
 // blink.c
@@ -135,6 +139,7 @@ If you have STC8H development board. the codes should be:
 void main()
 {
 #if defined(STC8H)
+    // P2 to Push-Pull mode.
     P2M0 = 1;
     P2M1 = 0;
 #endif
@@ -165,6 +170,7 @@ an ICE device is usually a little bit expensive. for Silicon Labs C8051Fx series
 
 And you can always use 'printf' via UART:-)
 
+
 # Programming
 
 ## for STC51 (from STC)
@@ -176,6 +182,7 @@ A close source isp tool for windows named 'STC-ISP' is provided by STCmcu offici
 There are 2 open source ISP tool you can use with linux. 
 
 ### stcgal
+
 [stcgal](https://github.com/grigorig/stcgal) suppport most STC MCUs from STC89 series to STC15 series very well, but lack of supporting for the latest STC8[A|C|F|G|H] series.
 
 ```
@@ -252,6 +259,7 @@ sudo stcflash -p /dev/ttyUSB0 blink.bin
 ```
 
 ## for WCH CH55x
+
 These are various opensource ISP tool for WCH CH5xx 8051 series, I prefer the c++ one [ch55x-isptool](https://github.com/cjacker/ch55x-isptool), I make a fork and add more ch55x models support. 
 
 ```
@@ -266,6 +274,7 @@ sudo ch55x-isptool firmwire.bin
 Another good isp tool is [ch552tool](https://github.com/MarsTechHAN/ch552tool). it written by python and can support CH551/CH552/CH553/CH554/CH559 with various bootloader version.
 
 ## for Silicon Labs C8051Fxx
+
 As metioned above, C8051Fxx series 8051 MCU from Silicon Labs requires a special ICE device to program and debug. these MCUs support either JTAG or C2 protocol. you need to acquire such a device (usally an USB adapter) first and wire it up before you continue reading .
 
 [ec2-new](https://github.com/paragonRobotics/ec2-new) is a fork of [e2drv](http://ec2drv.sourceforge.net/), an opensource project to support EC2 debugger.
