@@ -8,33 +8,31 @@ Today there are hundreds of companies (Such as Silicon Labs, Maxim, STC, Nuvoton
 
 # Hardware prerequist
 
-Before starting 8051 development, you need:
-
 * 8051 development board
-  + Here I suggest STC 8051 series and prefer the earlest model STC89C52, it's fully compatible with original intel 8051 and no additional hardwares/adapters required.
+  + Here I suggest STC 8051 series and prefer the earlest model STC89C52, it's fully compatible with original intel 8051 and no additional hardwares/adapters required to start development.
 
-* USB to TTL adapter if there is no one integrated on dev board. 
+* USB to TTL adapter if it is not be integrated on dev board. 
   + Here I suggest CH340. it's used for programming the MCU.
 
 **NOTE**:
 
 * for C8051F series from Silicon Labs, you need U-EC ICE adapter(with jtag and c2 protocol support) to program and debug.
-* for N76E from Nuvoton, you need Nu Link adatper (or Nu Link Me from the official EVB) to program (lack of opensource debugging support now).
+* for N76E series from Nuvoton, you need Nu-Link ICE adatper (or Nu-Link-Me from the official EVB) to program (lack of opensource debugging support now).
 
 # Toolchain overview
 
 * Compiler: SDCC for C, naken_asm/as31 for ASM
 * SDK: Headers for each MCU.
-* Debugger: varirous way, different for each manufactor.
 * Programming tool: various, different for each manufactor.
+* Debugger: varirous way, different for each manufactor.
 
 # Compiler
 
 If you prefer using **8051 assemblly language**, [naken_asm](https://github.com/mikeakohn/naken_asm/) or [as31](http://wiki.erazor-zone.de/wiki:projects:linux:as31) can be used.
 
-There are 2 widely used C compiler for 8051 MCU, one is Keil C51, a commercial close source compiler provided by ARM. and one is [SDCC](http://sdcc.sourceforge.net), an opensource c compiler.There are not much differences between them. I wrote a brief note here about [syntax differences between SDCC and C51](https://github.com/cjacker/opensource-toolchain-8051/blob/main/difference-between-c51-and-sdcc.md).
+There are 2 widely used C compiler for 8051 MCU, one is Keil C51, a commercial close source compiler provided by ARM. and one is [SDCC](http://sdcc.sourceforge.net), an opensource compiler. There are not much differences between them, I wrote a brief note here about [syntax differences between SDCC and C51](https://github.com/cjacker/opensource-toolchain-8051/blob/main/difference-between-c51-and-sdcc.md).
 
-Most linux dist already ship SDCC in their repositories, you can use the pkg management tools to install it. If you really want to build it yourself, at least you need make/bison/flex/libtool/g++/boost development package/zlib development package and other various packages installed and the building process is very simple:
+Most linux distribution already shipped SDCC in their repositories, you can use the pkg management tools to install it. If you really want to build it yourself, at least you need make/bison/flex/libtool/g++/boost development package/zlib development package and other various packages installed and the building process is very simple:
 
 ```
 ./configure --prefix=<where you want to install SDCC>
@@ -46,7 +44,7 @@ If the installation prefix isn't set to standard dir (standard dir means '/usr' 
 
 # SDK
 
-Since 8051 'SDK' usually means a set of pre-defined registers of your MCU model, there are no standard SDKs or libraries required to start 8051 development, you can start 8051 development without install anything except SDCC compiler.
+Since the 'SDK' of 8051 usually means a set of pre-defined registers of your MCU model, there are no standard SDKs or libraries required to start 8051 development, you can start 8051 development without install anything except SDCC compiler.
 
 ## Baremetal programming
 
@@ -76,11 +74,11 @@ packihx led.ihx > led.hex
 makebin lex.hex led.bin
 ```
 
-## Headers
+## Pre-defined Headers
 
-For developers' convenient, the compilers usually provide pre-defined headers for some basic models, for example, reg51.h/reg52.h provided by Keil C51 and 8051.h provided by SDCC. But it's not enough to cover all resources/registers on chip of defferent models, especially models with improvements, enhancements and addtitions. you can define them by yourself in sources files (use `__sfr` and `__sbit` of SDCC) or use pre-defined headers.
+For developers' convenient, the compilers usually provide pre-defined headers for some basic models. for example, reg51.h/reg52.h provided by Keil C51 and 8051.h provided by SDCC. But it's not enough to cover all resources/registers on chip of defferent models, especially models with improvements, enhancements and addtitions. you will need specific headers for every model or you can define them by yourself in sources files (use `__sfr` and `__sbit` of SDCC) according to the datasheet.
 
-The [headers within this repo](https://github.com/cjacker/opensource-toolchain-8051/tree/main/headers) provide a set of headers not provided by SDCC, include all STC 8051 models, WCH ch552/ch554/ch559 and Nuvoto n76e003/n76e616/n76e885, these headers usually come from vendor's official demo packages, and be converted to the format SDCC supported using [keil2sdcc](https://github.com/ywaby/keil2sdcc) with modifications manually.
+The [headers within this repo](https://github.com/cjacker/opensource-toolchain-8051/tree/main/headers) provide a set of pre-defined headers not provided by SDCC, include all STC 8051 models, WCH ch552/ch554/ch559 and Nuvoto n76e003/n76e616/n76e885, these headers usually come from vendor's official demo packages, and be converted to the format SDCC supported using [keil2sdcc](https://github.com/ywaby/keil2sdcc) with modifications manually.
 
 For example, above codes can be writen as:
 
@@ -139,9 +137,9 @@ If you have STC8H development board. the codes should be:
 void main()
 {
 #if defined(STC8H)
-    // P2 to Push-Pull mode.
-    P2M0 = 1;
-    P2M1 = 0;
+    // set P2.1 to Push-Pull mode.
+    P2M0 = 0x02;
+    P2M1 = 0x00;
 #endif
     while(1) {
         P21 = !P21;
@@ -150,34 +148,18 @@ void main()
 }
 ```
 
-**NOTE, every MCU model may have special registers with special features, PLEASE READ the DATASHEET before use it!!!**
+**NOTE, every model may have somce special registers, please refer to the DATASHEET before use it!!!**
 
-# Debugging
 
-There is no standard debugging tool such as gdb for 8051 MCUs from various different vendors. you can take SDCC manual (Chapter 5. Debugging) as refrence to find a debugging way you can use with your 8051 MCU. gennerally:
-
-* Debugging on a simulator:
-
-you can use `sdcdb` debugger and `ucsim-51` simulator shipped with SDCC.
-
-* Debugging on target using an on-target monitor:
-
-you need program a monitor firmware to your MCU first, good examples of monitors are [paulmon](https://www.pjrc.com/tech/8051/paulmon2.html) and [cmon51](http://cmon51.sourceforge.net/), but you may need modified the codes to match your MCU's resources and settings.
-
-* Debugging on target using an ICE (in circuit emulator):
-
-an ICE device is usually a little bit expensive. for Silicon Labs C8051Fx series, you can use U-EC ICE adapters with `newcdb` provided by 'e2drv'.
-
-And you can always use 'printf' via UART:-)
 
 
 # Programming
 
-## for STC51 (from STC)
+## for STC8051 (from STC)
 
-Every STC MCU have a bootloader(BSL) which support UART flashing, usually **the P3.0 pin is RX and P3.1 pin is TX**, most development board already integrate a USB to UART chip on board, you just need to use a USB cable to connect it to PC. 
+Every STC MCU have a bootloader(BSL) which support UART flashing, usually **the P3.0 pin is RX and P3.1 pin is TX**, most development board already integrate a USB to UART chip on board, you just need to use a cable to connect it to PC. 
 
-A close source isp tool for windows named 'STC-ISP' is provided by STCmcu officially. It can be run with wine under Linux. you need install wine  and use `winetricks -q mfc42` to install the mfc dll. you may also need to link '/dev/ttyUSB0' or '/dev/ttyACM0' (depending on the USB/UART adapter) to '~/.wine/dosdevices/com1', then the com device can be used by wine and stc-isp to find the USB/UART adaper. The STC-ISP tool is useful if you want to adjust some config options not supported by opensource isp tool.
+A close source isp tool for windows named 'STC-ISP' is provided by STCmcu officially. It can be run with wine under Linux. you need install wine  and use `winetricks -q mfc42` to install the mfc dll. you may also need to link '/dev/ttyUSB0' or '/dev/ttyACM0' (depending on the USB/UART adapter) to '~/.wine/dosdevices/com1', then the COM device can be used by wine and stc-isp to find the USB/UART adaper. The STC-ISP tool is useful if you want to adjust some config options not supported by opensource isp tool.
 
 There are 2 open source ISP tool you can use with linux. 
 
@@ -260,7 +242,7 @@ sudo stcflash -p /dev/ttyUSB0 blink.bin
 
 ## for WCH CH55x
 
-These are various opensource ISP tool for WCH CH5xx 8051 series, I prefer the c++ one [ch55x-isptool](https://github.com/cjacker/ch55x-isptool), I make a fork and add more ch55x models support. 
+These are various opensource ISP tool for WCH CH5xx 8051 series, I prefer the c++ one [ch55x-isptool](https://github.com/cjacker/ch55x-isptool), and make a fork to add more ch55x models support. 
 
 ```
 git clone https://github.com/cjacker/ch55x-isptool.git
@@ -338,15 +320,6 @@ Flash write successful.
 (newcdb) r
 ```
 
-## for Atmel AT89C5x (now MicroChip)
-avrdude
-
-dfu-programmer
-
-
-## for Dallas DS89Cxx (now Maxim)
-a python script
-
 ## for Nuvoton N76Exxx
 To program Nuvoton N76E series 8051 MCU, you need have a Nu-link adapter (from offcial EVB or standalone version) and wire up 5 pins: VCC/DAT/CLK/RST/GND.
 
@@ -366,6 +339,41 @@ sudo nuvoprog program -t n76e003 -i build/firmware.ihx -c @config.json
 Please refer to blink demo for details of 'config.json'.
 
 
+
+## for Atmel AT89C5x (now MicroChip)
+to be written
+
+avrdude
+
+dfu-programmer
+
+
+## for Dallas DS89Cxx (now Maxim)
+
+to be written
+
+a python script
+
+
+# Debugging
+
+There is no standard debugging tool such as gdb for 8051 MCUs from various different vendors. you can take SDCC manual (Chapter 5. Debugging) as refrence to find a debugging way you can use with your 8051 MCU. gennerally:
+
+* Debugging on a simulator:
+
+you can use `sdcdb` debugger and `ucsim-51` simulator shipped with SDCC.
+
+* Debugging on target using an on-target monitor:
+
+A monitor firmware need to program to MCU first. good examples of monitors are [paulmon](https://www.pjrc.com/tech/8051/paulmon2.html) and [cmon51](http://cmon51.sourceforge.net/), but you may need modified the codes to match your MCU's resources and settings.
+
+* Debugging on target using an ICE (in circuit emulator):
+
+an ICE device is usually a little bit expensive. for Silicon Labs C8051Fx series, you can use U-EC ICE adapters with `newcdb` provided by 'e2drv' mention above.
+
+And you can always use 'printf' via UART:-)
+
+
 # Project templates
 
 With [Project and Makefile template](https://github.com/cjacker/opensource-toolchain-8051/tree/main/blink) in this repo, you can start 8051 development under Linux very quickly. 
@@ -377,21 +385,7 @@ build:
 make 
 ```
 
-flashing STC51 with stcgal:
+programming:
 ```
-make flashstc
+make flash[stc|stc8x|ch55x|c8051f|76e003|76e616|76e885]
 ```
-
-flashing STC8x series with stcflash:
-```
-make flashstc8x
-```
-
-flashing Silicon Labs C8051Fxx:
-```
-make flashc8051f
-```
-
-etc.
-
-
