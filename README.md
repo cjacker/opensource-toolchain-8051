@@ -348,12 +348,26 @@ avrdude
 dfu-programmer
 
 
-## for Dallas DS89Cxx (now Maxim)
+## for Dallas DS89C430/450 (now Maxim)
 
-to be written
+DS89C430/450 have a built in ROM loader and can be involked to support ISP.
 
-a python script
+**Invoking the ROM Loader Mode**
 
+The ROM loader mode is invoked by simultaneously applying a logic 1 to the RST pin, a logic 0 to the EA pin, and driving the PSEN pin to a logic 0 level. If power were to cycle while the required input stimuli were present, the loader would be invoked on power-up. When the ROM loader mode is invoked, the device awaits an incoming <CR> character (0Dh) on serial port 0 at a baud rate that can be detected by the autobaud routine.
+
+**Exiting the Loader**
+
+To exit ROM loader mode, first float the PSEN signal, and then float or drive the RST pin low. The RST pin has an internal pulldown. The
+PSEN signal is an output and drives itself high. When the loader stimulus is removed, the processor performs a hardware reset and
+begin execution at location 0000h. Note that both of these conditions must occur, or the loader is exited.
+
+There is a python script provided by [vinu](https://blog.vinu.co.in/2011/10/ds89c430-microcontroller-programming.html) and I made a [python3 version](https://github.com/cjacker/opensource-toolchain-8051/blob/main/ds89c-programmer.py).
+
+
+```
+sudo ds89c-programmer.py -p /dev/ttyUSB0 -b 9600 firmware.ihx
+```
 
 # Debugging
 
