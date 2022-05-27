@@ -31,9 +31,9 @@ parser.add_argument("-p", "--port",
                         default=port)
 
 parser.add_argument("-b", "--baudrate",
-                    help="baud rate (default: 57600)",
+                    help="baud rate (default: 9600)",
                     type=int,
-                    default=57600)
+                    default=9600)
 
 opts=parser.parse_args()
 
