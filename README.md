@@ -383,7 +383,7 @@ A monitor firmware need to program to MCU first. good examples of monitors are [
 
 * Debugging on target using an ICE (in circuit emulator):
 
-an ICE device is usually a little bit expensive. for Silicon Labs C8051Fx series, you can use U-EC ICE adapters with `newcdb` provided by 'e2drv' mention above.
+an ICE device is usually a little bit expensive. for Silicon Labs C8051Fx series, you can use U-EC ICE adapters with `newcdb` provided by 'e2drv' mentioned above.
 
 And you can always use 'printf' via UART:-)
 
