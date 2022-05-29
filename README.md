@@ -340,34 +340,27 @@ Please refer to blink demo for details of 'config.json'.
 
 
 
-## for Atmel AT89C5x (now MicroChip)
-to be written
+## for Atmel AT89S5x (now MicroChip)
+AT89S51/52/53 can be programmed with avrdude using USBASP adapter. Note the reset of at89Sxx are inverted, which means that you reset the chip by connecting the rest-pin to VCC (and not the other way around) , Therefore you nead to invert the reset signal from the programmer. I use a 74HC04 to invert the reset signal and use 8051 board for other DIP40 51 chips, it works very well.
 
-avrdude
+There is a 'at89.conf' in this repo, please append it to `/etc/avrdude/avrdude.conf`.
 
-dfu-programmer
+Then use below command to program the AT89Sxx MCU:
 
+```
+avrdude -c usbasp -p 8052 -B 100 -e -U flash:w:<where your hex file>
+```
 
 ## for Dallas DS89C430/450 (now Maxim)
 
-DS89C430/450 have a built in ROM loader and can be involked to support ISP.
+**not tested**
 
-**Invoking the ROM Loader Mode**
+Please refer to:
 
-The ROM loader mode is invoked by simultaneously applying a logic 1 to the RST pin, a logic 0 to the EA pin, and driving the PSEN pin to a logic 0 level. If power were to cycle while the required input stimuli were present, the loader would be invoked on power-up. When the ROM loader mode is invoked, the device awaits an incoming <CR> character (0Dh) on serial port 0 at a baud rate that can be detected by the autobaud routine.
+http://anuradhai4.blogspot.com/2017/12/getting-started-with-ds89c450-in-linux.html
 
-**Exiting the Loader**
+https://blog.vinu.co.in/2011/10/ds89c430-microcontroller-programming.html?m=1
 
-To exit ROM loader mode, first float the PSEN signal, and then float or drive the RST pin low. The RST pin has an internal pulldown. The
-PSEN signal is an output and drives itself high. When the loader stimulus is removed, the processor performs a hardware reset and
-begin execution at location 0000h. Note that both of these conditions must occur, or the loader is exited.
-
-There is a python script provided by [vinu](https://blog.vinu.co.in/2011/10/ds89c430-microcontroller-programming.html) and I made a [python3 version](https://github.com/cjacker/opensource-toolchain-8051/blob/main/ds89c-programmer.py).
-
-
-```
-sudo ds89c-programmer.py -p /dev/ttyUSB0 -b 9600 firmware.ihx
-```
 
 # Debugging
 
