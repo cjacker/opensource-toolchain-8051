@@ -353,13 +353,39 @@ avrdude -c usbasp -p 8052 -B 100 -e -U flash:w:<where your hex file>
 
 ## for Dallas DS89C430/450 (now Maxim)
 
-**not tested**
+According to the datasheet and userguide(MAXIM AN4833), the 430/450 8051 MCU has a bootloader which can perform programming directly.
 
-Please refer to:
+![screenshot-2022-05-31-10-36-13](https://user-images.githubusercontent.com/1625340/171081748-59f380c5-009e-4f47-a2af-6ff41873b18a.png)
 
-http://anuradhai4.blogspot.com/2017/12/getting-started-with-ds89c450-in-linux.html
 
-https://blog.vinu.co.in/2011/10/ds89c430-microcontroller-programming.html?m=1
+To test this MCU, I made a board:
+
+![ds89](https://user-images.githubusercontent.com/1625340/171080894-59e53658-707c-483d-9788-21aad9d22834.jpg)
+
+
+To involk the bootloader, connect RST to VCC, EA/PSEN to GND, then wire to a ch340 USB TTL adapter as:
+
+```
+VCC -> VCC
+GND -> GND
+RX  -> TX0
+TX  -> RX0
+```
+
+Then power up by this CH340 adapter and use below command to connect to the bootloader:
+
+```
+minicom -D /dev/ttyUSB0 -b 57600
+```
+
+After connected, press Enter, you will get a banner msg:
+![screenshot-2022-05-31-10-34-46](https://user-images.githubusercontent.com/1625340/171081565-9ce6ac05-cb79-404d-bb5a-73d5d7484f3c.png)
+
+Enter `K<enter>` to erase the internal flash and use `L<enter>` to load the hex file to flash.
+
+You can find more information of bootloader commands from userguide(AN4833)
+
+After programming finished, power off and leave RESET and PSEN float and connect EA to VCC, then power on, it will run in normal mode.
 
 
 # Debugging
