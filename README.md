@@ -341,11 +341,13 @@ Please refer to blink demo for details of 'config.json'.
 
 
 ## for Atmel AT89S5x (now MicroChip)
-AT89S51/52/53 can be programmed with avrdude using USBASP adapter. Note the reset of at89Sxx are inverted, which means that you reset the chip by connecting the rest-pin to VCC (and not the other way around) , Therefore you nead to invert the reset signal from the programmer. I use a 74HC04 to invert the reset signal and use 8051 board for other DIP40 51 chips, it works very well.
+AT89S51/52/53 can be programmed with avrdude using USBASP adapter. Note the RESET signal of AT89S5x are inverted （different with AVR）, which means that you reset the chip by connecting the RESET pin to VCC, Therefore you need to invert the RESET signal from the USBASP programmer or find a USBASP with a NRST pin. I use 74HC04 to invert the RESET signal and use 8051 board for other DIP40 51 chips, it works very well.
 
-There is a 'at89.conf' in this repo, please append it to `/etc/avrdude/avrdude.conf`.
+If you use breadboard to setup a minimum system, be careful with the POWER ON RESET circuit. Gennerally, the POR circuit should be 'VCC->100uf capacitor->RESET->10k resistor->GND'. and note EA pin should connect to VCC if there is no external storage.
 
-Then use below command to program the AT89Sxx MCU:
+And you should connect the inverted RESET pin of USBASP directly to RESET pin of AT89S5x.
+
+There is a 'at89.conf' in this repo, append it to `/etc/avrdude/avrdude.conf`, then use below command to program the AT89Sxx MCU:
 
 ```
 avrdude -c usbasp -p 8052 -B 100 -e -U flash:w:<where your hex file>
@@ -353,39 +355,42 @@ avrdude -c usbasp -p 8052 -B 100 -e -U flash:w:<where your hex file>
 
 ## for Dallas DS89C430/450 (now Maxim)
 
-According to the datasheet and userguide(MAXIM AN4833), the 430/450 8051 MCU has a bootloader which can perform programming directly.
+According to the datasheet and user guide (MAXIM AN4833), the 430/450 8051 MCU has a bootloader which can perform programming directly.
 
 ![screenshot-2022-05-31-10-36-13](https://user-images.githubusercontent.com/1625340/171081748-59f380c5-009e-4f47-a2af-6ff41873b18a.png)
 
 
-To test this MCU, I made a board:
+To test this MCU, I made a minimum system board:
 
 ![ds89](https://user-images.githubusercontent.com/1625340/171080894-59e53658-707c-483d-9788-21aad9d22834.jpg)
 
-
-To involk the bootloader, connect RST to VCC, EA/PSEN to GND, then wire to a ch340 USB TTL adapter as:
+To involk the bootloader when power on, connect RST to VCC, EA/PSEN to GND, then wire to a ch340 USB TTL adapter as:
 
 ```
-VCC -> VCC
-GND -> GND
-RX  -> TX0
-TX  -> RX0
+CH340   :   DS89C430
+VCC    ->   VCC
+GND    ->   GND
+RX     ->   TX0
+TX     ->   RX0
 ```
 
-Then power up by this CH340 adapter and use below command to connect to the bootloader:
+Then power up by the CH340 adapter and use below command to connect to the bootloader:
 
 ```
 minicom -D /dev/ttyUSB0 -b 57600
 ```
 
+Note the '57600' baudrate, refer to user guide of ds89c430 to find the baudrate you should use, it depend on the oscilator.
+
 After connected, press Enter, you will get a banner msg:
+
 ![screenshot-2022-05-31-10-34-46](https://user-images.githubusercontent.com/1625340/171081565-9ce6ac05-cb79-404d-bb5a-73d5d7484f3c.png)
 
-Enter `K<enter>` to erase the internal flash and use `L<enter>` to load the hex file to flash.
+Enter `K<enter>` to erase the internal flash and use `L<enter>` to load the hex file to flash(use minicom to send the hex file as ASCII file).
 
-You can find more information of bootloader commands from userguide(AN4833)
+You can find more information about bootloader commands from the user guide (AN4833).
 
-After programming finished, power off and leave RESET and PSEN float and connect EA to VCC, then power on, it will run in normal mode.
+After programming finished, power off and leave RESET and PSEN float and connect EA pin to VCC, then power on, it will run in normal mode.
 
 
 # Debugging
