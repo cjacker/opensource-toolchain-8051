@@ -442,13 +442,13 @@ Note the '57600' baudrate, refer to user guide of ds89c430 to find the baudrate 
 
 After connected, press Enter, you will get a banner msg:
 
-![screenshot-2022-05-31-10-34-46](https://user-images.githubusercontent.com/1625340/171081565-9ce6ac05-cb79-404d-bb5a-73d5d7484f3c.png)
+<img src="https://user-images.githubusercontent.com/1625340/171081565-9ce6ac05-cb79-404d-bb5a-73d5d7484f3c.png" width="60%"/>
 
-Enter `K<enter>` to erase the internal flash and use `L<enter>` to load the hex file to flash(use minicom to send the hex file as ASCII file).
+Input `K<enter>` to erase the internal flash and Input `L<enter>` to load the hex file to flash(use minicom to send the hex file as ASCII file).
 
 You can find more information about bootloader commands from the user guide (AN4833).
 
-After programming finished, power off and leave RESET and PSEN float and connect EA pin to VCC, then power on, it will run in normal mode.
+After programming finished, power off and leave RESET and PSEN float and connect EA pin to VCC, then power on, the MCU will run in normal mode.
 
 
 # Debugging
