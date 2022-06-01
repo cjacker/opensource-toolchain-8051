@@ -341,16 +341,72 @@ Please refer to blink demo for details of 'config.json'.
 
 
 ## for Atmel AT89S5x (now MicroChip)
-AT89S51/52/53 can be programmed with avrdude using USBASP adapter. Note the RESET signal of AT89S5x are inverted （different with AVR）, which means that you reset the chip by connecting the RESET pin to VCC, Therefore you need to invert the RESET signal from the USBASP programmer or find a USBASP with a NRST pin. I use 74HC04 to invert the RESET signal and use 8051 board for other DIP40 51 chips, it works very well.
+AT89S51/52/53 can be programmed with avrdude using USBASP adapter. Relative to AVR, the RESET signal of 8051 MCU are inverted, which means that you reset the chip by connecting the RESET pin to VCC, Therefore you need to invert the RESET signal from the USBASP programmer. I use 74HC04 to invert the RESET signal and use 8051 board for other DIP40 51 chips, it works very well. you can also use a NPN triode to invert signal like:
 
-If you use breadboard to setup a minimum system, be careful with the POWER ON RESET circuit. Gennerally, the POR circuit should be 'VCC->100uf capacitor->RESET->10k resistor->GND'. and note EA pin should connect to VCC if there is no external storage.
+![inverters](https://user-images.githubusercontent.com/1625340/171430169-860e4ff4-b8b0-43b1-bca1-c37a98e004e8.jpg)
 
-And you should connect the inverted RESET pin of USBASP directly to RESET pin of AT89S5x.
+If you use breadboard to setup a minimum system, be careful with the POWER ON RESET circuit. Usually, the POR circuit should be 'VCC->10uf capacitor->RESET->10k resistor->GND'. and the EA pin should connect to VCC if there is no external storage.
+
+And you should connect the inverted RESET signal directly to RESET pin of AT89S5x:
+
+```
+             (Reset Inverter)      (Power On Reset)
+                    VCC                 VCC
+                     |                   |
+                     |                   |
+                    1K Ohm              10uF
+                     |                   |
+                     |-------------------+----RESET pin of AT89S52
+                     |                   |
+RESET of USBASP --> NPN                 10K Ohm
+                     |                   |
+                     |                   |
+                     |                   |
+                    GND                 GND
+```
+
 
 There is a 'at89.conf' in this repo, append it to `/etc/avrdude/avrdude.conf`, then use below command to program the AT89Sxx MCU:
 
 ```
-avrdude -c usbasp -p 8052 -B 100 -e -U flash:w:<where your hex file>
+avrdude -c usbasp -p 8052 -B 20 -e -U flash:w:<where your hex file>
+```
+
+Note the '-B 20', try to adjust it to find which value is the best for your circuit.
+
+
+The output looks like:
+
+```
+avrdude: set SCK frequency to 32000 Hz
+avrdude: AVR device initialized and ready to accept instructions
+
+Reading | ################################################## | 100% 0.01s
+
+avrdude: Device signature = 0x1e5206 (probably 8052)
+avrdude: erasing chip
+avrdude: set SCK frequency to 32000 Hz
+avrdude: reading input file "main.hex"
+avrdude: input file main.hex auto detected as Intel Hex
+avrdude: writing flash (24 bytes):
+
+Writing | ################################################## | 100% 0.16s
+
+avrdude: 24 bytes of flash written
+avrdude: verifying flash memory against main.hex:
+avrdude: load data flash data from input file main.hex:
+avrdude: input file main.hex auto detected as Intel Hex
+avrdude: input file main.hex contains 24 bytes
+avrdude: reading on-chip flash data:
+
+Reading | ################################################## | 100% 0.06s
+
+avrdude: verifying ...
+avrdude: 24 bytes of flash verified
+
+avrdude: safemode: Fuses OK (E:FF, H:FF, L:FF)
+
+avrdude done.  Thank you.
 ```
 
 ## for Dallas DS89C430/450 (now Maxim)
