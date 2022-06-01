@@ -347,7 +347,9 @@ AT89S51/52/53 can be programmed with avrdude using USBASP adapter. Relative to A
 
 If you use breadboard to setup a minimum system, be careful with the POWER ON RESET circuit. Usually, the POR circuit should be 'VCC->10uf capacitor->RESET->10k resistor->GND'. and the EA pin should connect to VCC if there is no external storage.
 
-And you should connect the inverted RESET signal directly to RESET pin of AT89S5x:
+And you should connect the inverted RESET signal directly to RESET pin of AT89S5x.
+
+The simple inverter and por circuit I use looks lik:
 
 ```
              (Reset Inverter)      (Power On Reset)
