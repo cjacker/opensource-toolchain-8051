@@ -341,7 +341,7 @@ Please refer to blink demo for details of 'config.json'.
 
 
 ## for Atmel AT89S5x (now MicroChip)
-AT89S51/52/53 can be programmed with avrdude using USBASP adapter. Relative to AVR, the RESET signal of 8051 MCU are inverted, which means that you reset the chip by connecting the RESET pin to VCC, Therefore you need to invert the RESET signal from the USBASP programmer. I use 74HC04 to invert the RESET signal and use 8051 board for other DIP40 51 chips, it works very well. you can also use a NPN triode to invert signal like:
+AT89S51/52 can be programmed with avrdude using USBASP adapter. Relative to AVR, the RESET signal of 8051 MCU are inverted, which means that you reset the chip by connecting the RESET pin to VCC, Therefore you need to invert the RESET signal from the USBASP programmer. I use 74HC04 to invert the RESET signal and use 8051 board for other DIP40 51 chips, it works very well. you can also use a NPN triode to invert signal like:
 
 ![inverters](https://user-images.githubusercontent.com/1625340/171430169-860e4ff4-b8b0-43b1-bca1-c37a98e004e8.jpg)
 
