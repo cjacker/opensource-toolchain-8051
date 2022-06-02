@@ -451,6 +451,13 @@ You can find more information about bootloader commands from the user guide (AN4
 After programming finished, power off and leave RESET and PSEN float and connect EA pin to VCC, then power on, the MCU will run in normal mode.
 
 
+## For Philips P89C51Rx (now NXP)
+Here is a very good article about how to program P89C51Rx: https://www.dos4ever.com/isp/isp.html
+
+Note, according to datasheet, not all P89C51 has a bootloader, only 89C51Rx2 and 89C66x support ISP program.
+
+![screenshot-2022-06-02-16-53-05](https://user-images.githubusercontent.com/1625340/171593834-0876eb53-f667-432d-a5b5-772a0e90383e.png)
+
 # Debugging
 
 There is no standard debugging tool such as gdb for 8051 MCUs from various different vendors. you can take SDCC manual (Chapter 5. Debugging) as refrence to find a debugging way you can use with your 8051 MCU. gennerally:
