@@ -451,6 +451,13 @@ You can find more information about bootloader commands from the user guide (AN4
 After programming finished, power off and leave RESET and PSEN float and connect EA pin to VCC, then power on, the MCU will run in normal mode.
 
 
+There is a recommended circuit with 74HC125 in USER GUIDE:
+
+<img src="https://user-images.githubusercontent.com/1625340/172283230-e5c4b373-9c6f-439e-b55a-2f3aeeb7d283.png" width="50%"/>
+
+You can use 'DTR' from a ch340 serial adapter with a 74HC125 to control RESET/EA and PSEN at the same time.
+
+
 ## For Philips P89C51Rx (now NXP)
 Here is a very good article about how to program P89C51Rx: https://www.dos4ever.com/isp/isp.html
 
