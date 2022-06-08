@@ -9,10 +9,9 @@ Today there are hundreds of companies (Such as Silicon Labs, Maxim, STC, Nuvoton
 # Hardware prerequist
 
 * 8051 development board
-  + Here I suggest STC 8051 series and prefer the earlest model STC89C52, it's fully compatible with original intel 8051 and no additional hardwares/adapters required to start development.
+  + I recommend STC 8051 series and prefer the earlest model STC89C52, it's fully compatible with original intel 8051 and no additional hardwares/adapters required to start development.
 
-* USB to TTL adapter if it is not be integrated on dev board. 
-  + Here I suggest CH340. it's used for programming the MCU.
+* USB to TTL adapter (for example, ch340) if it is not be integrated on dev board. 
 
 **NOTE**:
 
