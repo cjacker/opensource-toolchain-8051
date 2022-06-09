@@ -254,6 +254,35 @@ sudo ch55x-isptool firmwire.bin
 
 Another good isp tool is [ch552tool](https://github.com/MarsTechHAN/ch552tool). it written by python and can support CH551/CH552/CH553/CH554/CH559 with various bootloader version.
 
+
+## for Silicon Labs EFM8
+
+The EFM8 devices are factory programmed with a bootloader. Below table indicates which devices are orderable with the specified factory-programmed bootloader.
+
+![screenshot-2022-06-09-10-35-25](https://user-images.githubusercontent.com/1625340/172752098-91b125cb-dc5f-4124-9da9-dd89c1406590.png)
+
+For more information, please refer to the section of "Getting Started with the USB or UART Bootloader" : https://www.silabs.com/documents/public/application-notes/an945-efm8-factory-bootloader-user-guide.pdf
+
+The related utilities/sources can be downloaded from:
+
+How to use EFM8 UART Bootloader on Linux: https://community.silabs.com/s/article/how-to-use-efm8-uart-bootloader-on-linux?language=en_US
+
+efm8load.py: http://www.silabs.com/documents/public/example-code/AN945SW.zip
+
+sources of libslabhiddevice and libslabhidtosmbus: https://www.silabs.com/documents/public/software/USBXpressHostSDK-Linux.tar
+
+And there are also some opensource projects:
+
+https://github.com/kamnxt/efm8load
+
+https://github.com/ulidtko/efm8boot
+
+https://gglabs.us/node/2085
+
+https://github.com/gorlik/efm8_flash
+
+
+
 ## for Silicon Labs C8051Fxx
 
 As metioned above, C8051Fxx series 8051 MCU from Silicon Labs requires a special ICE device to program and debug. these MCUs support either JTAG or C2 protocol. you need to acquire such a device (usally an USB adapter) first and wire it up before you continue reading .
