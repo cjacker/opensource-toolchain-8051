@@ -271,11 +271,9 @@ $ sudo python efm8load.py -p /dev/ttyUSB0 filename.efm8
 
 And there are also some thirdparty opensource projects:
 
-https://github.com/fishpepper/efm8load (it already implement the bootloader protocol and does NOT require hex2boot)
+https://github.com/fishpepper/efm8load  and https://fishpepper.de/2016/10/15/efm8-bootloader-flash-tool-efm8load-py/ (it already implement the bootloader protocol and does NOT require hex2boot)
 
-https://gglabs.us/node/2085
-
-https://github.com/gorlik/efm8_flash
+https://github.com/gorlik/efm8_flash and https://gglabs.us/node/2085
 
 https://github.com/BarnabyShearer/efm8
 
