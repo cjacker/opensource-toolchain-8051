@@ -9,12 +9,10 @@ Today there are hundreds of companies (Such as Silicon Labs, Maxim, STC, Nuvoton
 # Hardware prerequist
 
 * 8051 development board
-  + I recommend STC 8051 series and prefer the earlest model STC89C52, it's fully compatible with original intel 8051 and no additional hardwares/adapters required to start development.
-
-* USB to TTL adapter (for example, ch340) if it is not be integrated on dev board. 
-
+  + STC 8051 series, Silicon Labs C8051F and EFM8 series and Nuvoton N76E series are recommended.
+  + You can use any 8051 dev board from any vendor, this tutorial already covers a lot of common models from different vendors, if your 8051 MCU not mentioned here, please provide some information to improve this tutorial.
+ 
 **NOTE**:
-
 * for C8051F series from Silicon Labs, you need U-EC ICE adapter(with jtag and c2 protocol support) to program and debug.
 * for N76E series from Nuvoton, you need Nu-Link ICE adatper (or Nu-Link-Me from the official EVB) to program (lack of opensource debugging support now).
 
@@ -147,9 +145,7 @@ void main()
 }
 ```
 
-**NOTE, every model may have somce special registers, please refer to the DATASHEET before use it!!!**
-
-
+**NOTE**, every model may have somce special registers, please refer to the DATASHEET before use it. and the blink example in this repos covers a lot of models from different vendors, you can take it as reference.
 
 
 # Programming
@@ -257,21 +253,29 @@ Another good isp tool is [ch552tool](https://github.com/MarsTechHAN/ch552tool). 
 
 ## for Silicon Labs EFM8
 
-The EFM8 devices are factory programmed with a bootloader. Below table indicates which devices are orderable with the specified factory-programmed bootloader. For more information, please refer to https://www.silabs.com/documents/public/application-notes/an945-efm8-factory-bootloader-user-guide.pdf
-
+The EFM8 devices are factory programmed with a bootloader. Below table indicates which devices are orderable with the specified factory-programmed bootloader. For more information, please refer to [AN945: EFM8 Factory Bootloader User's Guide](https://www.silabs.com/documents/public/application-notes/an945-efm8-factory-bootloader-user-guide.pdf).
+ 
 ![screenshot-2022-06-09-10-35-25](https://user-images.githubusercontent.com/1625340/172752098-91b125cb-dc5f-4124-9da9-dd89c1406590.png)
 
-The related utilities/sources can be downloaded from:
+The related utilities/sources can be downloaded from my [efm8load](https://github.com/cjacker/efm8load) repo.
 
-How to use EFM8 UART Bootloader on Linux: https://community.silabs.com/s/article/how-to-use-efm8-uart-bootloader-on-linux?language=en_US
+```
+$ git clone https://github.com/cjacker/efmload.git
+$ git submodule update --init
+$ cd efmload
+$ make
+$ export LD_LIBRARY_PATH=`pwd`:$LD_LIBRARY_PATH
+$ ./hex2boot/hex2boot filename.hex -o filename.efm8
+$ sudo python efm8load.py -p /dev/ttyUSB0 filename.efm8
+```
 
-efm8load.py and hex2boot.exe(close source): http://www.silabs.com/documents/public/example-code/AN945SW.zip
+And there are also some thirdparty opensource projects:
 
-sources of libslabhiddevice and libslabhidtosmbus: https://www.silabs.com/documents/public/software/USBXpressHostSDK-Linux.tar
+https://github.com/fishpepper/efm8load (it already implement the bootloader protocol and does NOT require hex2boot)
 
-And there are also some opensource projects:
+https://gglabs.us/node/2085
 
-https://github.com/fishpepper/efm8load (without requirement to hex2boot.exe)
+https://github.com/gorlik/efm8_flash
 
 https://github.com/BarnabyShearer/efm8
 
@@ -279,10 +283,7 @@ https://github.com/kamnxt/efm8load
 
 https://github.com/ulidtko/efm8boot
 
-https://gglabs.us/node/2085
-
-https://github.com/gorlik/efm8_flash
-
+https://github.com/conorpp/efm8-arduino-programmer
 
 
 ## for Silicon Labs C8051Fxx
@@ -494,6 +495,7 @@ Here is a very good article about how to program P89C51Rx: https://www.dos4ever.
 Note, according to datasheet, not all P89C51 has a bootloader, only 89C51Rx2 and 89C66x support ISP program.
 
 ![screenshot-2022-06-02-16-53-05](https://user-images.githubusercontent.com/1625340/171593834-0876eb53-f667-432d-a5b5-772a0e90383e.png)
+
 
 # Debugging
 
