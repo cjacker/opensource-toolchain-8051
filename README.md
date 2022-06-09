@@ -368,6 +368,22 @@ sudo nuvoprog program -t n76e003 -i build/firmware.ihx -c @config.json
 Please refer to blink demo for details of 'config.json'.
 
 
+## for Cypress CY7C68013A EZ-USB FX2LP
+you need download [cycfx2prog](http://www.triplespark.net/elec/periph/USB-FX2/software/cycfx2prog-0.47.tar.gz) from http://www.triplespark.net/elec/periph/USB-FX2/software/, the latest version is 0.47
+
+Build and Installation:
+```
+wget http://www.triplespark.net/elec/periph/USB-FX2/software/cycfx2prog-0.47.tar.gz
+tar xf cycfx2prog-0.47.tar.gz
+cd cycfx2prog-0.47
+make
+sudo install -m0755 cycfx2prog /usr/bin
+```
+
+Programming:
+```
+cycfx2prog prg:main.hex
+```
 
 ## for Atmel AT89S5x (now MicroChip)
 AT89S51/52 can be programmed with avrdude using USBASP adapter. Relative to AVR, the RESET signal of 8051 MCU are inverted, which means that you reset the chip by connecting the RESET pin to VCC, Therefore you need to invert the RESET signal from the USBASP programmer. I use 74HC04 to invert the RESET signal and use 8051 board for other DIP40 51 chips, it works very well. you can also use a NPN triode to invert signal like:
