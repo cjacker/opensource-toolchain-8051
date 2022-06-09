@@ -257,11 +257,9 @@ Another good isp tool is [ch552tool](https://github.com/MarsTechHAN/ch552tool). 
 
 ## for Silicon Labs EFM8
 
-The EFM8 devices are factory programmed with a bootloader. Below table indicates which devices are orderable with the specified factory-programmed bootloader.
+The EFM8 devices are factory programmed with a bootloader. Below table indicates which devices are orderable with the specified factory-programmed bootloader. For more information, please refer to https://www.silabs.com/documents/public/application-notes/an945-efm8-factory-bootloader-user-guide.pdf
 
 ![screenshot-2022-06-09-10-35-25](https://user-images.githubusercontent.com/1625340/172752098-91b125cb-dc5f-4124-9da9-dd89c1406590.png)
-
-For more information, please refer to the section of "Getting Started with the USB or UART Bootloader" : https://www.silabs.com/documents/public/application-notes/an945-efm8-factory-bootloader-user-guide.pdf
 
 The related utilities/sources can be downloaded from:
 
@@ -272,6 +270,8 @@ efm8load.py: http://www.silabs.com/documents/public/example-code/AN945SW.zip
 sources of libslabhiddevice and libslabhidtosmbus: https://www.silabs.com/documents/public/software/USBXpressHostSDK-Linux.tar
 
 And there are also some opensource projects:
+
+https://github.com/BarnabyShearer/efm8
 
 https://github.com/kamnxt/efm8load
 
