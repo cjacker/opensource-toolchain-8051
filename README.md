@@ -265,11 +265,13 @@ The related utilities/sources can be downloaded from:
 
 How to use EFM8 UART Bootloader on Linux: https://community.silabs.com/s/article/how-to-use-efm8-uart-bootloader-on-linux?language=en_US
 
-efm8load.py: http://www.silabs.com/documents/public/example-code/AN945SW.zip
+efm8load.py and hex2boot.exe(close source): http://www.silabs.com/documents/public/example-code/AN945SW.zip
 
 sources of libslabhiddevice and libslabhidtosmbus: https://www.silabs.com/documents/public/software/USBXpressHostSDK-Linux.tar
 
 And there are also some opensource projects:
+
+https://github.com/fishpepper/efm8load (without requirement to hex2boot.exe)
 
 https://github.com/BarnabyShearer/efm8
 
