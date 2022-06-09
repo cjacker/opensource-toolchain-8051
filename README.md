@@ -15,6 +15,7 @@ Today there are hundreds of companies (Such as Silicon Labs, Maxim, STC, Nuvoton
 **NOTE**:
 * for C8051F series from Silicon Labs, you need U-EC ICE adapter(with jtag and c2 protocol support) to program and debug.
 * for N76E series from Nuvoton, you need Nu-Link ICE adatper (or Nu-Link-Me from the official EVB) to program (lack of opensource debugging support now).
+* By the way, the most fast 8051 MCU is C8051F120(100 Mhz) and EFM8LB(72 Mhz) from Silicon Labs.
 
 # Toolchain overview
 
