@@ -266,7 +266,7 @@ $ git submodule update --init
 $ cd efmload
 $ make
 $ export LD_LIBRARY_PATH=`pwd`:$LD_LIBRARY_PATH
-$ ./hex2boot/hex2boot filename.hex -o filename.efm8
+$ python hex2boot.py filename.hex -o filename.efm8
 $ sudo python efm8load.py -p /dev/ttyUSB0 filename.efm8
 ```
 
