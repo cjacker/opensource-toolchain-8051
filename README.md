@@ -380,6 +380,14 @@ cd cycfx2prog-0.47
 make
 sudo install -m0755 cycfx2prog /usr/bin
 ```
+Detection:
+```
+cycfx2prog --list
+```
+The output looks like:
+```
+Bus 001 Device 024: ID 04b4:8613 (unconfigured FX2)
+```
 
 Programming:
 ```
