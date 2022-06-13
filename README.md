@@ -279,6 +279,16 @@ And there are also some thirdparty opensource projects for different EFM8 models
 
 https://github.com/fishpepper/efm8load  and https://fishpepper.de/2016/10/15/efm8-bootloader-flash-tool-efm8load-py/ (it already implement the bootloader protocol and does NOT require hex2boot)
 
+If you use this 'efm8load', the programming command is:
+
+```
+# program
+python efm8load.py -p /dev/ttyACM0 -b 115200 -w firmware.hex 
+# reset to run
+python efm8load.py -s
+```
+
+
 https://github.com/gorlik/efm8_flash and https://gglabs.us/node/2085
 
 https://github.com/BarnabyShearer/efm8
