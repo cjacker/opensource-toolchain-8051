@@ -8,6 +8,7 @@ ch55x-isptool := ch55x-isptool
 ec2writeflash := ec2writeflash
 nuvoprog := nuvoprog
 cycfx2prog := cycfx2prog
+efm8load := efm8load
 
 # sdcc flags
 # notes ： Please adjust '--iram-size'/'--xram-size'/'--code-size' according to your chip ）
@@ -74,7 +75,11 @@ flashn76e885:
 	sudo $(nuvoprog) program -t n76e885 -i build/firmware.ihx -c @config_n76e885.json
 
 flashfx2:
-	cycfx2prog prg:build/$(outname).ihx run
+	sudo $(cycfx2prog) prg:build/$(outname).ihx run
+
+flashefm8bb1:
+	hex2boot build/$(outname).hex -o build/$(outname).efm8
+	efm8load -p /dev/ttyACM0 -b 115200 -t build/$(outname).efm8
 	
 # clean project
 .PHONY : clean
