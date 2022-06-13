@@ -282,10 +282,12 @@ https://github.com/fishpepper/efm8load  and https://fishpepper.de/2016/10/15/efm
 If you use this 'efm8load', the programming command is:
 
 ```
+# detect
+python efm8load.py -p /dev/ttyACM0 -i
 # program
 python efm8load.py -p /dev/ttyACM0 -b 115200 -w firmware.hex 
 # reset to run
-python efm8load.py -s
+python efm8load.py -p /dev/ttyACM0 -s
 ```
 
 
