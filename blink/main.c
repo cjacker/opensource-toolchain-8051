@@ -1,6 +1,6 @@
 // blink led, Pin->Resistor->LED->GND
 
-#define STC89 
+#define STC89
 
 #if defined(STC89)
   #include <stc51.h>
