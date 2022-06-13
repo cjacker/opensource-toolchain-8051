@@ -565,5 +565,5 @@ make
 
 programming:
 ```
-make flash[stc|stc8x|ch55x|c8051f|76e003|76e616|76e885|fx2]
+make flash[stc|stc8x|ch55x|c8051f|efm8bb1|76e003|76e616|76e885|fx2]
 ```
