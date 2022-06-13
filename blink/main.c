@@ -1,6 +1,6 @@
 // blink led, Pin->Resistor->LED->GND
 
-#define STC89
+#define STC89 
 
 #if defined(STC89)
   #include <stc51.h>
@@ -37,6 +37,10 @@
 #elif defined(CH552)
   #include <ch552.h>
   #define LED P32
+
+#elif defined(FX2)
+	#include <fx2regs.h>
+	#define LED PA0
 #endif
 
 // not accurate since different MCU/different Clock
@@ -84,6 +88,8 @@ void main()
 #elif defined(N76E885)
   P0M1 = 0x00;
   P0M2 = 0x00;
+#elif defined(FX2)
+	OEA = 0x01;
 #endif
  
   while(1) {

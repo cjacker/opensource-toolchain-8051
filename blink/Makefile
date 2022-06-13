@@ -7,6 +7,7 @@ stcflash := stcflash
 ch55x-isptool := ch55x-isptool
 ec2writeflash := ec2writeflash
 nuvoprog := nuvoprog
+cycfx2prog := cycfx2prog
 
 # sdcc flags
 # notes ： Please adjust '--iram-size'/'--xram-size'/'--code-size' according to your chip ）
@@ -72,6 +73,9 @@ flashn76e616:
 flashn76e885:
 	sudo $(nuvoprog) program -t n76e885 -i build/firmware.ihx -c @config_n76e885.json
 
+flashfx2:
+	cycfx2prog prg:build/$(outname).ihx run
+	
 # clean project
 .PHONY : clean
 clean :
