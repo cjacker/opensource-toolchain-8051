@@ -391,7 +391,7 @@ Bus 001 Device 024: ID 04b4:8613 (unconfigured FX2)
 
 Programming:
 ```
-cycfx2prog prg:main.hex
+cycfx2prog prg:main.hex run
 ```
 
 There is Library routines for creating firmware for the Cypress FX2 (CY7C68013 and variants) with SDCC, please refer to [fx2lib](https://github.com/djmuhlestein/fx2lib).
