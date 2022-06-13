@@ -394,7 +394,14 @@ Programming:
 cycfx2prog prg:main.hex run
 ```
 
-There is Library routines for creating firmware for the Cypress FX2 (CY7C68013 and variants) with SDCC, please refer to [fx2lib](https://github.com/djmuhlestein/fx2lib).
+**NOTE**: the program uploaded for ARM will purge automatically after power off. 
+
+There are Library routines for creating firmware for the Cypress FX2 (CY7C68013 and variants) with SDCC, please refer to [libfx2](https://github.com/whitequark/libfx2) and [fx2lib](https://github.com/djmuhlestein/fx2lib).
+
+For other programer:
+
+fxload: https://github.com/esden/fxload
+fx2tool: https://github.com/whitequark/libfx2
 
 For more information of EZ-USB FX2 development, please refer to [EZ-USB FX2 Manual Technical Reference](https://www.infineon.com/dgdl/Infineon-EZ-USB_TECHNICAL_REFERENCE_MANUAL-AdditionalTechnicalInformation-v08_00-EN.pdf?fileId=8ac78c8c7d0d8da4017d0f9093657d61)
 
