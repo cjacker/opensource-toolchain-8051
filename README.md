@@ -370,7 +370,7 @@ Please refer to blink demo for details of 'config.json'.
 
 
 ## for Cypress CY7C68013A EZ-USB FX2LP
-you need download [cycfx2prog](http://www.triplespark.net/elec/periph/USB-FX2/software/cycfx2prog-0.47.tar.gz) from http://www.triplespark.net/elec/periph/USB-FX2/software/, the latest version is 0.47
+you need download [cycfx2prog](http://www.triplespark.net/elec/periph/USB-FX2/software/cycfx2prog-0.47.tar.gz) from http://www.triplespark.net/elec/periph/USB-FX2/software/, the latest version is 0.47.
 
 Build and Installation:
 ```
@@ -393,6 +393,12 @@ Programming:
 ```
 cycfx2prog prg:main.hex
 ```
+
+There is Library routines for creating firmware for the Cypress FX2 (CY7C68013 and variants) with SDCC, please refer to [fx2lib](https://github.com/djmuhlestein/fx2lib).
+
+For more information of EZ-USB FX2 development, please refer to [EZ-USB FX2 Manual Technical Reference](https://www.infineon.com/dgdl/Infineon-EZ-USB_TECHNICAL_REFERENCE_MANUAL-AdditionalTechnicalInformation-v08_00-EN.pdf?fileId=8ac78c8c7d0d8da4017d0f9093657d61)
+
+
 
 ## for Atmel AT89S5x (now MicroChip)
 AT89S51/52 can be programmed with avrdude using USBASP adapter. Relative to AVR, the RESET signal of 8051 MCU are inverted, which means that you reset the chip by connecting the RESET pin to VCC, Therefore you need to invert the RESET signal from the USBASP programmer. I use 74HC04 to invert the RESET signal and use 8051 board for other DIP40 51 chips, it works very well. you can also use a NPN triode to invert signal like:
@@ -552,5 +558,5 @@ make
 
 programming:
 ```
-make flash[stc|stc8x|ch55x|c8051f|76e003|76e616|76e885]
+make flash[stc|stc8x|ch55x|c8051f|76e003|76e616|76e885|fx2]
 ```
