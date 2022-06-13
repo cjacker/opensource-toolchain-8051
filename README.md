@@ -258,6 +258,10 @@ The EFM8 devices are factory programmed with a bootloader. Below table indicates
  
 ![screenshot-2022-06-09-10-35-25](https://user-images.githubusercontent.com/1625340/172752098-91b125cb-dc5f-4124-9da9-dd89c1406590.png)
 
+I use official EFM8BB1-LCK board for this tutorial, [the EFM8BB1-LCK has NO UART bootloader by default](https://community.silabs.com/s/question/0D58Y00008K6xfoSAB/efm8bb1lck-board-and-onchip-uart-bootloader?language=en_US), it has customer firmware installed which wiped the pre-installed UART bootloader, but the UART bootloader can be re-programmed with official Simplicity Studio and the bootloader file 'EFM8BB10F8G_QSOP24.hex' for EFM8BB1-LCK board can be found in EFM8 Factory Bootloader package [AN945SW](https://www.silabs.com/documents/public/example-code/AN945SW.zip), located at 'ProductionDeviceHexfiles/EFM8BB1/EFM8BB10F8G_QSOP24.hex'.
+
+After bootloader programmed, you can use a **3.3v** serial adapter to connect to the RX (P0.6, connect to serial adapter TX) and TX (P0.4, connect to serial adapter RX). Empty chips will enter the bootloader on every start. Once they have a firmware flashed the bootloader needs to be activated by pulling C2D low (on this chip, connect P2.0 to GND).
+
 The related utilities/sources can be downloaded from my [efm8load](https://github.com/cjacker/efm8load) repo.
 
 ```
@@ -265,12 +269,13 @@ $ git clone https://github.com/cjacker/efmload.git
 $ git submodule update --init
 $ cd efmload
 $ make
-$ export LD_LIBRARY_PATH=`pwd`:$LD_LIBRARY_PATH
-$ python hex2boot.py filename.hex -o filename.efm8
-$ sudo python efm8load.py -p /dev/ttyUSB0 filename.efm8
+$ make install DESTDIR= PREFIX=/usr
+$ hex2boot filename.hex -o filename.efm8
+$ efm8load -p /dev/ttyUSB0 -b 115200 -t filename.efm8
 ```
 
-And there are also some thirdparty opensource projects:
+
+And there are also some thirdparty opensource projects for different EFM8 models:
 
 https://github.com/fishpepper/efm8load  and https://fishpepper.de/2016/10/15/efm8-bootloader-flash-tool-efm8load-py/ (it already implement the bootloader protocol and does NOT require hex2boot)
 
@@ -283,6 +288,7 @@ https://github.com/kamnxt/efm8load
 https://github.com/ulidtko/efm8boot
 
 https://github.com/conorpp/efm8-arduino-programmer
+
 
 
 ## for Silicon Labs C8051Fxx
