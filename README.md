@@ -388,7 +388,7 @@ Please refer to blink demo for details of 'config.json'.
 
 
 ## for Cypress CY7C68013A EZ-USB FX2LP
-you need download [cycfx2prog](http://www.triplespark.net/elec/periph/USB-FX2/software/cycfx2prog-0.47.tar.gz) from http://www.triplespark.net/elec/periph/USB-FX2/software/, the latest version is 0.47.
+You need download [cycfx2prog](http://www.triplespark.net/elec/periph/USB-FX2/software/cycfx2prog-0.47.tar.gz) from http://www.triplespark.net/elec/periph/USB-FX2/software/, the latest version is 0.47.
 
 Build and Installation:
 ```
@@ -419,10 +419,10 @@ There are Library routines for creating firmware for the Cypress FX2 (CY7C68013 
 For other programer:
 
 fxload: https://github.com/esden/fxload
+
 fx2tool: https://github.com/whitequark/libfx2
 
 For more information of EZ-USB FX2 development, please refer to [EZ-USB FX2 Manual Technical Reference](https://www.infineon.com/dgdl/Infineon-EZ-USB_TECHNICAL_REFERENCE_MANUAL-AdditionalTechnicalInformation-v08_00-EN.pdf?fileId=8ac78c8c7d0d8da4017d0f9093657d61)
-
 
 
 ## for Atmel AT89S5x (now MicroChip)
