@@ -12,7 +12,7 @@
 
 #elif defined(C8051F120)
   #include <C8051F120.h>
-  #define LED P3_4
+  #define LED P3_3
 
 #elif defined(C8051F320)
   #include <C8051F320.h>
