@@ -146,7 +146,7 @@ void main()
 }
 ```
 
-**NOTE**, every model may have somce special registers, please refer to the DATASHEET before use it. and the blink example in this repos covers a lot of models from different vendors, you can take it as reference.
+**NOTE**, every model may have some special registers, please refer to the DATASHEET before use it. and the blink example in this repos covers a lot of models from different vendors, you can take it as reference.
 
 
 # Programming
@@ -309,7 +309,7 @@ https://github.com/conorpp/efm8-arduino-programmer : using arduino mega to progr
 
 https://github.com/christophe94700/efm8-arduino-programmer : using arduino uno/nano to program EFM8
 
-https://github.com/x893/C2.Flash : using stm32/arduino to program EFM8
+https://github.com/x893/C2.Flash and http://akb77.com/g/silabs/jump-to-silabs-step-1/: using stm32/arduino to program EFM8
 
 
 ## for Silicon Labs C8051Fxx
