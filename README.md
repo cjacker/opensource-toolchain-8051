@@ -303,6 +303,8 @@ https://github.com/ulidtko/efm8boot
 
 Programmers work with C2 protocol(**not verified**):
 
+https://github.com/newtorah/c2prog : using RPI to program EFM8
+
 https://github.com/jaromir-sukuba/efm8prog/ : using PIC to program EFM8
 
 https://github.com/conorpp/efm8-arduino-programmer : using arduino mega to program EFM8
