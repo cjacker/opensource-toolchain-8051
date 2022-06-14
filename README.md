@@ -290,6 +290,7 @@ python efm8load.py -p /dev/ttyACM0 -b 115200 -w firmware.hex
 python efm8load.py -p /dev/ttyACM0 -s
 ```
 
+Programmers with EFM8 Bootloader:
 
 https://github.com/gorlik/efm8_flash and https://gglabs.us/node/2085
 
@@ -299,10 +300,14 @@ https://github.com/kamnxt/efm8load
 
 https://github.com/ulidtko/efm8boot
 
-https://github.com/christophe94700/efm8-arduino-programmer
 
-https://github.com/conorpp/efm8-arduino-programmer
+Programmers work with C2 protocol:
 
+https://github.com/jaromir-sukuba/efm8prog/ : using PIC to program EFM8
+
+https://github.com/conorpp/efm8-arduino-programmer : using arduino mega to program EFM8
+
+https://github.com/christophe94700/efm8-arduino-programmer : using arduino uno/nano to program EFM8
 
 
 ## for Silicon Labs C8051Fxx
