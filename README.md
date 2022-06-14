@@ -377,6 +377,12 @@ Flash write successful.
 (newcdb) r
 ```
 
+There is also some other programming solution but not verified:
+https://github.com/Guntermann-Drunck/c2tool
+https://github.com/merbanan/c2gen
+https://github.com/merbanan/c2tool
+
+
 ## for Nuvoton N76Exxx
 To program Nuvoton N76E series 8051 MCU, you need have a Nu-link adapter (from offcial EVB or standalone version) and wire up 5 pins: VCC/DAT/CLK/RST/GND.
 
