@@ -419,7 +419,7 @@ Programming:
 cycfx2prog prg:main.hex run
 ```
 
-**NOTE**: the program uploaded for ARM will purge automatically after power off. 
+**NOTE**: the program uploaded for RAM will purge automatically after power off. 
 
 There are Library routines for creating firmware for the Cypress FX2 (CY7C68013 and variants) with SDCC, please refer to [libfx2](https://github.com/whitequark/libfx2) and [fx2lib](https://github.com/djmuhlestein/fx2lib).
 
