@@ -309,6 +309,8 @@ https://github.com/conorpp/efm8-arduino-programmer : using arduino mega to progr
 
 https://github.com/christophe94700/efm8-arduino-programmer : using arduino uno/nano to program EFM8
 
+https://github.com/x893/C2.Flash : using stm32/arduino to program EFM8
+
 
 ## for Silicon Labs C8051Fxx
 
