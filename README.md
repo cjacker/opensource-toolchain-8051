@@ -305,13 +305,15 @@ Programmers work with C2 protocol(**not verified**):
 
 https://github.com/newtorah/c2prog : using RPI to program EFM8
 
+https://github.com/lhartmann/c2_prog_wifi: WiFi-enabled programmer
+
 https://github.com/jaromir-sukuba/efm8prog/ : using PIC to program EFM8
 
 https://github.com/conorpp/efm8-arduino-programmer : using arduino mega to program EFM8
 
 https://github.com/christophe94700/efm8-arduino-programmer : using arduino uno/nano to program EFM8
 
-https://github.com/x893/C2.Flash and http://akb77.com/g/silabs/jump-to-silabs-step-1/: using stm32/arduino to program EFM8
+https://github.com/x893/C2.Flash and http://akb77.com/g/silabs/jump-to-silabs-step-1/: using stm32/arduino to program EFM8. (**not work**)
 
 
 ## for Silicon Labs C8051Fxx
