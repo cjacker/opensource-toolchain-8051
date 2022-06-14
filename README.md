@@ -299,6 +299,8 @@ https://github.com/kamnxt/efm8load
 
 https://github.com/ulidtko/efm8boot
 
+https://github.com/christophe94700/efm8-arduino-programmer
+
 https://github.com/conorpp/efm8-arduino-programmer
 
 
