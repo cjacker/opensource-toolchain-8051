@@ -319,7 +319,7 @@ python efm8load.py -p /dev/ttyACM0 -b 115200 -w firmware.hex
 python efm8load.py -p /dev/ttyACM0 -s
 ```
 
-Below opensource project remain un-verified:
+Below opensource projects exist but not verified:
 
 Programmers with EFM8 Bootloader (**not verified**):
 
