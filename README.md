@@ -6,6 +6,8 @@ The [Intel MCS-51](https://en.wikipedia.org/wiki/Intel_8051) (commonly termed 80
 
 Today there are hundreds of companies (Such as Silicon Labs, Maxim, STC, Nuvoton, WCH, etc.) which still manufactures this old school legendary MCU. some of them have even added more features like ADCs, communication peripherals like SPI and I2C, etc that were not originally incepted or integrated. 
 
+By the way, the most fast 8051 MCU is C8051F120(100 Mhz) and EFM8LB(72 Mhz) from Silicon Labs.
+
 # Hardware prerequist
 
 * 8051 development board
@@ -13,16 +15,15 @@ Today there are hundreds of companies (Such as Silicon Labs, Maxim, STC, Nuvoton
   + You can use any 8051 dev board from any vendor, this tutorial already covers a lot of common models from different vendors, if your 8051 MCU not mentioned here, please provide some information to improve this tutorial.
  
 **NOTE**:
-* for C8051F series from Silicon Labs, you need U-EC ICE adapter(with jtag and c2 protocol support) to program and debug.
-* for N76E series from Nuvoton, you need Nu-Link ICE adatper (or Nu-Link-Me from the official EVB) to program (lack of opensource debugging support now).
-* By the way, the most fast 8051 MCU is C8051F120(100 Mhz) and EFM8LB(72 Mhz) from Silicon Labs.
+* for C8051/EFM8 series from Silicon Labs, you need 8-bit USB Debug Adapter with jtag and c2 protocol support to program and debug.
+* for N76E series from Nuvoton, you need Nu-Link adatper (or Nu-Link-Me from the official EVB) to program (lack of opensource debugging support now).
 
 # Toolchain overview
 
 * Compiler: SDCC for C, naken_asm/as31 for ASM
 * SDK: Headers for each MCU.
-* Programming tool: various, different for each manufactor.
-* Debugger: varirous way, different for each manufactor.
+* Programming tool: various tool, different for each manufactor.
+* Debugger: various way, different for each manufactor.
 
 # Compiler
 
