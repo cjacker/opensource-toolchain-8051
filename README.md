@@ -260,19 +260,18 @@ There is no good and confirm-to-work opensource utilities to program EFM8 with C
 
 Here I recommend to use [official linux utils from Silicon Labs](https://github.com/cjacker/siliconlabs-c8051-efm8-utils), include `device8051` to detect device, `flash8051` with usb debug adapter and `flashefm8` with jlink.
 
-For example, I have a [EFM8BB1-LCK](https://www.silabs.com/development-tools/mcu/8-bit/efm8bb1lck-starter-kit) board with 'toolstick F330' on board.
+For example, I have a [EFM8BB1-LCK](https://www.silabs.com/development-tools/mcu/8-bit/efm8bb1lck-starter-kit) board with usb debug adapter 'Toolstick F330' on board.
 
 I can use `flash8051` to program it, just connect the board directly to PC via USB cable, and run:
 
 ```
 # to find serial number and target interface used by flash8051.
 sudo device8051 -slist
+# sn can be detect with device8051 or dmesg
 sudo flash8051 -sn LCK0081654 -tif c2 -erasemode full -upload firmware.hex
 ```
 
-Since [EFM8BB1-LCK has NO UART bootloader by default](https://community.silabs.com/s/question/0D58Y00008K6xfoSAB/efm8bb1lck-board-and-onchip-uart-bootloader?language=en_US), it has customer firmware installed which wiped the pre-installed UART bootloader.
-
-These utilities can also help you to program the UART bootloader back.
+Since [EFM8BB1-LCK has NO UART bootloader by default](https://community.silabs.com/s/question/0D58Y00008K6xfoSAB/efm8bb1lck-board-and-onchip-uart-bootloader?language=en_US), it has customer firmware installed which wiped the pre-installed UART bootloader. these utilities can also help you to program the UART bootloader back.
 
 ### with factory programmed UART bootloader
 
