@@ -432,7 +432,7 @@ There is also some other programming solution but not verified:
 
 https://github.com/Guntermann-Drunck/c2tool
 
-https://github.com/merbanan/c2gen and https://github.com/merbanan/c2tool(**verified, not work**)
+https://github.com/merbanan/c2gen and https://github.com/merbanan/c2tool (**verified, not work**)
 
 https://github.com/x893/C2.Flash and http://akb77.com/g/silabs/jump-to-silabs-step-1/: using stm32/arduino to program EFM8. (**verified, not work**)
 
