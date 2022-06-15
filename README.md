@@ -347,7 +347,24 @@ https://github.com/christophe94700/efm8-arduino-programmer : using arduino uno/n
 
 ## for Silicon Labs C8051Fxx
 
-As metioned above, C8051Fxx series 8051 MCU from Silicon Labs requires a special ICE device to program and debug. these MCUs support either JTAG or C2 protocol. you need to acquire such a device (usally an USB adapter) first and wire it up before you continue reading .
+As metioned above, C8051Fxx series 8051 MCU from Silicon Labs requires a special ICE device to program and debug. these MCUs support either JTAG or C2 protocol. you need to acquire such a device (usally an usb debug adapter) first and wire it up before you continue reading .
+
+## with flash8051 from silicon labs
+
+As mentioned in EFM8 section, there are [official linux utils from Silicon Labs](https://github.com/cjacker/siliconlabs-c8051-efm8-utils), include `device8051` to detect device, `flash8051` work with usb debug adapter.
+
+Take C8051F320 as example, connected with EC3 usb debug adapter and run:
+
+```
+sudo flash8051 -sn EC3T0120100 -tif c2 -erasemode full -upload filename.hex
+```
+
+To find the serial number and target interface used by `flash8051`, you can run:
+```
+sudo device8051 -slist
+```
+
+## with ec2-new
 
 [ec2-new](https://github.com/paragonRobotics/ec2-new) is a fork of [e2drv](http://ec2drv.sourceforge.net/), an opensource project to support EC2 debugger.
 
