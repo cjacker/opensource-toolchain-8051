@@ -8,6 +8,30 @@ Today there are hundreds of companies (Such as Silicon Labs, Maxim, STC, Nuvoton
 
 By the way, the most fast 8051 MCU is C8051F120(100 Mhz) and EFM8LB(72 Mhz) from Silicon Labs.
 
+# Table of content
+- [Hardware prerequist](https://github.com/cjacker/opensource-toolchain-8051#hardware-prerequist)
+- [Toolchain overview](https://github.com/cjacker/opensource-toolchain-8051#toolchain-overview)
+- [Compiler](https://github.com/cjacker/opensource-toolchain-8051#compiler)
+- [SDK](https://github.com/cjacker/opensource-toolchain-8051#sdk)
+- [Programming](https://github.com/cjacker/opensource-toolchain-8051#programming)
+  + [for STC8051 (from STC)](https://github.com/cjacker/opensource-toolchain-8051#for-stc8051-from-stc)
+    - [stcgal](https://github.com/cjacker/opensource-toolchain-8051#stcgal)
+    - [stcflash](https://github.com/cjacker/opensource-toolchain-8051#stcflash)
+  + [for WCH CH55x](https://github.com/cjacker/opensource-toolchain-8051#for-wch-ch55x)
+  + [for Silicon Labs EFM8](https://github.com/cjacker/opensource-toolchain-8051#for-silicon-labs-efm8)
+    - [with C2](https://github.com/cjacker/opensource-toolchain-8051#with-c2)
+    - [with factory programmed UART bootloader](https://github.com/cjacker/opensource-toolchain-8051#with-factory-programmed-uart-bootloader)
+  + [for Silicon Labs C8051Fxx](https://github.com/cjacker/opensource-toolchain-8051#for-silicon-labs-c8051fxx)
+    - [with flash8051 from silicon labs](https://github.com/cjacker/opensource-toolchain-8051#with-flash8051-from-silicon-labs)
+    - [with ec2-new](https://github.com/cjacker/opensource-toolchain-8051#with-ec2-new)
+  + [for Nuvoton N76Exxx](https://github.com/cjacker/opensource-toolchain-8051#for-nuvoton-n76exxx)
+  + [for Cypress CY7C68013A EZ-USB FX2LP](https://github.com/cjacker/opensource-toolchain-8051#for-cypress-cy7c68013a-ez-usb-fx2lp)
+  + [for Atmel AT89S5x (now MicroChip)](https://github.com/cjacker/opensource-toolchain-8051#for-atmel-at89s5x-now-microchip)
+  + [for Dallas DS89C430/450 (now Maxim)](https://github.com/cjacker/opensource-toolchain-8051#for-dallas-ds89c430450-now-maxim)
+  + [For Philips P89C51Rx (now NXP)](https://github.com/cjacker/opensource-toolchain-8051#for-philips-p89c51rx-now-nxp)
+- [Debugging](https://github.com/cjacker/opensource-toolchain-8051#debugging)
+- [Project template](https://github.com/cjacker/opensource-toolchain-8051#project-template)
+
 # Hardware prerequist
 
 * 8051 development board
@@ -638,7 +662,7 @@ an ICE device is usually a little bit expensive. for Silicon Labs C8051Fx series
 And you can always use 'printf' via UART:-)
 
 
-# Project templates
+# Project template
 
 With [Project and Makefile template](https://github.com/cjacker/opensource-toolchain-8051/tree/main/blink) in this repo, you can start 8051 development under Linux very quickly. 
 
