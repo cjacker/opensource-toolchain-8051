@@ -253,12 +253,42 @@ Another good isp tool is [ch552tool](https://github.com/MarsTechHAN/ch552tool). 
 
 
 ## for Silicon Labs EFM8
+EFM8 can be programmed with C2 protocol or with UART bootloader.
 
-The EFM8 devices are factory programmed with a bootloader. Below table indicates which devices are orderable with the specified factory-programmed bootloader. For more information, please refer to [AN945: EFM8 Factory Bootloader User's Guide](https://www.silabs.com/documents/public/application-notes/an945-efm8-factory-bootloader-user-guide.pdf).
+### with C2
+There is no good and confirm-to-work opensource utilities to program EFM8 with C2 protocol, although there are some opensource projects trying to implement C2 protocols with GPIO or arduino, but all of them don't work very well or have very limited device support.
+
+Here I recommend to use [official linux utils from Silicon Labs](https://github.com/cjacker/siliconlabs-c8051-efm8-utils), include `device8051` to detect device, `flash8051` with usb debug adapter and `flashefm8` with jlink.
+
+For example, I have a [EFM8BB1-LCK](https://www.silabs.com/development-tools/mcu/8-bit/efm8bb1lck-starter-kit) board with 'toolstick F330' on board.
+
+I can use `flash8051` to program it, just connect the board directly to PC via USB cable, and run:
+
+```
+# to find serial number and target interface used by flash8051.
+sudo device8051 -slist
+sudo flash8051 -sn LCK0081654 -tif c2 -erasemode full -upload firmware.hex
+```
+
+Since [EFM8BB1-LCK has NO UART bootloader by default](https://community.silabs.com/s/question/0D58Y00008K6xfoSAB/efm8bb1lck-board-and-onchip-uart-bootloader?language=en_US), it has customer firmware installed which wiped the pre-installed UART bootloader.
+
+These utilities can also help you to program the UART bootloader back.
+
+### with factory programmed UART bootloader
+
+most of EFM8 devices are factory programmed with a bootloader. Below table indicates which devices are orderable with the specified factory-programmed bootloader. For more information, please refer to [AN945: EFM8 Factory Bootloader User's Guide](https://www.silabs.com/documents/public/application-notes/an945-efm8-factory-bootloader-user-guide.pdf).
  
 ![screenshot-2022-06-09-10-35-25](https://user-images.githubusercontent.com/1625340/172752098-91b125cb-dc5f-4124-9da9-dd89c1406590.png)
 
-I use official [EFM8BB1-LCK](https://www.silabs.com/development-tools/mcu/8-bit/efm8bb1lck-starter-kit) board for this tutorial, the on-board debugger of EFM8BB1-LCK is 'Toolstick F330' and can not be supported by any opensource software (include ec2-new) up to now. and [EFM8BB1-LCK has NO UART bootloader by default](https://community.silabs.com/s/question/0D58Y00008K6xfoSAB/efm8bb1lck-board-and-onchip-uart-bootloader?language=en_US), it has customer firmware installed which wiped the pre-installed UART bootloader, but the UART bootloader can be re-programmed with official Simplicity Studio and the bootloader file 'EFM8BB10F8G_QSOP24.hex' for EFM8BB1-LCK board can be found in EFM8 Factory Bootloader package [AN945SW](https://www.silabs.com/documents/public/example-code/AN945SW.zip), located at 'ProductionDeviceHexfiles/EFM8BB1/EFM8BB10F8G_QSOP24.hex'.
+Take EFM8BB1-LCK Starter Kit as example, since the UART bootloader is wiped, first we need to program it back:
+
+```
+sudo flash8051 -sn LCK0081654 -tif c2 -erasemode full -upload EFM8BB10F8G_QSOP24.hex
+```
+
+The bootloader file 'EFM8BB10F8G_QSOP24.hex' for EFM8BB1-LCK board can be found in EFM8 Factory Bootloader package [AN945SW](https://www.silabs.com/documents/public/example-code/AN945SW.zip), located at 'ProductionDeviceHexfiles/EFM8BB1/EFM8BB10F8G_QSOP24.hex'. 
+
+Bootloaders for All models can be found in this package. if you use simple breakout board without usb debug adapter on-board, you may need a standalone 8bit usb debug adapter(aka, U-EC6) from silicon labs.
 
 After bootloader programmed, you could use a **3.3v** serial adapter to connect to the RX (P0.6, connect to serial adapter TX) and TX (P0.4, connect to serial adapter RX). Empty chips will enter the bootloader on every start. Once they have a firmware flashed the bootloader needs to be activated by pulling C2D low (on this chip, connect P2.0 to GND).
 
@@ -275,7 +305,7 @@ $ efm8load -p /dev/ttyUSB0 -b 115200 -t filename.efm8
 ```
 
 
-And there are also some thirdparty opensource projects for different EFM8 models:
+And there are also some thirdparty opensource projects for different EFM8 models,for example:
 
 https://github.com/fishpepper/efm8load  and https://fishpepper.de/2016/10/15/efm8-bootloader-flash-tool-efm8load-py/ (it already implement the bootloader protocol and does NOT require hex2boot)
 
@@ -289,6 +319,8 @@ python efm8load.py -p /dev/ttyACM0 -b 115200 -w firmware.hex
 # reset to run
 python efm8load.py -p /dev/ttyACM0 -s
 ```
+
+Below opensource project remain un-verified:
 
 Programmers with EFM8 Bootloader (**not verified**):
 
@@ -312,8 +344,6 @@ https://github.com/jaromir-sukuba/efm8prog/ : using PIC to program EFM8
 https://github.com/conorpp/efm8-arduino-programmer : using arduino mega to program EFM8
 
 https://github.com/christophe94700/efm8-arduino-programmer : using arduino uno/nano to program EFM8
-
-
 
 
 ## for Silicon Labs C8051Fxx
