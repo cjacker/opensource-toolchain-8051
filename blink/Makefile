@@ -81,7 +81,7 @@ flash_c8051f_with_flash8051:
 # modify the sn and tif according to your adapter and target board.
 	sudo $(flash8051) -sn EC3T0120100 -tif c2 -erasemode full -upload build/$(outname).hex
 
-flash_c8051f_with_flashefm8:
+flash_efm8_with_flashefm8:
 # modify the sn, part and tif according to your adapter and target board.
 	sudo $(flashefm8) -sn 000440033272 -tif c2 -part efm8sb10f8g -erasemode full -upload build/$(outname).hex
 

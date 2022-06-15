@@ -634,5 +634,5 @@ make
 
 programming:
 ```
-make flash[stc|stc8x|ch55x|c8051f|efm8bb1|76e003|76e616|76e885|fx2]
+make flash_[stc|stc8x|ch55x|c8051f_with_ec2new|c8051f_with_flash8051|efm8_with_flashefm8|efm8_with_uart_bootloader|76e003|76e616|76e885|fx2]
 ```
