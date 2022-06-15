@@ -313,7 +313,7 @@ https://github.com/conorpp/efm8-arduino-programmer : using arduino mega to progr
 
 https://github.com/christophe94700/efm8-arduino-programmer : using arduino uno/nano to program EFM8
 
-https://github.com/x893/C2.Flash and http://akb77.com/g/silabs/jump-to-silabs-step-1/: using stm32/arduino to program EFM8. (**not work**)
+
 
 
 ## for Silicon Labs C8051Fxx
@@ -383,10 +383,11 @@ Flash write successful.
 
 There is also some other programming solution but not verified:
 https://github.com/Guntermann-Drunck/c2tool
-https://github.com/merbanan/c2gen
+
+https://github.com/merbanan/c2gen (**verified, not work**)
 https://github.com/merbanan/c2tool
 
-
+https://github.com/x893/C2.Flash and http://akb77.com/g/silabs/jump-to-silabs-step-1/: using stm32/arduino to program EFM8. (**verified, not work**)
 ## for Nuvoton N76Exxx
 To program Nuvoton N76E series 8051 MCU, you need have a Nu-link adapter (from offcial EVB or standalone version) and wire up 5 pins: VCC/DAT/CLK/RST/GND.
 
