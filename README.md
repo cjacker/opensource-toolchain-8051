@@ -278,21 +278,53 @@ Another good isp tool is [ch552tool](https://github.com/MarsTechHAN/ch552tool). 
 
 
 ## for Silicon Labs EFM8
+
 EFM8 can be programmed with C2 protocol or with UART bootloader.
 
 ### with C2
+
 There is no good and confirm-to-work opensource utilities to program EFM8 with C2 protocol, although there are some opensource projects trying to implement C2 protocols with GPIO or arduino, but all of them don't work very well or have very limited device support.
 
 Here I recommend to use [official linux utils from Silicon Labs](https://github.com/cjacker/siliconlabs-c8051-efm8-utils), include `device8051` to detect device, `flash8051` with usb debug adapter and `flashefm8` with jlink.
 
 For example, I have a [EFM8BB1-LCK](https://www.silabs.com/development-tools/mcu/8-bit/efm8bb1lck-starter-kit) board with usb debug adapter 'Toolstick F330' on board.
 
-I can use `flash8051` to program it, just connect the board directly to PC via USB cable, and run:
+I can use `flash8051` to program it, just connect the board directly to PC via USB cable.
+
+To detect device:
 
 ```
-# to find serial number and target interface used by flash8051.
 sudo device8051 -slist
-# sn can be detect with device8051 or dmesg
+```
+
+The output looks like:
+
+```
+deviceCount = 1
+device (LCK0081654) {
+  adapterLabel = EFM8LCK
+  SerialNo = LCK0081654
+  targetInterface = c2
+  Name = EFM8BB10F8G-QSOP24
+  Type = MCU
+  Family = 8051
+  BoardID = efm8bb1lcba
+  BoardCount = 1
+  HardwareID = 0x30
+  DerivativeID = 0x1
+  HardwareRev = 0x2
+  DerivativeRev = 0xb
+  Unsupported = 0
+  Indeterminate = 0
+  Connected = 0
+  Locked = 0
+}
+```
+
+To program:
+
+```
+# sn and tif can be detect with device8051
 sudo flash8051 -sn LCK0081654 -tif c2 -erasemode full -upload firmware.hex
 ```
 
