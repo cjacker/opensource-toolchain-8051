@@ -414,7 +414,7 @@ sudo flash8051 -sn EC60000B878 -tif c2 -erasemode full -upload filename.hex
 
 ### with ec2-new
 
-[ec2-new](https://github.com/paragonRobotics/ec2-new) is a fork of [e2drv](http://ec2drv.sourceforge.net/), an opensource project to support Silicon Labs USB Debugger.
+[ec2-new](https://github.com/paragonRobotics/ec2-new) is a fork of [e2drv](http://ec2drv.sourceforge.net/), an opensource project to support Silicon Labs USB Debug Adapter (UDA).
 
 ec2tools contain programs that use the core library to perform various actions.
 
@@ -433,6 +433,23 @@ newcdb is the text-based interactive debugger, which can be used to fully debug 
 * modify all registers, SFRs, RAM, and XRAM
 * set breakpoints
 * run, stop, and step through programs
+
+By the way, there are a lot of USB Debug Adapter clones you can buy, The official UDA does **NOT** provide 3.3v voltage output, but some clones of 'EC6' provide 3.3v voltage output. There is also so-called 'EC3' UDA in market.
+
+As I verified, the [official EC6 USB debug adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) and other clones (no matter EC3 or EC6) works very well. if you encounter any issue, please try to reset the firmware with official [USB Reset Utility](https://www.silabs.com/documents/login/software/USB_Reset_Utility.zip).
+
+There is different version of 'USB Reset Utility':
+```
+  USB Reset Utility Version 1.7 - June 1, 2013
+  USB Reset Utility Version 1.6 - December 17, 2012
+  USB Reset Utility Version 1.5 - August 1, 2012
+  USB Reset Utility Version 1.3 - September 17, 2007
+  USB Reset Utility Version 1.1 - September 12, 2006
+```
+
+Some UDA clones called 'EC6' can only use 'USB Reset Utility Version 1.3' to reset the firmware. But the official UDA can use latest 1.7 version to reset.
+
+As I tested, if you try to use official utility 'flash8051' with UDA, it may inform you that flash8051 is updating the UDA firmware, but may encounter issues and can not use it with 'ec2-new' anymore, then you can use USB Reset Utility to reset the firmware to address this issue.
 
 **Build and Installation:**
 
@@ -483,7 +500,7 @@ Flash write successful.
 (newcdb) r
 ```
 
-As I verified, the EC3, [official EC6 USB debug adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) and other EC6 clones works very well. if you encounter any issue, please try to reset the firmware with official [USB Reset Utility](https://www.silabs.com/documents/login/software/USB_Reset_Utility.zip).
+
 
 ### other opensource c2 programmer
 
