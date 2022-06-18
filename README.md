@@ -374,24 +374,47 @@ https://github.com/christophe94700/efm8-arduino-programmer : using arduino uno/n
 
 As metioned above, C8051Fxx series 8051 MCU from Silicon Labs requires a special ICE device to program and debug. these MCUs support either JTAG or C2 protocol. you need to acquire such a device (usally an usb debug adapter) first and wire it up before you continue reading .
 
-## with flash8051 from silicon labs
+### with flash8051 from silicon labs
 
 As mentioned in EFM8 section, there are [official linux utils from Silicon Labs](https://github.com/cjacker/siliconlabs-c8051-efm8-utils), include `device8051` to detect device, `flash8051` work with usb debug adapter.
 
-Take C8051F320 as example, connected with EC3 usb debug adapter and run:
+Take C8051F320 as example, to detect the adapter and target device infomation:
 
-```
-sudo flash8051 -sn EC3T0120100 -tif c2 -erasemode full -upload filename.hex
-```
-
-To find the serial number and target interface used by `flash8051`, you can run:
 ```
 sudo device8051 -slist
 ```
+The output looks like:
+```
+deviceCount = 1
+device (EC60000B878) {
+  adapterLabel = USB Debug Adapter
+  SerialNo = EC60000B878
+  targetInterface = c2
+  Name = C8051F320
+  Type = MCU
+  Family = 8051
+  BoardID =
+  BoardCount = 0
+  HardwareID = 0x9
+  DerivativeID = 0x58
+  HardwareRev = 0x3
+  DerivativeRev = 0x6
+  Unsupported = 0
+  Indeterminate = 0
+  Connected = 0
+  Locked = 0
+}
+```
 
-## with ec2-new
+To program:
 
-[ec2-new](https://github.com/paragonRobotics/ec2-new) is a fork of [e2drv](http://ec2drv.sourceforge.net/), an opensource project to support EC2 debugger.
+```
+sudo flash8051 -sn EC60000B878 -tif c2 -erasemode full -upload filename.hex
+```
+
+### with ec2-new
+
+[ec2-new](https://github.com/paragonRobotics/ec2-new) is a fork of [e2drv](http://ec2drv.sourceforge.net/), an opensource project to support Silicon Labs USB Debugger.
 
 ec2tools contain programs that use the core library to perform various actions.
 
@@ -422,11 +445,19 @@ make
 sudo make install
 ```
 
+**Detect device:**
+
+```
+sudo ec3adapters
+sudo ec2device --port USB
+```
+
 **Program:**
 
 ```
 sudo ec2writeflash --port USB --hex xxx.hex --run
 ```
+
 **Debug:**
 
 ```
@@ -452,13 +483,18 @@ Flash write successful.
 (newcdb) r
 ```
 
-There is also some other programming solution but not verified:
+As I verified, the EC3, [official EC6 USB debug adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) and other EC6 clones works very well. if you encounter any issue, please try to reset the firmware with official [USB Reset Utility](https://www.silabs.com/documents/login/software/USB_Reset_Utility.zip).
+
+### other opensource c2 programmer
+
+There are also some other programming solutions but not verified:
 
 https://github.com/Guntermann-Drunck/c2tool
 
 https://github.com/merbanan/c2gen and https://github.com/merbanan/c2tool (**verified, not work**)
 
 https://github.com/x893/C2.Flash and http://akb77.com/g/silabs/jump-to-silabs-step-1/: using stm32/arduino to program EFM8. (**verified, not work**)
+
 
 ## for Nuvoton N76Exxx
 To program Nuvoton N76E series 8051 MCU, you need have a Nu-link adapter (from offcial EVB or standalone version) and wire up 5 pins: VCC/DAT/CLK/RST/GND.
