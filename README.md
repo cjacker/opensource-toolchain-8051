@@ -30,7 +30,7 @@ By the way, the most fast 8051 MCU is C8051F120(100 Mhz) and EFM8LB(72 Mhz) from
   + [for Cypress CY7C68013A EZ-USB FX2LP](https://github.com/cjacker/opensource-toolchain-8051#for-cypress-cy7c68013a-ez-usb-fx2lp)
   + [for Atmel AT89S5x (now MicroChip)](https://github.com/cjacker/opensource-toolchain-8051#for-atmel-at89s5x-now-microchip)
   + [for Dallas DS89C430/450 (now Maxim)](https://github.com/cjacker/opensource-toolchain-8051#for-dallas-ds89c430450-now-maxim)
-  + [For Philips P89C51Rx (now NXP)](https://github.com/cjacker/opensource-toolchain-8051#for-philips-p89c51rx-now-nxp)
+  + [for Philips P89C51Rx (now NXP)](https://github.com/cjacker/opensource-toolchain-8051#for-philips-p89c51rx-now-nxp)
 - [Debugging](https://github.com/cjacker/opensource-toolchain-8051#debugging)
 - [Project template](https://github.com/cjacker/opensource-toolchain-8051#project-template)
 
@@ -722,7 +722,7 @@ There is a recommended circuit with 74HC125 in USER GUIDE:
 You can use 'DTR' from a ch340 serial adapter with a 74HC125 to control RESET/EA and PSEN at the same time.
 
 
-## For Philips P89C51Rx (now NXP)
+## for Philips P89C51Rx (now NXP)
 Here is a very good article about how to program P89C51Rx: https://www.dos4ever.com/isp/isp.html
 
 Note, according to datasheet, not all P89C51 has a bootloader, only 89C51Rx2 and 89C66x support ISP program.
