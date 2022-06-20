@@ -285,14 +285,13 @@ EFM8 can be programmed with C2 protocol or with UART bootloader.
 
 ### with C2
 
-There is no good and confirm-to-work opensource utilities to program EFM8 with C2 protocol, although there are some opensource projects trying to implement C2 protocols with GPIO or arduino, but all of them don't work very well or have very limited device support.
+There is no good and confirm-to-work opensource utilities to program EFM8 with C2 protocol, although there are some opensource projects trying to implement C2 protocols with GPIO or arduino, but all of them don't work as expected or have very limited device support.
 
 Here I recommend to use [official linux utils from Silicon Labs](https://github.com/cjacker/siliconlabs-c8051-efm8-utils), include `device8051` to detect device, `flash8051` with usb debug adapter and `flashefm8` with jlink.
 
-For example, I have an [EFM8BB1-LCK](https://www.silabs.com/development-tools/mcu/8-bit/efm8bb1lck-starter-kit) board with usb debug adapter 'Toolstick F330 DC' on board, I can use `flash8051` to program it.
-
 If you have EFM8 breakout board without any Debugger on-board, you can use [8-bit USB Debug Adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) to program it.
 
+If you use official starter kit, usually there is a debugger on board, either toolstick or jlink. For example, I have an [EFM8BB1-LCK](https://www.silabs.com/development-tools/mcu/8-bit/efm8bb1lck-starter-kit) board with usb debug adapter 'Toolstick F330 DC' on board, I can use `flash8051` to program it.
 
 To detect device:
 
@@ -332,7 +331,7 @@ To program:
 sudo flash8051 -sn LCK0081654 -tif c2 -erasemode full -upload firmware.hex
 ```
 
-Since [EFM8BB1-LCK has NO UART bootloader by default](https://community.silabs.com/s/question/0D58Y00008K6xfoSAB/efm8bb1lck-board-and-onchip-uart-bootloader?language=en_US), it has customer firmware installed which wiped the pre-installed UART bootloader. these utilities can also help you to program the UART bootloader back.
+Since [EFM8BB1-LCK has NO UART bootloader by default](https://community.silabs.com/s/question/0D58Y00008K6xfoSAB/efm8bb1lck-board-and-onchip-uart-bootloader?language=en_US), the customer firmware wiped the pre-installed UART bootloader. there utilities can help you to program the UART bootloader back.
 
 ### with factory programmed UART bootloader
 
