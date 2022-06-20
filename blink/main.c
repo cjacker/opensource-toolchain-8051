@@ -18,13 +18,18 @@
   #include <C8051F320.h>
   #define LED P0_6
 
-#elif defined(EFM8BB1)
+#elif defined(EFM8BB1) || defined(EFM8BB2)
   __sfr __at(0x97) WDTCN;
   __sfr __at(0xA5) P1MDOUT;
   __sfr __at(0xD5) P1SKIP;
   __sfr __at(0xE3) XBR2;
+  __sbit __at(0x90+3) P13;
   __sbit __at(0x90+4) P14;
-  #define LED P14
+  #if defined(EFM8BB1)
+    #define LED P14
+  #elif defined(EFM8BB2) // my EFM8BB21F16G breakout board has LED to P13
+    #define LED P13
+  #endif
 
 #elif defined(N76E003)
   #include <n76e003.h>
@@ -87,7 +92,7 @@ void main()
   XBR1 = 0x40;
   // set P0_6 to Push-Pull
   P0MDOUT = 0x40;
-#elif defined(EFM8BB1)
+#elif defined(EFM8BB1) || defined(EFM8BB2)
   // disable watchdog
   WDTCN = 0xDE; //First key
   WDTCN = 0xAD; //Second key
