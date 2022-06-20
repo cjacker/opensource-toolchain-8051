@@ -349,7 +349,7 @@ The bootloader file 'EFM8BB10F8G_QSOP24.hex' for EFM8BB1-LCK board can be found 
 
 Bootloaders for All models can be found in this package. if you use simple breakout board without usb debug adapter on-board, you may need a standalone 8bit usb debug adapter(aka, U-EC6) from silicon labs.
 
-After bootloader programmed, you could use a **3.3v** serial adapter to connect to the RX (P0.6, connect to serial adapter TX) and TX (P0.4, connect to serial adapter RX). Empty chips will enter the bootloader on every start. Once they have a firmware flashed the bootloader needs to be activated by pulling C2D low (on this chip, connect P2.0 to GND).
+After bootloader programmed, you could use a **3.3v** serial adapter to connect to the RX (P0.5, connect to serial adapter TX) and TX (P0.4, connect to serial adapter RX). Empty chips will enter the bootloader on every start. Once they have a firmware flashed the bootloader needs to be activated by pulling C2D low (on this chip, connect P2.0 to GND).
 
 The related programming utilities with EFM8 UART bootloader can be downloaded from my [efm8load](https://github.com/cjacker/efm8load) repo.
 
