@@ -381,7 +381,7 @@ python efm8load.py -p /dev/ttyACM0 -s
 
 Below opensource projects exist but not verified:
 
-Programmers with EFM8 Bootloader (**not verified**):
+Programmers with EFM8 Bootloader (**not verified, should work**):
 
 https://github.com/gorlik/efm8_flash and https://gglabs.us/node/2085
 
@@ -400,9 +400,9 @@ https://github.com/lhartmann/c2_prog_wifi: WiFi-enabled programmer
 
 https://github.com/jaromir-sukuba/efm8prog/ : using PIC to program EFM8
 
-https://github.com/conorpp/efm8-arduino-programmer : using arduino mega to program EFM8
+~~https://github.com/conorpp/efm8-arduino-programmer : using arduino mega to program EFM8~~
 
-https://github.com/christophe94700/efm8-arduino-programmer : using arduino uno/nano to program EFM8
+~~https://github.com/christophe94700/efm8-arduino-programmer : using arduino uno/nano to program EFM8~~
 
 
 ## for Silicon Labs C8051
@@ -539,13 +539,13 @@ Flash write successful.
 
 ### other opensource c2 programmer
 
-There are also some other programming solutions but not verified:
+There are also some other programming solutions:
 
-https://github.com/Guntermann-Drunck/c2tool
+~~https://github.com/Guntermann-Drunck/c2tool~~
 
-https://github.com/merbanan/c2gen and https://github.com/merbanan/c2tool (**verified, not work**)
+~~https://github.com/merbanan/c2gen and https://github.com/merbanan/c2tool (**verified, not work**)~~
 
-https://github.com/x893/C2.Flash and http://akb77.com/g/silabs/jump-to-silabs-step-1/: using stm32/arduino to program EFM8. (**verified, not work**)
+~~https://github.com/x893/C2.Flash and http://akb77.com/g/silabs/jump-to-silabs-step-1/: using stm32/arduino to program EFM8. (**verified, not work**)~~
 
 
 ## for Nuvoton N76Exxx
