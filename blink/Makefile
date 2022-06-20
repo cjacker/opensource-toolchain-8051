@@ -87,7 +87,7 @@ flash_efm8_with_flashefm8:
 
 flash_efm8_with_uart_bootloader:
 	hex2boot build/$(outname).hex -o build/$(outname).efm8
-	efm8load -p /dev/ttyACM0 -b 115200 -t build/$(outname).efm8
+	efm8load -p /dev/ttyUSB0 -b 115200 -t build/$(outname).efm8
 
 flash_n76e003:
 	sudo $(nuvoprog) program -t n76e003 -i build/firmware.ihx -c @config_n76e003.json
