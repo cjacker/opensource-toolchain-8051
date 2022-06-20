@@ -328,6 +328,7 @@ To program:
 
 ```
 # sn and tif can be detect with device8051
+# change the 'sn' according to your UDA
 sudo flash8051 -sn LCK0081654 -tif c2 -erasemode full -upload firmware.hex
 ```
 
@@ -342,6 +343,7 @@ most of EFM8 devices are factory programmed with a bootloader. Below table indic
 Take EFM8BB1-LCK Starter Kit as example, since the UART bootloader is wiped, first we need to program it back:
 
 ```
+# change the 'sn' according to your UDA
 sudo flash8051 -sn LCK0081654 -tif c2 -erasemode full -upload EFM8BB10F8G_QSOP24.hex
 ```
 
