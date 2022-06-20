@@ -547,7 +547,7 @@ There are also some other programming solutions:
 
 ~~https://github.com/merbanan/c2gen and https://github.com/merbanan/c2tool (**verified, not work**)~~
 
-~~https://github.com/x893/C2.Flash and http://akb77.com/g/silabs/jump-to-silabs-step-1/: using stm32/arduino to program EFM8. (**verified, not work**)~~
+~~https://github.com/x893/C2.Flash and http://akb77.com/g/silabs/jump-to-silabs-step-1/: using stm32/arduino to program C8051. (**verified, not work**)~~
 
 
 ## for Nuvoton N76Exxx
