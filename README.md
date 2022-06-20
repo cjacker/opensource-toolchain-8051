@@ -23,7 +23,7 @@ By the way, the most fast 8051 MCU is C8051F120(100 Mhz) and EFM8LB(72 Mhz) from
   + [for Silicon Labs EFM8](https://github.com/cjacker/opensource-toolchain-8051#for-silicon-labs-efm8)
     - [with C2](https://github.com/cjacker/opensource-toolchain-8051#with-c2)
     - [with factory programmed UART bootloader](https://github.com/cjacker/opensource-toolchain-8051#with-factory-programmed-uart-bootloader)
-  + [for Silicon Labs C8051Fxx](https://github.com/cjacker/opensource-toolchain-8051#for-silicon-labs-c8051fxx)
+  + [for Silicon Labs C8051](https://github.com/cjacker/opensource-toolchain-8051#for-silicon-labs-c8051)
     - [with flash8051 from silicon labs](https://github.com/cjacker/opensource-toolchain-8051#with-flash8051-from-silicon-labs)
     - [with ec2-new](https://github.com/cjacker/opensource-toolchain-8051#with-ec2-new)
   + [for Nuvoton N76Exxx](https://github.com/cjacker/opensource-toolchain-8051#for-nuvoton-n76exxx)
@@ -37,11 +37,11 @@ By the way, the most fast 8051 MCU is C8051F120(100 Mhz) and EFM8LB(72 Mhz) from
 # Hardware prerequist
 
 * 8051 development board
-  + STC 8051 series, Silicon Labs C8051F and EFM8 series and Nuvoton N76E series are recommended.
+  + STC 8051 series, Silicon Labs C8051 and EFM8 series and Nuvoton N76E series are recommended.
   + You can use any 8051 dev board from any vendor, this tutorial already covers a lot of common models from different vendors, if your 8051 MCU not mentioned here, please provide some information to improve this tutorial.
  
 **NOTE**:
-* for C8051/EFM8 series from Silicon Labs, you need 8-bit USB Debug Adapter with jtag and c2 protocol support to program and debug.
+* for C8051/EFM8 series from Silicon Labs, you need [8-bit USB Debug Adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) with jtag and c2 protocol support to program and debug.
 * for N76E series from Nuvoton, you need Nu-Link adatper (or Nu-Link-Me from the official EVB) to program (lack of opensource debugging support now).
 
 # Toolchain overview
@@ -289,9 +289,10 @@ There is no good and confirm-to-work opensource utilities to program EFM8 with C
 
 Here I recommend to use [official linux utils from Silicon Labs](https://github.com/cjacker/siliconlabs-c8051-efm8-utils), include `device8051` to detect device, `flash8051` with usb debug adapter and `flashefm8` with jlink.
 
-For example, I have a [EFM8BB1-LCK](https://www.silabs.com/development-tools/mcu/8-bit/efm8bb1lck-starter-kit) board with usb debug adapter 'Toolstick F330' on board.
+For example, I have an [EFM8BB1-LCK](https://www.silabs.com/development-tools/mcu/8-bit/efm8bb1lck-starter-kit) board with usb debug adapter 'Toolstick F330 DC' on board, I can use `flash8051` to program it.
 
-I can use `flash8051` to program it, just connect the board directly to PC via USB cable.
+If you have EFM8 breakout board without any Debugger on-board, you can use [8-bit USB Debug Adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) to program it.
+
 
 To detect device:
 
@@ -404,9 +405,9 @@ https://github.com/conorpp/efm8-arduino-programmer : using arduino mega to progr
 https://github.com/christophe94700/efm8-arduino-programmer : using arduino uno/nano to program EFM8
 
 
-## for Silicon Labs C8051Fxx
+## for Silicon Labs C8051
 
-As metioned above, C8051Fxx series 8051 MCU from Silicon Labs requires a special ICE device to program and debug. these MCUs support either JTAG or C2 protocol. you need to acquire such a device (usally an usb debug adapter) first and wire it up before you continue reading .
+As metioned above, C8051 series MCU from Silicon Labs requires [8-bit USB Debug Adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) to program and debug. these MCUs support either JTAG or C2 protocol. you need to acquire such a device first and wire it up before you continue reading this section .
 
 ### with flash8051 from silicon labs
 
@@ -448,7 +449,7 @@ sudo flash8051 -sn EC60000B878 -tif c2 -erasemode full -upload filename.hex
 
 ### with ec2-new
 
-[ec2-new](https://github.com/paragonRobotics/ec2-new) is a fork of [e2drv](http://ec2drv.sourceforge.net/), an opensource project to support Silicon Labs USB Debug Adapter (UDA).
+[ec2-new](https://github.com/paragonRobotics/ec2-new) is a fork of [e2drv](http://ec2drv.sourceforge.net/), an opensource project to support Silicon Labs [USB Debug Adapter (UDA)](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter).
 
 ec2tools contain programs that use the core library to perform various actions.
 
