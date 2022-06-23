@@ -20,12 +20,12 @@ By the way, the most fast 8051 MCU is C8051F120(100 Mhz) and EFM8LB(72 Mhz) from
     - [stcgal](https://github.com/cjacker/opensource-toolchain-8051#stcgal)
     - [stcflash](https://github.com/cjacker/opensource-toolchain-8051#stcflash)
   + [for WCH CH55x](https://github.com/cjacker/opensource-toolchain-8051#for-wch-ch55x)
-  + [for Silicon Labs EFM8](https://github.com/cjacker/opensource-toolchain-8051#for-silicon-labs-efm8)
-    - [with C2](https://github.com/cjacker/opensource-toolchain-8051#with-c2)
-    - [with factory programmed UART bootloader](https://github.com/cjacker/opensource-toolchain-8051#with-factory-programmed-uart-bootloader)
   + [for Silicon Labs C8051](https://github.com/cjacker/opensource-toolchain-8051#for-silicon-labs-c8051)
     - [with flash8051 from silicon labs](https://github.com/cjacker/opensource-toolchain-8051#with-flash8051-from-silicon-labs)
     - [with ec2-new](https://github.com/cjacker/opensource-toolchain-8051#with-ec2-new)
+  + [for Silicon Labs EFM8](https://github.com/cjacker/opensource-toolchain-8051#for-silicon-labs-efm8)
+    - [with C2](https://github.com/cjacker/opensource-toolchain-8051#with-c2)
+    - [with factory programmed UART bootloader](https://github.com/cjacker/opensource-toolchain-8051#with-factory-programmed-uart-bootloader)
   + [for Nuvoton N76Exxx](https://github.com/cjacker/opensource-toolchain-8051#for-nuvoton-n76exxx)
   + [for Cypress CY7C68013A EZ-USB FX2LP](https://github.com/cjacker/opensource-toolchain-8051#for-cypress-cy7c68013a-ez-usb-fx2lp)
   + [for Atmel AT89S5x (now MicroChip)](https://github.com/cjacker/opensource-toolchain-8051#for-atmel-at89s5x-now-microchip)
@@ -278,6 +278,131 @@ sudo ch55x-isptool firmwire.bin
 
 Another good isp tool is [ch552tool](https://github.com/MarsTechHAN/ch552tool). it written by python and can support CH551/CH552/CH553/CH554/CH559 with various bootloader version.
 
+## for Silicon Labs C8051
+
+As metioned above, C8051 series MCU from Silicon Labs requires [8-bit USB Debug Adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) to program and debug. these MCUs support either JTAG or C2 protocol. you need to acquire such a device first and wire it up before you continue reading this section .
+
+### with flash8051 from silicon labs
+
+There are [official linux utils from Silicon Labs](https://github.com/cjacker/siliconlabs-c8051-efm8-utils), include `device8051` to detect device, `flash8051` work with usb debug adapter. Some part of these utils are open-source.
+
+Take C8051F320 as example, to detect the adapter and target device infomation:
+
+```
+sudo device8051 -slist
+```
+The output looks like:
+```
+deviceCount = 1
+device (EC60000B878) {
+  adapterLabel = USB Debug Adapter
+  SerialNo = EC60000B878
+  targetInterface = c2
+  Name = C8051F320
+  Type = MCU
+  Family = 8051
+  BoardID =
+  BoardCount = 0
+  HardwareID = 0x9
+  DerivativeID = 0x58
+  HardwareRev = 0x3
+  DerivativeRev = 0x6
+  Unsupported = 0
+  Indeterminate = 0
+  Connected = 0
+  Locked = 0
+}
+```
+
+To program:
+
+```
+sudo flash8051 -sn EC60000B878 -tif c2 -erasemode full -upload filename.hex
+```
+
+### with ec2-new
+
+[ec2-new](https://github.com/paragonRobotics/ec2-new) is a fork of [e2drv](http://ec2drv.sourceforge.net/), an opensource project to support Silicon Labs [USB Debug Adapter (UDA)](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter). It contain a lot of programs for device detection and programming, and newcdb is the text-based interactive debugger, which can be used to fully debug programs (if device supported).
+
+By the way, there are a lot of USB Debug Adapter clones you can buy, The official UDA does **NOT** provide 3.3v voltage output, but some clones called 'U-EC6' provide 3.3v voltage output.
+
+As I verified, the [official EC6 USB debug adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) and other clones (no matter U-EC3 or U-EC6) works very well. if you encounter any issue, please try to reset the firmware with official [USB Reset Utility](https://www.silabs.com/documents/login/software/USB_Reset_Utility.zip).
+
+There is different version of 'USB Reset Utility':
+```
+  USB Reset Utility Version 1.7 - June 1, 2013
+  USB Reset Utility Version 1.6 - December 17, 2012
+  USB Reset Utility Version 1.5 - August 1, 2012
+  USB Reset Utility Version 1.3 - September 17, 2007
+  USB Reset Utility Version 1.1 - September 12, 2006
+```
+
+Some UDA clones called 'U-EC6' can only use 'USB Reset Utility Version 1.3' to reset the firmware. But the official UDA can use latest 1.7 version to reset.
+
+I make a fork of 'ec2-new' to fix some bugs and add more features, some of them already submitted and accepted by upstream. Up to now, it's better to use my fork.
+
+**Build and Installation:**
+
+```
+git clone https://github.com/cjacker/ec2-new.git
+cd ec2-new
+autoreconf -ivf
+./configure --prefix=/usr/local
+make
+sudo make install
+```
+
+**Detect device:**
+
+```
+sudo ec3adapters
+sudo ec2device --port USB
+```
+
+**Program:**
+
+```
+sudo ec2writeflash --port USB --hex xxx.hex --run
+```
+
+**Debug:**
+
+```
+$ sudo newcdb
+(newcdb) set target SL51
+current target <none>
+selecting target SL51
+(newcdb) set target port USB
+set port 'USB'
+(newcdb) set target connect
+NOT C2, Trying JTAG
+Debug adaptor ver = 0x19
+(newcdb) file firmware
+Clearing all breakpoints.
+Clearing all breakpoints in target.
+Debug adaptor ver = 0x19
+Loading file 'firmware.ihx'
+Writing to flash with auto erase as necessary
+        Writing 167 bytes at 0x0000
+Erasing scratchpaderasing scratchpad sector at addr=0x00000
+erasing scratchpad sector at addr=0x00080
+Flash write successful.
+(newcdb) r
+```
+
+
+
+### other opensource c2 programmer
+
+There are also some other programming solutions:
+
+~~https://github.com/Guntermann-Drunck/c2tool~~
+
+~~https://github.com/merbanan/c2gen and https://github.com/merbanan/c2tool (**verified, not work**)~~
+
+~~https://github.com/x893/C2.Flash and http://akb77.com/g/silabs/jump-to-silabs-step-1/: using stm32/arduino to program C8051. (**verified, not work**)~~
+
+
 
 ## for Silicon Labs EFM8
 
@@ -287,13 +412,16 @@ EFM8 can be programmed with C2 protocol or with UART bootloader.
 
 There is no good and confirm-to-work opensource utilities to program EFM8 with C2 protocol except ['ec2-new'](https://github.com/cjacker/ec2-new), although there are some opensource projects trying to implement C2 protocols with GPIO or arduino, but all of them don't work as expected or have very limited device support and need verified.
 
-You can use ['ec2-new'](https://github.com/cjacker/ec2-new) with UDA to program EFM8 without any problem (only program, partially support debugging).
+You can use ['ec2-new'](https://github.com/cjacker/ec2-new) with UDA to program EFM8 without any problem (only program, since SiLabs didn't expost SFR_BP information). 
 
-Here I recommend to use [official linux utils from Silicon Labs](https://github.com/cjacker/siliconlabs-c8051-efm8-utils), include `device8051` to detect device, `flash8051` with usb debug adapter and `flashefm8` with jlink.
+For usage of 'ec2-new', please refer to above 'C8051 section'.
+
+
+SiLabs also officially provided [linux utils to program C8051 and EFM8](https://github.com/cjacker/siliconlabs-c8051-efm8-utils) as mentioned in 'C8051 section', include `device8051` to detect device, `flash8051` with usb debug adapter and `flashefm8` with jlink.
 
 If you have EFM8 breakout board without any Debugger on-board, you can use [8-bit USB Debug Adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) to program it.
 
-If you use official starter kit, usually there is a debugger on board, either toolstick or jlink. For example, I have an [EFM8BB1-LCK](https://www.silabs.com/development-tools/mcu/8-bit/efm8bb1lck-starter-kit) board with usb debug adapter 'Toolstick F330 DC' on board, I can use `flash8051` to program it.
+If you use official starter kit, usually there is a debugger on board, either toolstick or jlink. For example, I have an [EFM8BB1-LCK](https://www.silabs.com/development-tools/mcu/8-bit/efm8bb1lck-starter-kit) board with 'Toolstick F330 DC' debugger on board, this toolstick debugger can not be supported by 'ec2-new', you have to use `flash8051` to program it.
 
 To detect device:
 
@@ -407,148 +535,6 @@ https://github.com/jaromir-sukuba/efm8prog/ : using PIC to program EFM8
 
 ~~https://github.com/christophe94700/efm8-arduino-programmer : using arduino uno/nano to program EFM8~~
 
-
-## for Silicon Labs C8051
-
-As metioned above, C8051 series MCU from Silicon Labs requires [8-bit USB Debug Adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) to program and debug. these MCUs support either JTAG or C2 protocol. you need to acquire such a device first and wire it up before you continue reading this section .
-
-### with flash8051 from silicon labs
-
-As mentioned in EFM8 section, there are [official linux utils from Silicon Labs](https://github.com/cjacker/siliconlabs-c8051-efm8-utils), include `device8051` to detect device, `flash8051` work with usb debug adapter.
-
-Take C8051F320 as example, to detect the adapter and target device infomation:
-
-```
-sudo device8051 -slist
-```
-The output looks like:
-```
-deviceCount = 1
-device (EC60000B878) {
-  adapterLabel = USB Debug Adapter
-  SerialNo = EC60000B878
-  targetInterface = c2
-  Name = C8051F320
-  Type = MCU
-  Family = 8051
-  BoardID =
-  BoardCount = 0
-  HardwareID = 0x9
-  DerivativeID = 0x58
-  HardwareRev = 0x3
-  DerivativeRev = 0x6
-  Unsupported = 0
-  Indeterminate = 0
-  Connected = 0
-  Locked = 0
-}
-```
-
-To program:
-
-```
-sudo flash8051 -sn EC60000B878 -tif c2 -erasemode full -upload filename.hex
-```
-
-### with ec2-new
-
-[ec2-new](https://github.com/paragonRobotics/ec2-new) is a fork of [e2drv](http://ec2drv.sourceforge.net/), an opensource project to support Silicon Labs [USB Debug Adapter (UDA)](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter).
-
-ec2tools contain programs that use the core library to perform various actions.
-
-* ec2test-any - test the opperation of a micro / debugger combination
-* ec2readflash - read the target flash memory.
-* ec2writeflash - write to the target flash memory.
-* ec2device - identify connected microprocessor
-* ec3adapters - list all USB debug adaptors and their serial numbers (for both EC3 and toolstick debuggers)
-* ec2readfw - read the debugger firmware image
-* ec2-update-fw - write new firmware into the debugger
-
-newcdb is the text-based interactive debugger, which can be used to fully debug programs
-
-* flash firmware to devices
-* inspect all registers, SFRs, RAM, code, and XRAM
-* modify all registers, SFRs, RAM, and XRAM
-* set breakpoints
-* run, stop, and step through programs
-
-By the way, there are a lot of USB Debug Adapter clones you can buy, The official UDA does **NOT** provide 3.3v voltage output, but some clones of 'EC6' provide 3.3v voltage output. There is also so-called 'EC3' UDA in market.
-
-As I verified, the [official EC6 USB debug adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) and other clones (no matter EC3 or EC6) works very well. if you encounter any issue, please try to reset the firmware with official [USB Reset Utility](https://www.silabs.com/documents/login/software/USB_Reset_Utility.zip).
-
-There is different version of 'USB Reset Utility':
-```
-  USB Reset Utility Version 1.7 - June 1, 2013
-  USB Reset Utility Version 1.6 - December 17, 2012
-  USB Reset Utility Version 1.5 - August 1, 2012
-  USB Reset Utility Version 1.3 - September 17, 2007
-  USB Reset Utility Version 1.1 - September 12, 2006
-```
-
-Some UDA clones called 'EC6' can only use 'USB Reset Utility Version 1.3' to reset the firmware. But the official UDA can use latest 1.7 version to reset.
-
-As I tested, if you try to use official utility 'flash8051' with UDA, it may inform you that flash8051 is updating the UDA firmware, but maybe it will encounter issues and can not use it with 'ec2-new' anymore, you can use USB Reset Utility to reset the firmware to address this issue.
-
-**Build and Installation:**
-
-```
-git clone https://github.com/cjacker/ec2-new.git
-cd ec2-new
-autoreconf -ivf
-./configure --prefix=/usr/local
-make
-sudo make install
-```
-
-**Detect device:**
-
-```
-sudo ec3adapters
-sudo ec2device --port USB
-```
-
-**Program:**
-
-```
-sudo ec2writeflash --port USB --hex xxx.hex --run
-```
-
-**Debug:**
-
-```
-$ sudo newcdb
-(newcdb) set target SL51
-current target <none>
-selecting target SL51
-(newcdb) set target port USB
-set port 'USB'
-(newcdb) set target connect
-NOT C2, Trying JTAG
-Debug adaptor ver = 0x19
-(newcdb) file firmware
-Clearing all breakpoints.
-Clearing all breakpoints in target.
-Debug adaptor ver = 0x19
-Loading file 'firmware.ihx'
-Writing to flash with auto erase as necessary
-        Writing 167 bytes at 0x0000
-Erasing scratchpaderasing scratchpad sector at addr=0x00000
-erasing scratchpad sector at addr=0x00080
-Flash write successful.
-(newcdb) r
-```
-
-
-
-### other opensource c2 programmer
-
-There are also some other programming solutions:
-
-~~https://github.com/Guntermann-Drunck/c2tool~~
-
-~~https://github.com/merbanan/c2gen and https://github.com/merbanan/c2tool (**verified, not work**)~~
-
-~~https://github.com/x893/C2.Flash and http://akb77.com/g/silabs/jump-to-silabs-step-1/: using stm32/arduino to program C8051. (**verified, not work**)~~
 
 
 ## for Nuvoton N76Exxx
