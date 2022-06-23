@@ -285,7 +285,9 @@ EFM8 can be programmed with C2 protocol or with UART bootloader.
 
 ### with C2
 
-There is no good and confirm-to-work opensource utilities to program EFM8 with C2 protocol, although there are some opensource projects trying to implement C2 protocols with GPIO or arduino, but all of them don't work as expected or have very limited device support.
+There is no good and confirm-to-work opensource utilities to program EFM8 with C2 protocol except ['ec2-new'](https://github.com/cjacker/ec2-new), although there are some opensource projects trying to implement C2 protocols with GPIO or arduino, but all of them don't work as expected or have very limited device support and need verified.
+
+You can use ['ec2-new'](https://github.com/cjacker/ec2-new) with UDA to program EFM8 without any problem (only program, partially support debugging).
 
 Here I recommend to use [official linux utils from Silicon Labs](https://github.com/cjacker/siliconlabs-c8051-efm8-utils), include `device8051` to detect device, `flash8051` with usb debug adapter and `flashefm8` with jlink.
 
@@ -485,12 +487,12 @@ There is different version of 'USB Reset Utility':
 
 Some UDA clones called 'EC6' can only use 'USB Reset Utility Version 1.3' to reset the firmware. But the official UDA can use latest 1.7 version to reset.
 
-As I tested, if you try to use official utility 'flash8051' with UDA, it may inform you that flash8051 is updating the UDA firmware, but may encounter issues and can not use it with 'ec2-new' anymore, then you can use USB Reset Utility to reset the firmware to address this issue.
+As I tested, if you try to use official utility 'flash8051' with UDA, it may inform you that flash8051 is updating the UDA firmware, but maybe it will encounter issues and can not use it with 'ec2-new' anymore, you can use USB Reset Utility to reset the firmware to address this issue.
 
 **Build and Installation:**
 
 ```
-git clone https://github.com/paragonRobotics/ec2-new.git
+git clone https://github.com/cjacker/ec2-new.git
 cd ec2-new
 autoreconf -ivf
 ./configure --prefix=/usr/local
