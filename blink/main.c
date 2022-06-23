@@ -16,7 +16,7 @@
 
 #elif defined(C8051F320)
   #include <C8051F320.h>
-  #define LED P0_6
+  #define LED P2_0 //CJMCU F320 on-board LED
 
 #elif defined(EFM8BB1) || defined(EFM8BB2)
   __sfr __at(0x97) WDTCN;
