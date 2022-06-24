@@ -322,7 +322,7 @@ sudo flash8051 -sn EC60000B878 -tif c2 -erasemode full -upload filename.hex
 
 ### with ec2-new
 
-[ec2-new](https://github.com/paragonRobotics/ec2-new) is a fork of [e2drv](http://ec2drv.sourceforge.net/), an opensource project to support Silicon Labs [USB Debug Adapter (UDA)](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter). It contain a lot of programs for device detection and programming, and newcdb is the text-based interactive debugger, which can be used to fully debug programs (if device supported).
+[ec2-new](https://github.com/paragonRobotics/ec2-new) is a fork of [e2drv](http://ec2drv.sourceforge.net/), an opensource project to support Silicon Labs [USB Debug Adapter (UDA)](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter). It contain a lot of programs for device detection and programming, and newcdb is the text-based interactive debugger, which can be used to debug programs (if device supported).
 
 By the way, there are a lot of USB Debug Adapter clones you can buy, The official UDA does **NOT** provide 3.3v voltage output, but some clones called 'U-EC6' provide 3.3v voltage output.
 
@@ -367,6 +367,8 @@ sudo ec2writeflash --port USB --hex xxx.hex --run
 
 **Debug:**
 
+Note: newcdb is in very early stage, lack of a lot of features and may not work as expected.
+
 ```
 $ sudo newcdb
 (newcdb) set target SL51
@@ -387,6 +389,7 @@ Writing to flash with auto erase as necessary
 Erasing scratchpaderasing scratchpad sector at addr=0x00000
 erasing scratchpad sector at addr=0x00080
 Flash write successful.
+(newcdb) info Registers
 (newcdb) r
 ```
 
