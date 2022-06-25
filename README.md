@@ -365,33 +365,7 @@ sudo ec2device --port USB
 sudo ec2writeflash --port USB --hex xxx.hex --run
 ```
 
-**Debug:**
 
-Note: newcdb is in very early stage, lack of a lot of features and may not work as expected.
-
-```
-$ sudo newcdb
-(newcdb) set target SL51
-current target <none>
-selecting target SL51
-(newcdb) set target port USB
-set port 'USB'
-(newcdb) set target connect
-NOT C2, Trying JTAG
-Debug adaptor ver = 0x19
-(newcdb) file firmware
-Clearing all breakpoints.
-Clearing all breakpoints in target.
-Debug adaptor ver = 0x19
-Loading file 'firmware.ihx'
-Writing to flash with auto erase as necessary
-        Writing 167 bytes at 0x0000
-Erasing scratchpaderasing scratchpad sector at addr=0x00000
-erasing scratchpad sector at addr=0x00080
-Flash write successful.
-(newcdb) info Registers
-(newcdb) r
-```
 
 
 
@@ -740,6 +714,41 @@ A monitor firmware need to program to MCU first. good examples of monitors are [
 an ICE device is usually a little bit expensive. for Silicon Labs C8051Fx series, you can use U-EC ICE adapters with `newcdb` provided by 'e2drv' mentioned above.
 
 And you can always use 'printf' via UART:-)
+
+
+Here is a brief introduction about how to use newcdb to debug C8051 program. You need use '--debug' arg with 'sdcc' to generate the debug information, take blink example in this repo as reference, after build successfully, a 'firmware.cdb' will be generated.
+
+now in current dir, run:
+```
+ddd --debugger newcdb
+```
+
+In command window of DDD, input:
+```
+set target SL51
+set target port USB
+set target connect
+file firmware
+```
+NOTE, 'file' command take 'filename' without suffix.
+
+After 'firmware' loaded to device, the sources will be loaded into DDD's window automatically, then you can set breakpoint, run, continue, step, etc. Just as gdb.
+
+newcdb is still lack of some features, but can be used to debug program.
+
+<img src="https://user-images.githubusercontent.com/1625340/175755827-3ab167c8-52d0-4592-870c-66fd13253412.png" width=50%/>
+
+By the way, I use Xft font with motif, please append:
+```
+*renderTable: xft
+*xft*fontType: FONT_IS_XFT
+*xft*fontName: Sans
+```
+to `~/.Xresources`, and run `xrdb -load ~/.Xresources` to reload it.
+
+then you can launch ddd with `ddd --debugger newcdb --fontsize 12`.
+
+
 
 
 # Project template
