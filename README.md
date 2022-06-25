@@ -742,7 +742,7 @@ By the way, I use Xft font with motif, please append:
 ```
 *renderTable: xft
 *xft*fontType: FONT_IS_XFT
-*xft*fontName: Sans
+*xft*fontName: Monospace
 ```
 to `~/.Xresources`, and run `xrdb -load ~/.Xresources` to reload it.
 
