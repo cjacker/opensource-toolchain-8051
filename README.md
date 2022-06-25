@@ -711,14 +711,15 @@ A monitor firmware need to program to MCU first. good examples of monitors are [
 
 * Debugging on target using an ICE (in circuit emulator):
 
-an ICE device is usually a little bit expensive. for Silicon Labs C8051Fx series, you can use U-EC ICE adapters with `newcdb` provided by 'e2drv' mentioned above.
+An ICE device is usually a little bit expensive. for Silicon Labs C8051Fx series, you can use UDA with `newcdb` to debug program for supported device. 
 
-And you can always use 'printf' via UART:-)
+And you can always use UART 'printf', this is the most common debug way we usually use.
 
 
-Here is a brief introduction about how to use newcdb to debug C8051 program. You need use '--debug' arg with 'sdcc' to generate the debug information, take blink example in this repo as reference, after build successfully, a 'firmware.cdb' will be generated.
+Here is a brief introduction about how to use newcdb to debug C8051 program. Make sure your device is supported by newcdb and use '--debug' arg with 'sdcc' to generate the debug information, take 'blink' example in this repo as reference, after build successfully, a 'firmware.cdb' will be generated.
 
 now in current dir, run:
+
 ```
 ddd --debugger newcdb
 ```
@@ -732,24 +733,19 @@ file firmware
 ```
 NOTE, 'file' command take 'filename' without suffix.
 
-After 'firmware' loaded to device, the sources will be loaded into DDD's window automatically, then you can set breakpoint, run, continue, step, etc. Just as gdb.
-
-newcdb is still lack of some features, but can be used to debug program.
+After 'firmware.ihx' loaded to device, the corresponding sources will be loaded into DDD's window automatically, then you can set breakpoint/ run/continue/step..., Just as gdb. newcdb is still lack of some features, but can be used to debug program.
 
 <img src="https://user-images.githubusercontent.com/1625340/175755827-3ab167c8-52d0-4592-870c-66fd13253412.png" width=50%/>
 
-By the way, I use Xft font with motif, please append:
+By the way, I use Xft font with MOTIF for better look&feel, please append:
+
 ```
 *renderTable: xft
 *xft*fontType: FONT_IS_XFT
 *xft*fontName: Monospace
 ```
-to `~/.Xresources`, and run `xrdb -load ~/.Xresources` to reload it.
 
-then you can launch ddd with `ddd --debugger newcdb --fontsize 12`.
-
-
-
+to `~/.Xresources`, and run `xrdb -load ~/.Xresources` to reload it. then you can launch ddd with `ddd --debugger newcdb --fontsize 12`.
 
 # Project template
 
