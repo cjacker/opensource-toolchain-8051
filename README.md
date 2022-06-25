@@ -389,16 +389,14 @@ EFM8 can be programmed with C2 protocol or with UART bootloader.
 
 There is no good and confirm-to-work opensource utilities to program EFM8 with C2 protocol except ['ec2-new'](https://github.com/cjacker/ec2-new), although there are some opensource projects trying to implement C2 protocols with GPIO or arduino, but all of them don't work as expected or have very limited device support and need verified.
 
-You can use ['ec2-new'](https://github.com/cjacker/ec2-new) with UDA to program EFM8 without any problem (only program, since SiLabs didn't expost SFR_BP information). 
-
-For usage of 'ec2-new', please refer to above 'C8051 section'.
+You can use ['ec2-new'](https://github.com/cjacker/ec2-new) with UDA to program some EFM8 mcu. For usage of 'ec2-new', please refer to above 'C8051 section'.
 
 
 SiLabs also officially provided [linux utils to program C8051 and EFM8](https://github.com/cjacker/siliconlabs-c8051-efm8-utils) as mentioned in 'C8051 section', include `device8051` to detect device, `flash8051` with usb debug adapter and `flashefm8` with jlink.
 
 If you have EFM8 breakout board without any Debugger on-board, you can use [8-bit USB Debug Adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) to program it.
 
-If you use official starter kit, usually there is a debugger on board, either toolstick or jlink. For example, I have an [EFM8BB1-LCK](https://www.silabs.com/development-tools/mcu/8-bit/efm8bb1lck-starter-kit) board with 'Toolstick F330 DC' debugger on board, this toolstick debugger can not be supported by 'ec2-new', you have to use `flash8051` to program it.
+If you use official starter kit or old toolstick development platform, usually there is a debugger on board, either toolstick or jlink. For example, I have an [EFM8BB1-LCK](https://www.silabs.com/development-tools/mcu/8-bit/efm8bb1lck-starter-kit) board with 'Toolstick F330 DC' debugger on board, this toolstick debugger can not be supported by 'ec2-new', you have to use `flash8051` to program it.
 
 To detect device:
 
@@ -438,11 +436,13 @@ To program:
 sudo flash8051 -sn LCK0081654 -tif c2 -erasemode full -upload firmware.hex
 ```
 
-Since [EFM8BB1-LCK has NO UART bootloader by default](https://community.silabs.com/s/question/0D58Y00008K6xfoSAB/efm8bb1lck-board-and-onchip-uart-bootloader?language=en_US), the customer firmware wiped the pre-installed UART bootloader. there utilities can help you to program the UART bootloader back.
+Since [EFM8BB1-LCK has NO UART bootloader by default](https://community.silabs.com/s/question/0D58Y00008K6xfoSAB/efm8bb1lck-board-and-onchip-uart-bootloader?language=en_US), the customer firmware wiped the pre-installed UART bootloader. The official utilities can help you to program the UART bootloader back.
+
+NOTE, ec2-new still have some issues, it can not be use to program EFM8 bootloader up to now.
 
 ### with factory programmed UART bootloader
 
-most of EFM8 devices are factory programmed with a bootloader. Below table indicates which devices are orderable with the specified factory-programmed bootloader. For more information, please refer to [AN945: EFM8 Factory Bootloader User's Guide](https://www.silabs.com/documents/public/application-notes/an945-efm8-factory-bootloader-user-guide.pdf).
+Most of EFM8 devices are factory programmed with a bootloader. Below table indicates which devices are orderable with the specified factory-programmed bootloader. For more information, please refer to [AN945: EFM8 Factory Bootloader User's Guide](https://www.silabs.com/documents/public/application-notes/an945-efm8-factory-bootloader-user-guide.pdf).
  
 ![screenshot-2022-06-09-10-35-25](https://user-images.githubusercontent.com/1625340/172752098-91b125cb-dc5f-4124-9da9-dd89c1406590.png)
 
@@ -455,9 +455,11 @@ sudo flash8051 -sn LCK0081654 -tif c2 -erasemode full -upload EFM8BB10F8G_QSOP24
 
 The bootloader file 'EFM8BB10F8G_QSOP24.hex' for EFM8BB1-LCK board can be found in EFM8 Factory Bootloader package [AN945SW](https://www.silabs.com/documents/public/example-code/AN945SW.zip), located at 'ProductionDeviceHexfiles/EFM8BB1/EFM8BB10F8G_QSOP24.hex'. 
 
-Bootloaders for All models can be found in this package. if you use simple breakout board without usb debug adapter on-board, you may need a standalone 8bit usb debug adapter(aka, U-EC6) from silicon labs.
+Bootloaders for all EFM8 models can be found in this package. if you use simple breakout board without usb debug adapter on-board, you may need a standalone 8bit usb debug adapter from silicon labs.
 
-After bootloader programmed, you could use a **3.3v** serial adapter to connect to the RX (P0.5, connect to serial adapter TX) and TX (P0.4, connect to serial adapter RX). Empty chips will enter the bootloader on every start. Once they have a firmware flashed the bootloader needs to be activated by pulling C2D low (on this chip, connect P2.0 to GND).
+After bootloader programmed, you could use a serial adapter to connect to the RX (P0.5, connect to serial adapter TX) and TX (P0.4, connect to serial adapter RX). Empty chips will enter the bootloader on every start. Once they have a firmware flashed **the bootloader needs to be activated by pulling C2D low (on this chip, connect P2.0 to GND).**
+
+Before power on the target device, please check the datasheet to make sure whether it use 5v or 3.3v voltage and check your power supply.
 
 The related programming utilities with EFM8 UART bootloader can be downloaded from my [efm8load](https://github.com/cjacker/efm8load) repo.
 
@@ -472,7 +474,7 @@ $ efm8load -p /dev/ttyUSB0 -b 115200 -t filename.efm8
 ```
 
 
-And there are also some thirdparty opensource projects for different EFM8 models,for example:
+And there are also some thirdparty opensource projects for different EFM8 models, for example:
 
 https://github.com/fishpepper/efm8load  and https://fishpepper.de/2016/10/15/efm8-bootloader-flash-tool-efm8load-py/ (it already implement the bootloader protocol and does NOT require hex2boot)
 
@@ -511,8 +513,6 @@ https://github.com/jaromir-sukuba/efm8prog/ : using PIC to program EFM8
 ~~https://github.com/conorpp/efm8-arduino-programmer : using arduino mega to program EFM8~~
 
 ~~https://github.com/christophe94700/efm8-arduino-programmer : using arduino uno/nano to program EFM8~~
-
-
 
 ## for Nuvoton N76Exxx
 To program Nuvoton N76E series 8051 MCU, you need have a Nu-link adapter (from offcial EVB or standalone version) and wire up 5 pins: VCC/DAT/CLK/RST/GND.
