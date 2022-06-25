@@ -715,8 +715,9 @@ An ICE device is usually a little bit expensive. for Silicon Labs C8051Fx series
 
 And you can always use UART 'printf', this is the most common debug way we usually use.
 
+Most of time I do NOT use debugger, especially to communicate with peripherals, since various protocols is timing critical and can not be set breakpoint, logic analyzer may be more useful than software debugger.
 
-Here is a brief introduction about how to use newcdb to debug C8051 program. Make sure your device is supported by newcdb and use '--debug' arg with 'sdcc' to generate the debug information, take 'blink' example in this repo as reference, after build successfully, a 'firmware.cdb' will be generated.
+Anyway, here is a brief introduction about how to use newcdb to debug C8051 program. Make sure your device is supported by newcdb and use '--debug' arg with 'sdcc' to generate the debug information, take 'blink' example in this repo as reference, after build successfully, a 'firmware.cdb' will be generated.
 
 now in current dir, run:
 
