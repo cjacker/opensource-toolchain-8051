@@ -14,12 +14,19 @@
   #include <C8051F120.h>
   #define LED P3_3
 
+#elif defined(C8051F300)
+  #include <C8051F300.h>
+  #define LED P0_0 //on-board LED
+
 #elif defined(C8051F320)
   #include <C8051F320.h>
   #define LED P2_0 //CJMCU F320 on-board LED
 
+#elif defined(C8051F330)
+  #include <C8051F330.h>
+  #define LED P1_0 //on-board LED
 
-#elif defined(EFM8BB1) || defined(EFM8BB2) || defined(C8051F850)
+#elif defined(EFM8BB1) || defined(EFM8BB2) || defined(C8051F850) || defined(C8051F990)
   __sfr __at(0x97) WDTCN;
   __sfr __at(0xA5) P1MDOUT;
   __sfr __at(0xD5) P1SKIP;
@@ -33,6 +40,8 @@
   #elif defined(EFM8BB2) // my EFM8BB21F16G breakout board has LED to P13
     #define LED P13
   #elif defined(C8051F850)
+    #define LED P10 // official toolstick dev platform
+  #elif defined(C8051F990)
     #define LED P10 // official toolstick dev platform
   #endif
 
@@ -90,14 +99,32 @@ void main()
   // enable Crossbar
   XBR2 = 0x40;
   P3MDOUT = 0xff;
+
+#elif defined(C8051F300)
+  // disable watchdog
+  PCA0MD = 0x00;
+  // eanble Crossbar
+  XBR2 = 0x40;
+  // set P0 to Push-Pull
+  P0MDOUT = 0xff;
+
 #elif defined(C8051F320)
   // disable watchdog
-  PCA0MD = 0x00; 
+  PCA0MD = 0x00;
   // eanble Crossbar
   XBR1 = 0x40;
-  // set P0_6 to Push-Pull
-  P2MDOUT = 0x01;
-#elif defined(EFM8BB1) || defined(EFM8BB2) || defined(C8051F850)
+  // set P2 to Push-Pull
+  P2MDOUT = 0xff;
+
+#elif defined(C8051F330) 
+  // disable watchdog
+  PCA0MD = 0x00;
+  // eanble Crossbar
+  XBR1 = 0x40;
+  // set P1 to Push-Pull
+  P1MDOUT = 0xff;
+
+#elif defined(EFM8BB1) || defined(EFM8BB2) || defined(C8051F850) || defined(C8051F990)
   // disable watchdog
   WDTCN = 0xDE; //First key
   WDTCN = 0xAD; //Second key
