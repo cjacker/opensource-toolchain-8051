@@ -42,7 +42,7 @@
   #elif defined(C8051F850)
     #define LED P10 // official toolstick dev platform
   #elif defined(C8051F990)
-    #define LED P10 // official toolstick dev platform
+    #define LED P10
   #endif
 
 #elif defined(N76E003)
@@ -128,12 +128,12 @@ void main()
   // disable watchdog
   WDTCN = 0xDE; //First key
   WDTCN = 0xAD; //Second key
-  // p1.4 to push-pull
-  P1MDOUT = 0x10;
-  // P1.4 pin is skipped by the crossbar
-  P1SKIP = 0x10;
   // enable crossbar
   XBR2 = 0x40;
+  // p1 to push-pull
+  P1MDOUT = 0xff;
+  // P1 pin is skipped by the crossbar
+  P1SKIP = 0xff;
 #elif defined(N76E003)
   P1M1 = 0x00;
   P1M2 = 0x00;
