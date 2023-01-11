@@ -196,8 +196,9 @@ XBR2 equ 0xE3                 ; CROSSBAR CONFIGURATION REGISTER 2
 XBR3 equ 0xE4                 ; CROSSBAR CONFIGURATION REGISTER 3
 P6 equ 0xE8                   ; PORT 6
 P7 equ 0xF8                   ; PORT 7
-
+; /*
 ; Do NOT use sfr16 for CAN0DAT !
+; */
 
 ;  BIT Registers  
 

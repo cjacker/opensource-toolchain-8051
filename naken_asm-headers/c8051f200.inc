@@ -134,7 +134,6 @@ EX1 equ 0xAA                  ; EXTERNAL Interrupt 1 Enable
 ET1 equ 0xAB                  ; TIMER 1 Interrupt Enable
 ES equ 0xAC                   ; SERIAL PORT Interrupt Enable
 ET2 equ 0xAD                  ; TIMER 2 Interrupt Enable
-; Bit 6 not used
 EA equ 0xAF                   ; GLOBAL Interrupt Enable
 
 ;  IP  0xB8 
@@ -144,8 +143,6 @@ PX1 equ 0xBA                  ; EXTERNAL Interrupt 1 Priority
 PT1 equ 0xBB                  ; TIMER 1 Priority
 PS equ 0xBC                   ; SERIAL PORT Priority
 PT2 equ 0xBD                  ; TIMER 2 Priority
-; Bit 6 not used
-; Bit 7 not used
 
 ;  T2CON  0xC8 
 CPRL2 equ 0xC8                ; CAPTURE OR RELOAD SELECT

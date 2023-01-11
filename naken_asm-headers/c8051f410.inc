@@ -331,12 +331,12 @@ CP0AOEN equ 0x20              ; XBR0
 INT_EXT0 equ 0                ; External Interrupt 0
 INT_TIMER0 equ 1              ; Timer0 Overflow
 INT_EXT1 equ 2                ; External Interrupt 1
-INT_TIMER1 equ 3              ; Timer1 Overflow 
-INT_UART0 equ 4               ; Serial Port 0 
+INT_TIMER1 equ 3              ; Timer1 Overflow
+INT_UART0 equ 4               ; Serial Port 0
 INT_TIMER2 equ 5              ; Timer2 Overflow
 INT_SPI0 equ 6                ; Serial Peripheral Interface 0
 INT_SMBUS0 equ 7              ; SMBus0 Interface
-INT_RTC0 equ 8                ; RTC0 Interface 
+INT_RTC0 equ 8                ; RTC0 Interface
 INT_ADC0_WINDOW equ 9         ; ADC0 Window Comparison
 INT_ADC0_EOC equ 10           ; ADC0 End Of Conversion
 INT_PCA0 equ 11               ; PCA0 Peripheral
@@ -344,4 +344,4 @@ INT_COMPARATOR0 equ 12        ; Comparator0
 INT_COMPARATOR1 equ 13        ; Comparator1
 INT_TIMER3 equ 14             ; Timer3 Overflow
 INT_VREG_DROPOUT equ 15       ; VREG dropout
-INT_PORT_MATCH equ 16         ; Port Match 
+INT_PORT_MATCH equ 16         ; Port Match

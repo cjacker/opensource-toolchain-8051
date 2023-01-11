@@ -162,109 +162,109 @@ PCA0CP4 equ 0xFEFD            ; PCA CAPTURE 4 WORD
 ;  BIT Registers  
 
 ;  TCON  0x88 
-IT0 equ 0x88+0                ; TCON.0 - EXT. INTERRUPT 0 TYPE
-IE0 equ 0x88+1                ; TCON.1 - EXT. INTERRUPT 0 EDGE FLAG
-IT1 equ 0x88+2                ; TCON.2 - EXT. INTERRUPT 1 TYPE
-IE1 equ 0x88+3                ; TCON.3 - EXT. INTERRUPT 1 EDGE FLAG
-TR0 equ 0x88+4                ; TCON.4 - TIMER 0 ON/OFF CONTROL
-TF0 equ 0x88+5                ; TCON.5 - TIMER 0 OVERFLOW FLAG
-TR1 equ 0x88+6                ; TCON.6 - TIMER 1 ON/OFF CONTROL
-TF1 equ 0x88+7                ; TCON.7 - TIMER 1 OVERFLOW FLAG
+IT0 equ 0x88.0                ; TCON.0 - EXT. INTERRUPT 0 TYPE
+IE0 equ 0x88.1                ; TCON.1 - EXT. INTERRUPT 0 EDGE FLAG
+IT1 equ 0x88.2                ; TCON.2 - EXT. INTERRUPT 1 TYPE
+IE1 equ 0x88.3                ; TCON.3 - EXT. INTERRUPT 1 EDGE FLAG
+TR0 equ 0x88.4                ; TCON.4 - TIMER 0 ON/OFF CONTROL
+TF0 equ 0x88.5                ; TCON.5 - TIMER 0 OVERFLOW FLAG
+TR1 equ 0x88.6                ; TCON.6 - TIMER 1 ON/OFF CONTROL
+TF1 equ 0x88.7                ; TCON.7 - TIMER 1 OVERFLOW FLAG
 
 ;  SCON  0x98 
-RI equ 0x98+0                 ; SCON.0 - RECEIVE INTERRUPT FLAG
-RI0 equ 0x98+0                ; SCON.0 - RECEIVE INTERRUPT FLAG
-TI equ 0x98+1                 ; SCON.1 - TRANSMIT INTERRUPT FLAG
-TI0 equ 0x98+1                ; SCON.1 - TRANSMIT INTERRUPT FLAG
-RB8 equ 0x98+2                ; SCON.2 - RECEIVE BIT 8
-RB80 equ 0x98+2               ; SCON.2 - RECEIVE BIT 8
-TB8 equ 0x98+3                ; SCON.3 - TRANSMIT BIT 8
-TB80 equ 0x98+3               ; SCON.3 - TRANSMIT BIT 8
-REN equ 0x98+4                ; SCON.4 - RECEIVE ENABLE
-REN0 equ 0x98+4               ; SCON.4 - RECEIVE ENABLE
-SM2 equ 0x98+5                ; SCON.5 - MULTIPROCESSOR COMMUNICATION ENABLE
-MCE0 equ 0x98+5               ; SCON.5 - MULTIPROCESSOR COMMUNICATION ENABLE
-SM0 equ 0x98+7                ; SCON.7 - SERIAL MODE CONTROL BIT 0
-S0MODE equ 0x98+7             ; SCON.7 - SERIAL MODE CONTROL BIT 0
+RI equ 0x98.0                 ; SCON.0 - RECEIVE INTERRUPT FLAG
+RI0 equ 0x98.0                ; SCON.0 - RECEIVE INTERRUPT FLAG
+TI equ 0x98.1                 ; SCON.1 - TRANSMIT INTERRUPT FLAG
+TI0 equ 0x98.1                ; SCON.1 - TRANSMIT INTERRUPT FLAG
+RB8 equ 0x98.2                ; SCON.2 - RECEIVE BIT 8
+RB80 equ 0x98.2               ; SCON.2 - RECEIVE BIT 8
+TB8 equ 0x98.3                ; SCON.3 - TRANSMIT BIT 8
+TB80 equ 0x98.3               ; SCON.3 - TRANSMIT BIT 8
+REN equ 0x98.4                ; SCON.4 - RECEIVE ENABLE
+REN0 equ 0x98.4               ; SCON.4 - RECEIVE ENABLE
+SM2 equ 0x98.5                ; SCON.5 - MULTIPROCESSOR COMMUNICATION ENABLE
+MCE0 equ 0x98.5               ; SCON.5 - MULTIPROCESSOR COMMUNICATION ENABLE
+SM0 equ 0x98.7                ; SCON.7 - SERIAL MODE CONTROL BIT 0
+S0MODE equ 0x98.7             ; SCON.7 - SERIAL MODE CONTROL BIT 0
 
 ;  IE  0xA8 
-EX0 equ 0xA8+0                ; IE.0 - EXTERNAL INTERRUPT 0 ENABLE
-ET0 equ 0xA8+1                ; IE.1 - TIMER 0 INTERRUPT ENABLE
-EX1 equ 0xA8+2                ; IE.2 - EXTERNAL INTERRUPT 1 ENABLE
-ET1 equ 0xA8+3                ; IE.3 - TIMER 1 INTERRUPT ENABLE
-ES equ 0xA8+4                 ; IE.4 - SERIAL PORT INTERRUPT ENABLE
-ES0 equ 0xA8+4                ; IE.4 - SERIAL PORT INTERRUPT ENABLE
-ET2 equ 0xA8+5                ; IE.5 - TIMER 2 INTERRUPT ENABLE
-ESPI0 equ 0xA8+6              ; IE.6 - SPI0 INTERRUPT ENABLE
-EA equ 0xA8+7                 ; IE.7 - GLOBAL INTERRUPT ENABLE
+EX0 equ 0xA8.0                ; IE.0 - EXTERNAL INTERRUPT 0 ENABLE
+ET0 equ 0xA8.1                ; IE.1 - TIMER 0 INTERRUPT ENABLE
+EX1 equ 0xA8.2                ; IE.2 - EXTERNAL INTERRUPT 1 ENABLE
+ET1 equ 0xA8.3                ; IE.3 - TIMER 1 INTERRUPT ENABLE
+ES equ 0xA8.4                 ; IE.4 - SERIAL PORT INTERRUPT ENABLE
+ES0 equ 0xA8.4                ; IE.4 - SERIAL PORT INTERRUPT ENABLE
+ET2 equ 0xA8.5                ; IE.5 - TIMER 2 INTERRUPT ENABLE
+ESPI0 equ 0xA8.6              ; IE.6 - SPI0 INTERRUPT ENABLE
+EA equ 0xA8.7                 ; IE.7 - GLOBAL INTERRUPT ENABLE
 
 ;  IP  0xB8 
-PX0 equ 0xB8+0                ; IP.0 - EXTERNAL INTERRUPT 0 PRIORITY
-PT0 equ 0xB8+1                ; IP.1 - TIMER 0 PRIORITY
-PX1 equ 0xB8+2                ; IP.2 - EXTERNAL INTERRUPT 1 PRIORITY
-PT1 equ 0xB8+3                ; IP.3 - TIMER 1 PRIORITY
-PS equ 0xB8+4                 ; IP.4 - SERIAL PORT PRIORITY
-PS0 equ 0xB8+4                ; IP.4 - SERIAL PORT PRIORITY
-PT2 equ 0xB8+5                ; IP.5 - TIMER 2 PRIORITY
-PSPI0 equ 0xB8+6              ; IP.6 - SPI0 PRIORITY
+PX0 equ 0xB8.0                ; IP.0 - EXTERNAL INTERRUPT 0 PRIORITY
+PT0 equ 0xB8.1                ; IP.1 - TIMER 0 PRIORITY
+PX1 equ 0xB8.2                ; IP.2 - EXTERNAL INTERRUPT 1 PRIORITY
+PT1 equ 0xB8.3                ; IP.3 - TIMER 1 PRIORITY
+PS equ 0xB8.4                 ; IP.4 - SERIAL PORT PRIORITY
+PS0 equ 0xB8.4                ; IP.4 - SERIAL PORT PRIORITY
+PT2 equ 0xB8.5                ; IP.5 - TIMER 2 PRIORITY
+PSPI0 equ 0xB8.6              ; IP.6 - SPI0 PRIORITY
 
 ;  SMB0CN  0xC0 
-SI equ 0xC0+0                 ; SMB0CN.0 - SMBUS 0 INTERRUPT PENDING FLAG
-ACK equ 0xC0+1                ; SMB0CN.1 - SMBUS 0 ACKNOWLEDGE FLAG
-ARBLOST equ 0xC0+2            ; SMB0CN.2 - SMBUS 0 ARBITRATION LOST INDICATOR
-ACKRQ equ 0xC0+3              ; SMB0CN.3 - SMBUS 0 ACKNOWLEDGE REQUEST
-STO equ 0xC0+4                ; SMB0CN.4 - SMBUS 0 STOP FLAG
-STA equ 0xC0+5                ; SMB0CN.5 - SMBUS 0 START FLAG
-TXMODE equ 0xC0+6             ; SMB0CN.6 - SMBUS 0 TRANSMIT MODE INDICATOR
-MASTER equ 0xC0+7             ; SMB0CN.7 - SMBUS 0 MASTER/SLAVE INDICATOR
+SI equ 0xC0.0                 ; SMB0CN.0 - SMBUS 0 INTERRUPT PENDING FLAG
+ACK equ 0xC0.1                ; SMB0CN.1 - SMBUS 0 ACKNOWLEDGE FLAG
+ARBLOST equ 0xC0.2            ; SMB0CN.2 - SMBUS 0 ARBITRATION LOST INDICATOR
+ACKRQ equ 0xC0.3              ; SMB0CN.3 - SMBUS 0 ACKNOWLEDGE REQUEST
+STO equ 0xC0.4                ; SMB0CN.4 - SMBUS 0 STOP FLAG
+STA equ 0xC0.5                ; SMB0CN.5 - SMBUS 0 START FLAG
+TXMODE equ 0xC0.6             ; SMB0CN.6 - SMBUS 0 TRANSMIT MODE INDICATOR
+MASTER equ 0xC0.7             ; SMB0CN.7 - SMBUS 0 MASTER/SLAVE INDICATOR
 
 ;  TMR2CN  0xC8 
-T2XCLK equ 0xC8+0             ; TMR2CN.0 - TIMER 2 EXTERNAL CLOCK SELECT
-TR2 equ 0xC8+2                ; TMR2CN.2 - TIMER 2 ON/OFF CONTROL
-T2SPLIT equ 0xC8+3            ; TMR2CN.3 - TIMER 2 SPLIT MODE ENABLE
-TF2LEN equ 0xC8+5             ; TMR2CN.5 - TIMER 2 LOW BYTE INTERRUPT ENABLE
-TF2L equ 0xC8+6               ; TMR2CN.6 - TIMER 2 LOW BYTE OVERFLOW FLAG
-TF2 equ 0xC8+7                ; TMR2CN.7 - TIMER 2 OVERFLOW FLAG
-TF2H equ 0xC8+7               ; TMR2CN.7 - TIMER 2 HIGH BYTE OVERFLOW FLAG
+T2XCLK equ 0xC8.0             ; TMR2CN.0 - TIMER 2 EXTERNAL CLOCK SELECT
+TR2 equ 0xC8.2                ; TMR2CN.2 - TIMER 2 ON/OFF CONTROL
+T2SPLIT equ 0xC8.3            ; TMR2CN.3 - TIMER 2 SPLIT MODE ENABLE
+TF2LEN equ 0xC8.5             ; TMR2CN.5 - TIMER 2 LOW BYTE INTERRUPT ENABLE
+TF2L equ 0xC8.6               ; TMR2CN.6 - TIMER 2 LOW BYTE OVERFLOW FLAG
+TF2 equ 0xC8.7                ; TMR2CN.7 - TIMER 2 OVERFLOW FLAG
+TF2H equ 0xC8.7               ; TMR2CN.7 - TIMER 2 HIGH BYTE OVERFLOW FLAG
 
 ;  PSW  0xD0 
-PARITY equ 0xD0+0             ; PSW.0 - ACCUMULATOR PARITY FLAG
-F1 equ 0xD0+1                 ; PSW.1 - FLAG 1
-OV equ 0xD0+2                 ; PSW.2 - OVERFLOW FLAG
-RS0 equ 0xD0+3                ; PSW.3 - REGISTER BANK SELECT 0
-RS1 equ 0xD0+4                ; PSW.4 - REGISTER BANK SELECT 1
-F0 equ 0xD0+5                 ; PSW.5 - FLAG 0
-AC equ 0xD0+6                 ; PSW.6 - AUXILIARY CARRY FLAG
-CY equ 0xD0+7                 ; PSW.7 - CARRY FLAG
+PARITY equ 0xD0.0             ; PSW.0 - ACCUMULATOR PARITY FLAG
+F1 equ 0xD0.1                 ; PSW.1 - FLAG 1
+OV equ 0xD0.2                 ; PSW.2 - OVERFLOW FLAG
+RS0 equ 0xD0.3                ; PSW.3 - REGISTER BANK SELECT 0
+RS1 equ 0xD0.4                ; PSW.4 - REGISTER BANK SELECT 1
+F0 equ 0xD0.5                 ; PSW.5 - FLAG 0
+AC equ 0xD0.6                 ; PSW.6 - AUXILIARY CARRY FLAG
+CY equ 0xD0.7                 ; PSW.7 - CARRY FLAG
 
 ;  PCA0CN  0xD8 
-CCF0 equ 0xD8+0               ; PCA0CN.0 - PCA MODULE 0 CAPTURE/COMPARE FLAG
-CCF1 equ 0xD8+1               ; PCA0CN.1 - PCA MODULE 1 CAPTURE/COMPARE FLAG
-CCF2 equ 0xD8+2               ; PCA0CN.2 - PCA MODULE 2 CAPTURE/COMPARE FLAG
-CCF3 equ 0xD8+3               ; PCA0CN.3 - PCA MODULE 3 CAPTURE/COMPARE FLAG
-CCF4 equ 0xD8+4               ; PCA0CN.4 - PCA MODULE 4 CAPTURE/COMPARE FLAG
-CR equ 0xD8+6                 ; PCA0CN.6 - PCA COUNTER/TIMER RUN CONTROL
-CF equ 0xD8+7                 ; PCA0CN.7 - PCA COUNTER/TIMER OVERFLOW FLAG
+CCF0 equ 0xD8.0               ; PCA0CN.0 - PCA MODULE 0 CAPTURE/COMPARE FLAG
+CCF1 equ 0xD8.1               ; PCA0CN.1 - PCA MODULE 1 CAPTURE/COMPARE FLAG
+CCF2 equ 0xD8.2               ; PCA0CN.2 - PCA MODULE 2 CAPTURE/COMPARE FLAG
+CCF3 equ 0xD8.3               ; PCA0CN.3 - PCA MODULE 3 CAPTURE/COMPARE FLAG
+CCF4 equ 0xD8.4               ; PCA0CN.4 - PCA MODULE 4 CAPTURE/COMPARE FLAG
+CR equ 0xD8.6                 ; PCA0CN.6 - PCA COUNTER/TIMER RUN CONTROL
+CF equ 0xD8.7                 ; PCA0CN.7 - PCA COUNTER/TIMER OVERFLOW FLAG
 
 ;  ADC0CN  0xE8 
-AD0CM0 equ 0xE8+0             ; ADC0CN.0 - ADC 0 START OF CONV. MODE BIT 0
-AD0CM1 equ 0xE8+1             ; ADC0CN.1 - ADC 0 START OF CONV. MODE BIT 1
-AD0CM2 equ 0xE8+2             ; ADC0CN.2 - ADC 0 START OF CONV. MODE BIT 2
-AD0WINT equ 0xE8+3            ; ADC0CN.3 - ADC 0 WINDOW COMPARE INT. FLAG
-AD0BUSY equ 0xE8+4            ; ADC0CN.4 - ADC 0 BUSY FLAG
-AD0INT equ 0xE8+5             ; ADC0CN.5 - ADC 0 CONV. COMPLETE INT. FLAG
-AD0TM equ 0xE8+6              ; ADC0CN.6 - ADC 0 TRACK MODE
-AD0EN equ 0xE8+7              ; ADC0CN.7 - ADC 0 ENABLE
+AD0CM0 equ 0xE8.0             ; ADC0CN.0 - ADC 0 START OF CONV. MODE BIT 0
+AD0CM1 equ 0xE8.1             ; ADC0CN.1 - ADC 0 START OF CONV. MODE BIT 1
+AD0CM2 equ 0xE8.2             ; ADC0CN.2 - ADC 0 START OF CONV. MODE BIT 2
+AD0WINT equ 0xE8.3            ; ADC0CN.3 - ADC 0 WINDOW COMPARE INT. FLAG
+AD0BUSY equ 0xE8.4            ; ADC0CN.4 - ADC 0 BUSY FLAG
+AD0INT equ 0xE8.5             ; ADC0CN.5 - ADC 0 CONV. COMPLETE INT. FLAG
+AD0TM equ 0xE8.6              ; ADC0CN.6 - ADC 0 TRACK MODE
+AD0EN equ 0xE8.7              ; ADC0CN.7 - ADC 0 ENABLE
 
 ;  SPI0CN  0xF8 
-SPIEN equ 0xF8+0              ; SPI0CN.0 - SPI0 ENABLE
-TXBMT equ 0xF8+1              ; SPI0CN.1 - TRANSMIT BUFFER EMPTY
-NSSMD0 equ 0xF8+2             ; SPI0CN.2 - SLAVE SELECT MODE BIT 0
-NSSMD1 equ 0xF8+3             ; SPI0CN.3 - SLAVE SELECT MODE BIT 1
-RXOVRN equ 0xF8+4             ; SPI0CN.4 - RECEIVE OVERRUN FLAG
-MODF equ 0xF8+5               ; SPI0CN.5 - MODE FAULT FLAG
-WCOL equ 0xF8+6               ; SPI0CN.6 - WRITE COLLISION FLAG
-SPIF equ 0xF8+7               ; SPI0CN.7 - SPI0 INTERRUPT FLAG
+SPIEN equ 0xF8.0              ; SPI0CN.0 - SPI0 ENABLE
+TXBMT equ 0xF8.1              ; SPI0CN.1 - TRANSMIT BUFFER EMPTY
+NSSMD0 equ 0xF8.2             ; SPI0CN.2 - SLAVE SELECT MODE BIT 0
+NSSMD1 equ 0xF8.3             ; SPI0CN.3 - SLAVE SELECT MODE BIT 1
+RXOVRN equ 0xF8.4             ; SPI0CN.4 - RECEIVE OVERRUN FLAG
+MODF equ 0xF8.5               ; SPI0CN.5 - MODE FAULT FLAG
+WCOL equ 0xF8.6               ; SPI0CN.6 - WRITE COLLISION FLAG
+SPIF equ 0xF8.7               ; SPI0CN.7 - SPI0 INTERRUPT FLAG
 
 ; Predefined SFR Bit Masks 
 PCON_IDLE equ 0x01            ; PCON
@@ -301,7 +301,7 @@ INT_TIMER2 equ 5              ; Timer2 Overflow
 INT_SPI0 equ 6                ; Serial Peripheral Interface 0
 INT_SMBUS0 equ 7              ; SMBus0 Interface
 
-; 8 Reserved 
+;                        8          Reserved 
 INT_ADC0_WINDOW equ 9         ; ADC0 Window Comparison
 INT_ADC0_EOC equ 10           ; ADC0 End Of Conversion
 INT_PCA0 equ 11               ; PCA0 Peripheral
