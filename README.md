@@ -46,14 +46,16 @@ By the way, the most fast 8051 MCU is C8051F120(100 Mhz) and EFM8LB(72 Mhz) from
 
 # Toolchain overview
 
-* Compiler: SDCC for C, naken_asm/as31 for ASM
+* Compiler: 
+  - SDCC for C
+  - naken_asm or as31 for ASM
 * SDK: Headers for each MCU.
 * Programming tool: various tool, different for each manufactor.
 * Debugger: various way, different for each manufactor.
 
 # Compiler
 
-If you prefer using **8051 assemblly language**, [naken_asm](https://github.com/mikeakohn/naken_asm/) or [as31](http://wiki.erazor-zone.de/wiki:projects:linux:as31) can be used.
+If you prefer using **8051 assemblly language**, [naken_asm](https://github.com/mikeakohn/naken_asm/) or [as31](http://wiki.erazor-zone.de/wiki:projects:linux:as31) can be used. 
 
 There are 2 widely used C compiler for 8051 MCU, one is Keil C51, a commercial close source compiler provided by ARM. and one is [SDCC](http://sdcc.sourceforge.net), an opensource compiler. There are not much differences between them, I wrote a brief note here about [syntax differences between SDCC and C51](https://github.com/cjacker/opensource-toolchain-8051/blob/main/difference-between-c51-and-sdcc.md).
 
