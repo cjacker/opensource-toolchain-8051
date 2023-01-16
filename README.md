@@ -339,12 +339,12 @@ There is different version of 'USB Reset Utility':
 
 Some UDA clones called 'U-EC6' can only use 'USB Reset Utility Version 1.3' to reset the firmware. But the official UDA can use latest 1.7 version to reset.
 
-I make a fork of 'ec2-new' to fix some bugs and add more features, some of them already submitted and accepted by upstream. Up to now, it's better to use my fork.
+I make a fork of 'ec2-new' to fix some bugs and add more features such as more C8051f models and some EFM8 device support , all the changes had been submitted and accepted by upstream.
 
 **Build and Installation:**
 
 ```
-git clone https://github.com/cjacker/ec2-new.git
+git clone https://github.com/paragonrobotics/ec2-new.git
 cd ec2-new
 autoreconf -ivf
 ./configure --prefix=/usr/local
@@ -365,13 +365,9 @@ sudo ec2device --port USB
 sudo ec2writeflash --port USB --hex xxx.hex --run
 ```
 
-
-
-
-
 ### other opensource c2 programmer
 
-There are also some other programming solutions:
+There are also some other programming solutions but most of them not works anymore:
 
 ~~https://github.com/Guntermann-Drunck/c2tool~~
 
@@ -380,17 +376,17 @@ There are also some other programming solutions:
 ~~https://github.com/x893/C2.Flash and http://akb77.com/g/silabs/jump-to-silabs-step-1/: using stm32/arduino to program C8051. (**verified, not work**)~~
 
 
-
 ## for Silicon Labs EFM8
 
 EFM8 can be programmed with C2 protocol or with UART bootloader.
 
 ### with C2
 
-There is no good and confirm-to-work opensource utilities to program EFM8 with C2 protocol except ['ec2-new'](https://github.com/cjacker/ec2-new), although there are some opensource projects trying to implement C2 protocols with GPIO or arduino, but all of them don't work as expected or have very limited device support and need verified.
+There is no good and confirm-to-work opensource utilities to program EFM8 with C2 protocol except ['ec2-new'](https://github.com/paragonrobotics/ec2-new.git) with my improvement to add EFM8 support. Although there are some other opensource projects trying to implement C2 protocols with GPIO or arduino, but all of them don't work as expected or have very limited device support.
 
-You can use ['ec2-new'](https://github.com/cjacker/ec2-new) with UDA to program some EFM8 mcu. For usage of 'ec2-new', please refer to above 'C8051 section'.
+You can use ['ec2-new'](https://github.com/paragonrobotics/ec2-new.git) with UDA to program some EFM8 models. 
 
+For usage of 'ec2-new', please refer to above 'C8051F section'.
 
 SiLabs also officially provided [linux utils to program C8051 and EFM8](https://github.com/cjacker/siliconlabs-c8051-efm8-utils) as mentioned in 'C8051 section', include `device8051` to detect device, `flash8051` with usb debug adapter and `flashefm8` with jlink.
 
@@ -438,7 +434,7 @@ sudo flash8051 -sn LCK0081654 -tif c2 -erasemode full -upload firmware.hex
 
 Since [EFM8BB1-LCK has NO UART bootloader by default](https://community.silabs.com/s/question/0D58Y00008K6xfoSAB/efm8bb1lck-board-and-onchip-uart-bootloader?language=en_US), the customer firmware wiped the pre-installed UART bootloader. The official utilities can help you to program the UART bootloader back.
 
-NOTE, ec2-new still have some issues, it can not be use to program EFM8 bootloader up to now.
+NOTE, ec2-new still have some issues, it can not be used to program EFM8 bootloader up to now.
 
 ### with factory programmed UART bootloader
 
