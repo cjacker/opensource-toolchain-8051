@@ -47,19 +47,42 @@ By the way, the most fast 8051 MCU is C8051F120(100 Mhz) and EFM8LB(72 Mhz) from
 # Toolchain overview
 
 * Compiler: 
-  - SDCC for C
   - naken_asm or as31 for ASM
+  - SDCC for C
 * SDK: Headers for each MCU.
 * Programming tool: various tool, different for each manufactor.
 * Debugger: various way, different for each manufactor.
 
 # Compiler
 
-If you prefer using **8051 assemblly language**, [naken_asm](https://github.com/mikeakohn/naken_asm/) or [as31](http://wiki.erazor-zone.de/wiki:projects:linux:as31) can be used. 
+## naken_asm
 
-There are 2 widely used C compiler for 8051 MCU, one is Keil C51, a commercial close source compiler provided by ARM. and one is [SDCC](http://sdcc.sourceforge.net), an opensource compiler. There are not much differences between them, I wrote a brief note here about [syntax differences between SDCC and C51](https://github.com/cjacker/opensource-toolchain-8051/blob/main/difference-between-c51-and-sdcc.md).
+[naken_asm](https://github.com/mikeakohn/naken_asm) is an assembler for MSP430, dsPIC, ARM, MIPS, 65xx, 68000, 8051/8052, Atmel AVR8, and others. It can be used with any 8051 models from any vendors.
 
-Most linux distribution already shipped SDCC in their repositories, you can use the pkg management tools to install it. If you really want to build it yourself, at least you need make/bison/flex/libtool/g++/boost development package/zlib development package and other various packages installed and the building process is very simple:
+I perfer to use assemblly language to learn 8051, since 8051 architecture is simple and the instruction set is very easy to use. using asm will help you understand the RAM layout, SFRs, etc better.
+
+Usually, most of dist. provide naken_asm, you can install naken_asm from your distribution's package repository directly.
+
+If you want to build it yourself:
+
+```
+git clone https://github.com/mikeakohn/naken_asm.git
+cd naken_asm
+./configure --install-prefix=/usr --include-path=/usr/share/naken_asm/include
+make 
+sudo make install
+```
+
+`--include-path` specify where you want to install device include files of naken_asm. device include filescontains SFR and bit defininations for naken_asm, as above example, the 8051 device include files will be installed to `/usr/share/naken_asm/include/8051` dir.
+
+
+## SDCC
+
+There are 2 widely used C compiler for 8051 MCU, one is Keil C51, a commercial close source compiler. and one is [SDCC](http://sdcc.sourceforge.net), an opensource compiler. There are not much differences between them, I wrote a brief note here about [syntax differences between SDCC and C51](https://github.com/cjacker/opensource-toolchain-8051/blob/main/difference-between-c51-and-sdcc.md), you can take it as a reference.
+
+Most linux distribution already shipped SDCC in their repositories, you can use the pkg management tools to install it. If you really want to build it yourself, at least you need make/bison/flex/libtool/g++/boost development package/zlib development package and other various packages installed.
+
+the building process is very simple:
 
 ```
 ./configure --prefix=<where you want to install SDCC>
@@ -71,11 +94,58 @@ If the installation prefix isn't set to standard dir (standard dir means '/usr' 
 
 # SDK
 
-Since the 'SDK' of 8051 usually means a set of pre-defined registers of your MCU model, there are no standard SDKs or libraries required to start 8051 development, you can start 8051 development without install anything except SDCC compiler.
+the 'SDK' of 8051 development usually means a set of pre-defined registers(SFRs) and bits of your MCU model. there are no standard SDKs or libraries required to start 8051 development, you can define SFRs in your source code and start 8051 development without install anything except the compiler.
+
+If you want to use timer/interruppt, you have to define a lot of SFR and BITs, it's not very convenient. you'd better use the include files provided by MCU vendors, if it's for Keil C51, you can use `keil2sdcc` to convert the headers to SDCC format. For naken_asm, since the format of `inc` files is asm format, you may need write a script to convert them.
 
 ## Baremetal programming
 
-For example:
+### For Naken_asm:
+
+```
+; blink_softdelay.asm
+;
+; build: naken_asm -o blink_softdelay.hex blink_softdelay.asm
+
+; directive to tell naken_asm this is a 8051 asm source file.
+.8051
+
+; according to datasheet, define port 2 addr
+P2 equ 0xa0
+; define a BIT for LED
+LED equ P2.1
+
+; code addr arrangement
+.org 0x0000h
+start:
+  ; a simple loop to blink led and delay
+  loop:
+  cpl LED
+  lcall delay
+  sjmp loop
+
+; delay subroutine
+delay:
+  mov R0, #255
+  _outer_loop:
+    mov R1, #255
+    _inner_loop:
+      nop
+      djnz R1, _inner_loop
+    djnz R0, _outer_loop
+  ret
+; end of source file
+end
+```
+
+Build the asm like this:
+
+```
+nakenasm -o blink_softdelay.hex blink_softdelay.asm
+```
+
+
+### For SDCC:
 
 ```
 // led.c
@@ -103,24 +173,115 @@ makebin lex.hex led.bin
 
 ## Pre-defined Headers
 
-For developers' convenient, the compilers usually provide pre-defined headers for some basic models. for example, reg51.h/reg52.h provided by Keil C51 and 8051.h provided by SDCC. But it's not enough to cover all resources/registers on chip of defferent models, especially models with improvements, enhancements and addtitions. you will need specific headers for every model or you can define them by yourself in sources files (use `__sfr` and `__sbit` of SDCC) according to the datasheet.
+For developers' convenient, the compilers usually provide pre-defined headers for some basic models. for example, reg51.h/reg52.h provided by Keil C51, 8051.h provided by SDCC and 8051.inc provided by naken_asm. But it's not enough to cover all resources/registers on chip of defferent models, especially models with improvements, enhancements and addtitions. you will need specific headers for every model or you can define them by yourself in sources files (use `__sfr` and `__sbit` of SDCC) according to the datasheet.
 
-The [headers within this repo](https://github.com/cjacker/opensource-toolchain-8051/tree/main/headers) provide a set of pre-defined headers not provided by SDCC, include all STC 8051 models, WCH ch552/ch554/ch559 and Nuvoto n76e003/n76e616/n76e885, these headers usually come from vendor's official demo packages, and be converted to the format SDCC supported using [keil2sdcc](https://github.com/ywaby/keil2sdcc) with modifications manually.
+### For naken_asm
+The [naken_asm header within this repo](https://github.com/cjacker/opensource-toolchain-8051/tree/main/naken_asm-headers) provide a set of headers for naken_asm include all STC 8051 models, most of C8051F/EFM8 models, WCH ch552/ch554/ch559 and Nuvoto n76e003/n76e616/n76e885, if they did not cover your MCU model, you can take them as reference to convert your own header by yourself.
+
+These headers should be put to `/usr/share/naken_asm/include/8051` or your customized include path.
+
+For example, using timer0 mode1 to blink LED every second for STC89C52 with FOSC 11.0592Mhz:
+
+```
+; blink.asm
+; build: naken_asm -o blink.hex blink.asm
+
+.8051
+.include "stc89xx.inc"
+
+LED equ P2.1
+
+.org 0x0000h
+ljmp start
+
+.org 0x000bh
+ljmp timer0_isr
+
+start:
+  setb LED
+  
+  ; TMOD = 0x01h
+  orl TMOD, #0x01h
+  anl TMOD, #0xfdh
+  
+  ;65536-50000/((1/11.0592)*12) = 19456 = 0x4c00
+  mov TH0, #0x4c
+  mov TL0, #0x00
+  
+  setb EA
+  setb ET0
+  setb TR0
+
+  mov A, #0
+
+  sjmp $
+
+timer0_isr:
+  mov TH0, #0x4c
+  mov TL0, #0x00
+  cjne A, #20, continue_count
+    mov A, #0
+    cpl LED
+    ajmp isr_end
+  continue_count:
+    inc A
+  isr_end:
+    reti
+
+end
+```
+
+and build it:
+```
+naken_asm -o blink.hex blink.asm
+```
+
+### For SDCC
+
+The [SDCC headers within this repo](https://github.com/cjacker/opensource-toolchain-8051/tree/main/headers) provide a set of headers not provided by SDCC, include all STC 8051 models, most of C8051F/EFM8 models, WCH ch552/ch554/ch559 and Nuvoto n76e003/n76e616/n76e885, these headers usually come from vendor's official demo packages, and be converted to the format SDCC supported using [keil2sdcc](https://github.com/ywaby/keil2sdcc) with modifications manually.
 
 For example, above codes can be writen as:
 
 ```
-// define STC MCU model corresponding to your development board.
+// define STC MCU model of your development board.
 // refer to stc51.h for more information.
 #define STC89
 
 // meta header for stc51 series
 #include <stc51.h>
 
+#define LED P21
+
+static int count = 0;
+
 void main()
 {
-    P21 = 1;
-    while(1);
+	LED = 1;
+
+	TMOD = 0x01;
+	TH0 = 0x4c;
+	TL0 = 0x00;
+
+	EA = 1;
+	ET0 = 1;
+	TR0 = 1;
+
+	while(1);
+}
+
+void timer0_isr() __interrupt 1
+{
+  TH0 = 0x4c;
+  TL0 = 0x00;
+
+  if(count < 20) {
+    count++;
+    return;
+  }
+  if(count == 20) {
+    LED = !LED;
+    count = 0;
+  }
 }
 ```
 
@@ -175,7 +336,7 @@ void main()
 }
 ```
 
-**NOTE**, every model may have some special registers, please refer to the DATASHEET before use it. and the blink example in this repos covers a lot of models from different vendors, you can take it as reference.
+**NOTE**, every model may have some special registers, please refer to the DATASHEET before starting write your codes. and the blink example in this repos covers a lot of models from different vendors, you can take it as reference.
 
 
 # Programming
