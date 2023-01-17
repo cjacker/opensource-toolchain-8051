@@ -14,7 +14,15 @@ By the way, the most fast 8051 MCU is C8051F120(100 Mhz) and EFM8LB(72 Mhz) from
 - [Hardware prerequist](https://github.com/cjacker/opensource-toolchain-8051#hardware-prerequist)
 - [Toolchain overview](https://github.com/cjacker/opensource-toolchain-8051#toolchain-overview)
 - [Compiler](https://github.com/cjacker/opensource-toolchain-8051#compiler)
+  + [Naken_asm](https://github.com/cjacker/opensource-toolchain-8051#naken_asm)
+  + [SDCC](https://github.com/cjacker/opensource-toolchain-8051#sdcc)
 - [SDK](https://github.com/cjacker/opensource-toolchain-8051#sdk)
+  + [Baremetal programming](https://github.com/cjacker/opensource-toolchain-8051#baremetal-programming)
+    - [For naken_asm](https://github.com/cjacker/opensource-toolchain-8051#for-naken_asm)
+    - [For SDCC](https://github.com/cjacker/opensource-toolchain-8051#for-sdcc)
+  + [pre-defined headers](https://github.com/cjacker/opensource-toolchain-8051#pre-defined-headers)
+    - [For naken_asm](https://github.com/cjacker/opensource-toolchain-8051#for-naken_asm-1)
+    - [For SDCC](https://github.com/cjacker/opensource-toolchain-8051#for-sdcc-1)
 - [Programming](https://github.com/cjacker/opensource-toolchain-8051#programming)
   + [for STC8051 (from STC)](https://github.com/cjacker/opensource-toolchain-8051#for-stc8051-from-stc)
     - [stcgal](https://github.com/cjacker/opensource-toolchain-8051#stcgal)
@@ -55,7 +63,7 @@ By the way, the most fast 8051 MCU is C8051F120(100 Mhz) and EFM8LB(72 Mhz) from
 
 # Compiler
 
-## naken_asm
+## Naken_asm
 
 [naken_asm](https://github.com/mikeakohn/naken_asm) is an assembler for MSP430, dsPIC, ARM, MIPS, 65xx, 68000, 8051/8052, Atmel AVR8, and others. It can be used with any 8051 models from any vendors.
 
