@@ -23,6 +23,7 @@ By the way, the most fast 8051 MCU is C8051F120(100 Mhz) and EFM8LB(72 Mhz) from
   + [pre-defined headers](https://github.com/cjacker/opensource-toolchain-8051#pre-defined-headers)
     - [For naken_asm](https://github.com/cjacker/opensource-toolchain-8051#for-naken_asm-1)
     - [For SDCC](https://github.com/cjacker/opensource-toolchain-8051#for-sdcc-1)
+- [Emulator](https://github.com/cjacker/opensource-toolchain-8051#emulator)
 - [Programming](https://github.com/cjacker/opensource-toolchain-8051#programming)
   + [for STC8051 (from STC)](https://github.com/cjacker/opensource-toolchain-8051#for-stc8051-from-stc)
     - [stcgal](https://github.com/cjacker/opensource-toolchain-8051#stcgal)
@@ -44,13 +45,13 @@ By the way, the most fast 8051 MCU is C8051F120(100 Mhz) and EFM8LB(72 Mhz) from
 
 # Hardware prerequist
 
-* 8051 development board
-  + STC 8051 series, Silicon Labs C8051 and EFM8 series and Nuvoton N76E series are recommended.
-  + You can use any 8051 dev board from any vendor, this tutorial already covers a lot of common models from different vendors, if your 8051 MCU not mentioned here, please provide some information to improve this tutorial.
+* 8051 board
+  + STC 8051 series, Silicon Labs C8051 or EFM8 series or Nuvoton N76E series are recommended.
+  + You can use any 8051 board from any vendor, this tutorial covers a lot of common models from different vendors, if your 8051 MCU not mentioned here, please provide some information to improve this tutorial.
  
 **NOTE**:
 * for C8051/EFM8 series from Silicon Labs, you need [8-bit USB Debug Adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) with jtag and c2 protocol support to program and debug.
-* for N76E series from Nuvoton, you need Nu-Link adatper (or Nu-Link-Me from the official EVB) to program (lack of opensource debugging support now).
+* for N76E series from Nuvoton, you need Nu-Link adatper (or Nu-Link-Me integrated with the official EVB) to program (lack of opensource debugging support now).
 
 # Toolchain overview
 
@@ -58,6 +59,7 @@ By the way, the most fast 8051 MCU is C8051F120(100 Mhz) and EFM8LB(72 Mhz) from
   - naken_asm or as31 for ASM
   - SDCC for C
 * SDK: Headers for each MCU.
+* Emulator: emu8051
 * Programming tool: various tool, different for each manufactor.
 * Debugger: various way, different for each manufactor.
 
@@ -346,16 +348,31 @@ void main()
 
 **NOTE**, every model may have some special registers, please refer to the DATASHEET before starting write your codes. and the blink example in this repos covers a lot of models from different vendors, you can take it as reference.
 
+# Emulator
+There are various 8051 emulators you can use, such as `mcu8051ide`, `ucsim_51` shipped with SDCC.
+
+I prefer to use `emu8051` as emulator to watch how code works and help debugging.
+
+The upstream url is https://github.com/jarikomppa/emu8051.
+
+And there are some fixes not upstreamed, you'd better use my fork:
+```
+git clone https://github.com/cjacker/emu8051/
+cd emu8051
+make
+```
+
+The usage of emu8051 is very simple, please read the docs or have a try to figure out how to use it.
 
 # Programming
 
 ## for STC8051 (from STC)
 
-Every STC MCU have a bootloader(BSL) which support UART flashing, usually **the P3.0 pin is RX and P3.1 pin is TX**, most development board already integrate a USB to UART chip on board, you just need to use a cable to connect it to PC. 
+Every STC MCU have a bootloader(BSL) which support UART programming, as we know **the P3.0 pin is RX and P3.1 pin is TX**, most development board already integrate a USB to UART chip on board, you just need to use a cable to connect it to PC. 
 
 A close source isp tool for windows named 'STC-ISP' is provided by STCmcu officially. It can be run with wine under Linux. you need install wine  and use `winetricks -q mfc42` to install the mfc dll. you may also need to link '/dev/ttyUSB0' or '/dev/ttyACM0' (depending on the USB/UART adapter) to '~/.wine/dosdevices/com1', then the COM device can be used by wine and stc-isp to find the USB/UART adaper. The STC-ISP tool is useful if you want to adjust some config options not supported by opensource isp tool.
 
-There are 2 open source ISP tool you can use with linux. 
+There are 2 opensource STC ISP tool you can use with linux. 
 
 ### stcgal
 
@@ -510,7 +527,7 @@ There is different version of 'USB Reset Utility':
 
 Some UDA clones called 'U-EC6' can only use 'USB Reset Utility Version 1.3' to reset the firmware. But the official UDA can use latest 1.7 version to reset.
 
-I make a fork of 'ec2-new' to fix some bugs and add more features such as more C8051f models and some EFM8 device support , all the changes had been submitted and accepted by upstream.
+I make a fork of 'ec2-new' to fix some bugs and add more features such as more C8051f models and some EFM8 devices support , all the changes had been submitted and accepted by upstream.
 
 **Build and Installation:**
 
@@ -605,7 +622,7 @@ sudo flash8051 -sn LCK0081654 -tif c2 -erasemode full -upload firmware.hex
 
 Since [EFM8BB1-LCK has NO UART bootloader by default](https://community.silabs.com/s/question/0D58Y00008K6xfoSAB/efm8bb1lck-board-and-onchip-uart-bootloader?language=en_US), the customer firmware wiped the pre-installed UART bootloader. The official utilities can help you to program the UART bootloader back.
 
-NOTE, ec2-new still have some issues, it can not be used to program EFM8 bootloader up to now.
+NOTE, ec2-new still have some issues with EFM8 due to the hex layout, it can not be used to program EFM8 bootloader up to now.
 
 ### with factory programmed UART bootloader
 
@@ -682,6 +699,7 @@ https://github.com/jaromir-sukuba/efm8prog/ : using PIC to program EFM8
 ~~https://github.com/christophe94700/efm8-arduino-programmer : using arduino uno/nano to program EFM8~~
 
 ## for Nuvoton N76Exxx
+
 To program Nuvoton N76E series 8051 MCU, you need have a Nu-link adapter (from offcial EVB or standalone version) and wire up 5 pins: VCC/DAT/CLK/RST/GND.
 
 [nuvoprog](https://github.com/erincandescent/nuvoprog) is an open source tool for programming Nuvoton microcontollers. I make a fork to add N76E616/N76E885 support.
@@ -739,7 +757,7 @@ For more information of EZ-USB FX2 development, please refer to [EZ-USB FX2 Manu
 
 
 ## for Atmel AT89S5x (now MicroChip)
-AT89S51/52 can be programmed with avrdude using USBASP adapter. Relative to AVR, the RESET signal of 8051 MCU are inverted, which means that you reset the chip by connecting the RESET pin to VCC, Therefore you need to invert the RESET signal from the USBASP programmer. I use 74HC04 to invert the RESET signal and use 8051 board for other DIP40 51 chips, it works very well. you can also use a NPN triode to invert signal like:
+AT89S51/52 can be programmed with avrdude using USBASP adapter. Relative to AVR, the RESET signal of 8051 MCU are inverted, which means that you reset the chip by connecting the RESET pin to VCC, Therefore you need to invert the RESET signal from the USBASP programmer. I use 74HC04 to invert the RESET signal and use 8051 board for DIP40 51MCU, it works very well. you can also use a NPN triode to invert signal like:
 
 ![inverters](https://user-images.githubusercontent.com/1625340/171430169-860e4ff4-b8b0-43b1-bca1-c37a98e004e8.jpg)
 
@@ -857,7 +875,7 @@ You can use 'DTR' from a ch340 serial adapter with a 74HC125 to control RESET/EA
 
 
 ## for Philips P89C51Rx (now NXP)
-Here is a very good article about how to program P89C51Rx: https://www.dos4ever.com/isp/isp.html
+Here has a very good article about how to program P89C51Rx: https://www.dos4ever.com/isp/isp.html
 
 Note, according to datasheet, not all P89C51 has a bootloader, only 89C51Rx2 and 89C66x support ISP program.
 
@@ -899,7 +917,7 @@ set target port USB
 set target connect
 file firmware
 ```
-NOTE, 'file' command take 'filename' without suffix.
+NOTE, 'file' command take only 'filename' without 'ihx' suffix.
 
 After 'firmware.ihx' loaded to device, the corresponding sources will be loaded into DDD's window automatically, then you can set breakpoint/ run/continue/step..., Just as gdb. newcdb is still lack of some features, but can be used to debug program.
 
