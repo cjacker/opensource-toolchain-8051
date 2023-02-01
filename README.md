@@ -557,34 +557,23 @@ sudo ec2device --port USB
 sudo ec2writeflash --port USB --hex xxx.hex --run
 ```
 
-### other opensource c2 programmer
-
-There are also some other programming solutions but most of them not works anymore:
-
-~~https://github.com/Guntermann-Drunck/c2tool~~
-
-~~https://github.com/merbanan/c2gen and https://github.com/merbanan/c2tool (**verified, not work**)~~
-
-~~https://github.com/x893/C2.Flash and http://akb77.com/g/silabs/jump-to-silabs-step-1/: using stm32/arduino to program C8051. (**verified, not work**)~~
-
-
 ## for Silicon Labs EFM8
 
 EFM8 can be programmed with C2 protocol or with UART bootloader.
 
 ### with C2
 
-There is no good and confirm-to-work opensource utilities to program EFM8 with C2 protocol except ['ec2-new'](https://github.com/paragonrobotics/ec2-new.git) with my improvements to add EFM8 support. Although there are some other opensource projects trying to implement C2 protocols with GPIO or arduino, but all of them don't work as expected or have very limited device support.
+There is no good and confirm-to-work opensource utilities to program EFM8 with C2 protocol except ['ec2-new'](https://github.com/paragonrobotics/ec2-new.git) with [my improvements](https://github.com/cjacker/ec2-new.git) to add EFM8 support. Although there are some other opensource projects trying to implement C2 protocols with GPIO or arduino, but all of them don't work as expected or have very limited device support.
 
-You can use ['ec2-new'](https://github.com/paragonrobotics/ec2-new.git) with UDA to program some EFM8 models. 
+You can use ['ec2-new'](https://github.com/cjacker/ec2-new.git) with UDA to program some EFM8 models. 
 
-For usage of 'ec2-new', please refer to above 'C8051F section'.
+For usage of 'ec2-new', please refer to above 'C8051F' section.
 
-SiLabs also officially provided [linux utils to program C8051 and EFM8](https://github.com/cjacker/siliconlabs-c8051-efm8-utils) as mentioned in 'C8051 section', include `device8051` to detect device, `flash8051` with usb debug adapter and `flashefm8` with jlink.
+Silicon Labs also officially provided [linux utils to program C8051 and EFM8](https://github.com/cjacker/siliconlabs-c8051-efm8-utils), as mentioned in 'C8051' section, it includes `device8051` to detect device, `flash8051` with usb debug adapter and `flashefm8` with jlink.
 
 If you have EFM8 breakout board without any Debugger on-board, you can use [8-bit USB Debug Adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) to program it.
 
-If you use official starter kit or old toolstick development platform, usually there is a debugger on board, either toolstick or jlink. For example, I have an [EFM8BB1-LCK](https://www.silabs.com/development-tools/mcu/8-bit/efm8bb1lck-starter-kit) board with 'Toolstick F330 DC' debugger on board, this toolstick debugger can not be supported by 'ec2-new', you have to use `flash8051` to program it.
+If you use official starter kit or old toolstick development platform, usually there is a debugger on board, either toolstick or jlink. For example, I have an [EFM8BB1-LCK](https://www.silabs.com/development-tools/mcu/8-bit/efm8bb1lck-starter-kit) board with 'Toolstick F330 DC' debugger on board, this toolstick debugger can not be supported by 'ec2-new' up to now, you have to use `flash8051` to program it.
 
 To detect device:
 
