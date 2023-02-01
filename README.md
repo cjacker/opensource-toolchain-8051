@@ -527,13 +527,14 @@ There is different version of 'USB Reset Utility':
 
 Some UDA clones called 'U-EC6' can only use 'USB Reset Utility Version 1.3' to reset the firmware. But the official UDA can use latest 1.7 version to reset.
 
-I make a fork of 'ec2-new' to fix some bugs and add more features such as more C8051f models and some EFM8 devices support , all the changes had been submitted and accepted by upstream.
+I make a fork of 'ec2-new' to fix some bugs and add more features such as more C8051f models and some EFM8 devices support, also include heavy improvments to newcdb debugger. 
 
 **Build and Installation:**
 
 ```
-git clone https://github.com/paragonrobotics/ec2-new.git
+git clone https://github.com/cjacker/ec2-new.git
 cd ec2-new
+git checkout more_devices
 autoreconf -ivf
 ./configure --prefix=/usr/local
 make
@@ -570,7 +571,7 @@ EFM8 can be programmed with C2 protocol or with UART bootloader.
 
 ### with C2
 
-There is no good and confirm-to-work opensource utilities to program EFM8 with C2 protocol except ['ec2-new'](https://github.com/paragonrobotics/ec2-new.git) with my improvement to add EFM8 support. Although there are some other opensource projects trying to implement C2 protocols with GPIO or arduino, but all of them don't work as expected or have very limited device support.
+There is no good and confirm-to-work opensource utilities to program EFM8 with C2 protocol except ['ec2-new'](https://github.com/paragonrobotics/ec2-new.git) with my improvements to add EFM8 support. Although there are some other opensource projects trying to implement C2 protocols with GPIO or arduino, but all of them don't work as expected or have very limited device support.
 
 You can use ['ec2-new'](https://github.com/paragonrobotics/ec2-new.git) with UDA to program some EFM8 models. 
 
