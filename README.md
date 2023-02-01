@@ -349,7 +349,8 @@ void main()
 **NOTE**, every model may have some special registers, please refer to the DATASHEET before starting write your codes. and the blink example in this repos covers a lot of models from different vendors, you can take it as reference.
 
 # Emulator
-There are various 8051 emulators you can use, such as `mcu8051ide`, `ucsim_51` shipped with SDCC.
+
+There are various 8051 emulators you can use, such as `edsim51`(free but not opensource), `mcu8051ide`, `ucsim_51`(shipped with SDCC).
 
 I prefer to use `emu8051` as emulator to watch how code works and help debugging.
 
@@ -363,6 +364,8 @@ make
 ```
 
 The usage of emu8051 is very simple, please read the docs or have a try to figure out how to use it.
+
+Another good choice is `edsim51`, free but not opensource, it is worth a try.
 
 # Programming
 
