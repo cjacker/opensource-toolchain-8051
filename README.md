@@ -828,7 +828,7 @@ Note, according to datasheet, not all P89C51 has a bootloader, only 89C51Rx2 and
 
 # Debugging
 
-There is no standard debugging tool such as gdb for 8051 MCUs from various different vendors. you can take SDCC manual (Chapter 5. Debugging) as refrence to find a debugging way you can use with your 8051 MCU. gennerally:
+There is no standard debugging tool such as gdb for 8051 MCUs from various different vendors. you can take SDCC manual (Chapter 5. Debugging) as refrence to find a debugging way you can use with your own 8051 MCU. gennerally:
 
 * Debugging on a simulator:
 
@@ -864,7 +864,7 @@ set target port USB
 set target connect
 file firmware.cdb
 ```
-Or a simple way:
+Or more efficient way:
 
 ```
 connect
@@ -872,11 +872,14 @@ file firmware.cdb
 ```
 
 **to list content of specific sources:**
+
 ```
-list main.c:0
+list FILENAME:LINE_NUM
+list FUNCTION_NAME
 ```
 
 **to continue listing:**
+
 ```
 list
 ```
@@ -888,7 +891,12 @@ break *ADDR
 break FUNCTION_NAME
 ```
 
-**to view value of registers:**
+**to view breakpoints:**
+```
+info breakpoints
+```
+
+**to view important registers:**
 
 ```
 info registers
@@ -898,29 +906,38 @@ info registers
 
 ```
 readpc
-readbit BIT_NAME|BIT_DOT_NOTATION|BIT_BY_NUMBER BIT2 ...
-readregister SFR_NAME|Rn|SFR_ADDR ...
+readbit BIT_NAME[or BIT_DOT_NOTATION or BIT_BY_NUMBER] BIT2 ...
+readregister SFR_NAME[or Rn or SFR_ADDR] ...
 readpsfr PAGE_NUM SFR_ADDR
 readdata start_addr [nbyte]
 readxdata start_addr [nbyte]
 readcode start_addr [nbyte]
 
 writepc VALUE
-writebit BIT_NAME|BIT_DOT_NOTATION|BIT_BY_NUMER=VALUE
-writeregister SFR_NAME|Rn|SFR_ADDR=VALUE
+writebit BIT_NAME[or BIT_DOT_NOTATION or BIT_BY_NUMER]=VALUE
+writeregister SFR_NAME[or Rn or SFR_ADDR]=VALUE
 writepsfr PAGE_NUM SFR_ADDR=VALUE
 writedata ADDR=VALUE
 writexdata ADDR=VALUE
 ```
 
 **to run/step/stepi program:**
+
 ```
 run
 step
 stepi
 ```
 
+**to disassemble:**
+
+```
+disassemble START_ADDR END_ADDR
+disassemble FUNCTION_NAME
+```
+
 For more infomation about newcdb usage, type `help`:
+
 ```
 help target:      setup/connect to target device
 help breakpoints: add/delete breakpoints
