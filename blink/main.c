@@ -1,6 +1,6 @@
 // blink led, Pin->Resistor->LED->GND
 
-#define STC89 
+#define STC89
 
 #if defined(STC89)
   #include <stc51.h>
@@ -26,7 +26,13 @@
   #include <C8051F330.h>
   #define LED P1_0 //on-board LED
 
-#elif defined(EFM8BB1) || defined(EFM8BB2) || defined(C8051F850) || defined(C8051F990)
+#elif defined(C8051F990)
+  __sfr __at(0xA5) P1MDOUT;
+  __sfr __at(0xD9) PCA0MD;
+  __sfr __at(0xE3) XBR2;
+  __sbit __at(0x90+0) P10;
+  #define LED P10
+#elif defined(EFM8BB1) || defined(EFM8BB2) || defined(C8051F850)
   __sfr __at(0x97) WDTCN;
   __sfr __at(0xA5) P1MDOUT;
   __sfr __at(0xD5) P1SKIP;
@@ -41,8 +47,6 @@
     #define LED P13
   #elif defined(C8051F850)
     #define LED P10 // official toolstick dev platform
-  #elif defined(C8051F990)
-    #define LED P10
   #endif
 
 #elif defined(N76E003)
@@ -124,7 +128,12 @@ void main()
   // set P1 to Push-Pull
   P1MDOUT = 0xff;
 
-#elif defined(EFM8BB1) || defined(EFM8BB2) || defined(C8051F850) || defined(C8051F990)
+#elif defined(C8051F990)
+  PCA0MD = 0x00;
+  XBR2 = 0x40;
+  P1MDOUT = 0xff;
+
+#elif defined(EFM8BB1) || defined(EFM8BB2) || defined(C8051F850)
   // disable watchdog
   WDTCN = 0xDE; //First key
   WDTCN = 0xAD; //Second key
