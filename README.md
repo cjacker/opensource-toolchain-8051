@@ -842,36 +842,95 @@ A monitor firmware need to program to MCU first. good examples of monitors are [
 
 An ICE device is usually a little bit expensive. for Silicon Labs C8051Fx series, you can use UDA with `newcdb` to debug program for supported device. 
 
-Here is a brief introduction about how to use newcdb to debug C8051 program. Make sure your device is supported by newcdb and use '--debug' arg with 'sdcc' to generate the debug information, take 'blink' example in this repo as reference, after build successfully, a 'firmware.cdb' will be generated.
+Here is a brief introduction about how to use `newcdb`(with my improvments) to debug C8051/EFM8 program. 
 
-now in current dir, run:
+At first, use '--debug' arg with 'sdcc' to generate debugging information, the 'blink' example in this repo will generated 'firmware.cdb' and other debugging related files automatically.
+
+Then, using `ec2device --port USB` to check your device is supported or not. If it report 'Tested: TRUE', that means your device is fully supported by 'newcdb'.
+
+In blink dir,
+
+**to launch newcdb:**
 
 ```
-ddd --debugger newcdb
+newcdb
 ```
 
-In command window of DDD, input:
+**to connect target device:**
+
 ```
 set target SL51
 set target port USB
 set target connect
-file firmware
+file firmware.cdb
 ```
-NOTE, 'file' command take only 'filename' without 'ihx' suffix.
-
-After 'firmware.ihx' loaded to device, the corresponding sources will be loaded into DDD's window automatically, then you can set breakpoint/ run/continue/step..., Just as gdb. newcdb is still lack of some features, but can be used to debug program.
-
-<img src="https://user-images.githubusercontent.com/1625340/175755827-3ab167c8-52d0-4592-870c-66fd13253412.png" width=50%/>
-
-By the way, I use Xft font with MOTIF for better look&feel, please append:
+Or a simple way:
 
 ```
-*renderTable: xft
-*xft*fontType: FONT_IS_XFT
-*xft*fontName: Monospace
+connect
+file firmware.cdb
 ```
 
-to `~/.Xresources`, and run `xrdb -load ~/.Xresources` to reload it. then you can launch ddd with `ddd --debugger newcdb --fontsize 12`.
+**to list content of specific sources:**
+```
+list main.c:0
+```
+
+**to continue listing:**
+```
+list
+```
+
+**to set a breakpoint:**
+```
+break FILE:LINE_NUM
+break *ADDR
+break FUNCTION_NAME
+```
+
+**to view value of registers:**
+
+```
+info registers
+```
+
+**to read/write PC/Rn/SFR/Paged SFR/BIT/DATA/XDATA and CODE(READ ONLY):**
+
+```
+readpc
+readbit BIT_NAME|BIT_DOT_NOTATION|BIT_BY_NUMBER BIT2 ...
+readregister SFR_NAME|Rn|SFR_ADDR ...
+readpsfr PAGE_NUM SFR_ADDR
+readdata start_addr [nbyte]
+readxdata start_addr [nbyte]
+readcode start_addr [nbyte]
+
+writepc VALUE
+writebit BIT_NAME|BIT_DOT_NOTATION|BIT_BY_NUMER=VALUE
+writeregister SFR_NAME|Rn|SFR_ADDR=VALUE
+writepsfr PAGE_NUM SFR_ADDR=VALUE
+writedata ADDR=VALUE
+writexdata ADDR=VALUE
+```
+
+**to run/step/stepi program:**
+```
+run
+step
+stepi
+```
+
+For more infomation about newcdb usage, type `help`:
+```
+help target:      setup/connect to target device
+help breakpoints: add/delete breakpoints
+help readwrite:   read/write Rn/SFR/bit and memory address
+help disassemble: disassemble a speficied section
+help control:     run/step/continue the program
+help info:        query various information
+help file:        load and list files
+```
+
 
 # Project template
 
