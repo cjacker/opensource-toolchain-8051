@@ -1,14 +1,10 @@
 # Opensource toolchain for 8051 MCU
 
-**NOTE: the MIT license of this repo means all individual resources made by myself, the content of the tutorial and the example codes is licensed under MIT. All third-party opensource projects, upstream source codes and patches to other opensource projects will/should follow their own LICENSE.**
-
 The [Intel MCS-51](https://en.wikipedia.org/wiki/Intel_8051) (commonly termed 8051) is a single chip microcontroller (MCU) series developed by Intel in 1980 for use in embedded systems. 
 
 8051 are first-generation microcontrollers that sparked the modern embedded-system era and established the basic concepts for almost all microcontrollers. In the early 1980s, 8051 microcontrollers were first introduced by Intel. Later other manufacturers like Philips (NXP), Atmel (now Microchip), Silicon Labs, Maxim, etc took the 8051 architecture and introduced their variants of 8051s. 
 
 Today there are hundreds of companies (Such as Silicon Labs, Maxim, STC, Nuvoton, WCH, etc.) which still manufactures this old school legendary MCU. some of them have even added more features like ADCs, communication peripherals like SPI and I2C, etc that were not originally incepted or integrated. 
-
-By the way, the most fast 8051 MCU is C8051F120(100 Mhz) and EFM8LB(72 Mhz) from Silicon Labs.
 
 # Table of content
 - [Hardware prerequist](https://github.com/cjacker/opensource-toolchain-8051#hardware-prerequist)
@@ -58,9 +54,9 @@ By the way, the most fast 8051 MCU is C8051F120(100 Mhz) and EFM8LB(72 Mhz) from
 * Compiler: 
   - naken_asm or as31 for ASM
   - SDCC for C
-* SDK: Headers for each MCU.
-* Emulator: emu8051
-* Programming tool: various tool, different for each manufactor.
+* SDK: include files for each MCU model.
+* Emulator: emu8051, edsim51
+* Programming tool: various tools, different for each manufactor.
 * Debugger: various way, different for each manufactor.
 
 # Compiler
@@ -69,7 +65,7 @@ By the way, the most fast 8051 MCU is C8051F120(100 Mhz) and EFM8LB(72 Mhz) from
 
 [naken_asm](https://github.com/mikeakohn/naken_asm) is an assembler for MSP430, dsPIC, ARM, MIPS, 65xx, 68000, 8051/8052, Atmel AVR8, and others. It can be used with any 8051 models from any vendors.
 
-I perfer to use assemblly language to learn 8051, since 8051 architecture is simple and the instruction set is very easy to use. using asm will help you understand the RAM layout, SFRs, etc better.
+I perfer to use assemblly language to learn 8051, since 8051 architecture is simple and the instruction set is very easy to use. using asm will help you to understand the RAM layout, SFRs, etc better.
 
 Usually, most of dist. provide naken_asm, you can install naken_asm from your distribution's package repository directly.
 
@@ -83,14 +79,14 @@ make
 sudo make install
 ```
 
-`--include-path` specify where you want to install device include files of naken_asm. device include filescontains SFR and bit defininations for naken_asm, as above example, the 8051 device include files will be installed to `/usr/share/naken_asm/include/8051` dir.
+`--include-path` specify where you want to install device include files of naken_asm. device include files contains SFR and bit defininations, as above example, the 8051 device include files will be installed to `/usr/share/naken_asm/include/8051` dir.
 
 
 ## SDCC
 
 There are 2 widely used C compiler for 8051 MCU, one is Keil C51, a commercial close source compiler. and one is [SDCC](http://sdcc.sourceforge.net), an opensource compiler. There are not much differences between them, I wrote a brief note here about [syntax differences between SDCC and C51](https://github.com/cjacker/opensource-toolchain-8051/blob/main/difference-between-c51-and-sdcc.md), you can take it as a reference.
 
-Most linux distribution already shipped SDCC in their repositories, you can use the pkg management tools to install it. If you really want to build it yourself, at least you need make/bison/flex/libtool/g++/boost development package/zlib development package and other various packages installed.
+Most linux distribution already shipped SDCC in their repositories, If you really want to build it yourself, at least you need make/bison/flex/libtool/g++/boost/zlib development packages and other various packages installed.
 
 the building process is very simple:
 
@@ -100,13 +96,13 @@ make
 make install
 ```
 
-If the installation prefix isn't set to standard dir (standard dir means '/usr' or '/usr/local), you need add the `<prefix>/bin` dir to PATH env.
+If the prefix isn't set to standard dir (standard dir is '/usr' or '/usr/local), you need add the `<prefix>/bin` dir to `PATH` env.
 
 # SDK
 
-the 'SDK' of 8051 development usually means a set of pre-defined registers(SFRs) and bits of your MCU model. there are no standard SDKs or libraries required to start 8051 development, you can define SFRs in your source code and start 8051 development without install anything except the compiler.
+the 'SDK' of 8051 development usually means a set of pre-defined registers(SFRs) and bits for your MCU model. there are no standard SDKs or libraries required to start 8051 development, you can define SFRs in your source code and start 8051 development without install anything except the compiler.
 
-If you want to use timer/interruppt, you have to define a lot of SFR and BITs, it's not very convenient. you'd better use the include files provided by MCU vendors, if it's for Keil C51, you can use `keil2sdcc` to convert the headers to SDCC format. For naken_asm, since the format of `inc` files is asm format, you may need write a script to convert them.
+But if your codes is complex, such as using timer/interrupt, you have to define a lot of SFRs and BITs, the better way is using the include files provided by MCU vendors. if it's for Keil C51, you can use `keil2sdcc` to convert the headers to SDCC format. For naken_asm, since the `inc` files is naken_asm format, you may need write a script to convert them.
 
 ## Baremetal programming
 
@@ -151,7 +147,7 @@ end
 Build the asm like this:
 
 ```
-nakenasm -o blink_softdelay.hex blink_softdelay.asm
+naken_asm -o blink_softdelay.hex blink_softdelay.asm
 ```
 
 
@@ -183,12 +179,11 @@ makebin lex.hex led.bin
 
 ## Pre-defined Headers
 
-For developers' convenient, the compilers usually provide pre-defined headers for some basic models. for example, reg51.h/reg52.h provided by Keil C51, 8051.h provided by SDCC and 8051.inc provided by naken_asm. But it's not enough to cover all resources/registers on chip of defferent models, especially models with improvements, enhancements and addtitions. you will need specific headers for every model or you can define them by yourself in sources files (use `__sfr` and `__sbit` of SDCC) according to the datasheet.
+The compilers usually provide pre-defined headers for some basic models. for example, reg51.h/reg52.h provided by Keil C51, 8051.h provided by SDCC and 8051.inc provided by naken_asm. Usually it's not enough to cover all resources/registers of defferent models, especially models with improvements, enhancements and addtitions. you will need specific headers for each model or you can define them by yourself in sources files (use `__sfr` and `__sbit` of SDCC) according to the datasheet.
 
 ### For naken_asm
-The [naken_asm header within this repo](https://github.com/cjacker/opensource-toolchain-8051/tree/main/naken_asm-headers) provide a set of headers for naken_asm include all STC 8051 models, most of C8051F/EFM8 models, WCH ch552/ch554/ch559 and Nuvoto n76e003/n76e616/n76e885, if they did not cover your MCU model, you can take them as reference to convert your own header by yourself.
 
-These headers should be put to `/usr/share/naken_asm/include/8051` or your customized include path.
+The [naken_asm header within this repo](https://github.com/cjacker/opensource-toolchain-8051/tree/main/naken_asm-headers) provide a set of headers for naken_asm include all STC 8051 models, most of C8051F/EFM8 models, WCH ch552/ch554/ch559 and Nuvoto n76e003/n76e616/n76e885. These headers should be put to `/usr/share/naken_asm/include/8051` or your customized include path.
 
 For example, using timer0 mode1 to blink LED every second for STC89C52 with FOSC 11.0592Mhz:
 
@@ -248,7 +243,7 @@ naken_asm -o blink.hex blink.asm
 
 ### For SDCC
 
-The [SDCC headers within this repo](https://github.com/cjacker/opensource-toolchain-8051/tree/main/headers) provide a set of headers not provided by SDCC, include all STC 8051 models, most of C8051F/EFM8 models, WCH ch552/ch554/ch559 and Nuvoto n76e003/n76e616/n76e885, these headers usually come from vendor's official demo packages, and be converted to the format SDCC supported using [keil2sdcc](https://github.com/ywaby/keil2sdcc) with modifications manually.
+The [SDCC headers within this repo](https://github.com/cjacker/opensource-toolchain-8051/tree/main/headers) provide a set of headers not provided by SDCC, include all STC 8051 models, most of C8051F/EFM8 models, WCH ch552/ch554/ch559 and Nuvoto n76e003/n76e616/n76e885, these headers usually come from vendor's official demo packages, and was converted to the format SDCC supported using [keil2sdcc](https://github.com/ywaby/keil2sdcc) with modifications manually.
 
 For example, above codes can be writen as:
 
@@ -346,7 +341,7 @@ void main()
 }
 ```
 
-**NOTE**, every model may have some special registers, please refer to the DATASHEET before starting write your codes. and the blink example in this repos covers a lot of models from different vendors, you can take it as reference.
+**NOTE**, every model may have some special registers, please refer to the DATASHEET before starting write the codes. and the blink example in this repos covers a lot of models from different vendors, you can take it as reference.
 
 # Emulator
 
@@ -365,15 +360,15 @@ make
 
 The usage of emu8051 is very simple, please read the docs or have a try to figure out how to use it.
 
-Another good choice is `edsim51`, free but not opensource, it is worth a try.
+Another good choice is `edsim51`, free but not opensource, it is also worth a try.
 
 # Programming
 
 ## for STC8051 (from STC)
 
-Every STC MCU have a bootloader(BSL) which support UART programming, as we know **the P3.0 pin is RX and P3.1 pin is TX**, most development board already integrate a USB to UART chip on board, you just need to use a cable to connect it to PC. 
+Every STC MCU have a bootloader(BSL) which support UART programming, as we know **the P3.0 pin is RX and P3.1 pin is TX**, most development board already have a USB to UART chip integrated, you just need to use a USB cable to connect it to Linux PC. 
 
-A close source isp tool for windows named 'STC-ISP' is provided by STCmcu officially. It can be run with wine under Linux. you need install wine  and use `winetricks -q mfc42` to install the mfc dll. you may also need to link '/dev/ttyUSB0' or '/dev/ttyACM0' (depending on the USB/UART adapter) to '~/.wine/dosdevices/com1', then the COM device can be used by wine and stc-isp to find the USB/UART adaper. The STC-ISP tool is useful if you want to adjust some config options not supported by opensource isp tool.
+The official close source isp tool for windows is 'STC-ISP'. It can be run with wine under Linux. you need install wine and use `winetricks -q mfc42` to install the mfc dll. you may also need to link '/dev/ttyUSB0' or '/dev/ttyACM0' (depending on the USB/UART adapter) to '~/.wine/dosdevices/com1', then the COM device can be used by STC-ISP to find the USB/UART adaper. The STC-ISP tool is useful if you want to adjust some config options which not supported by opensource utilities.
 
 There are 2 opensource STC ISP tool you can use with linux. 
 
@@ -471,11 +466,11 @@ Another good isp tool is [ch552tool](https://github.com/MarsTechHAN/ch552tool). 
 
 ## for Silicon Labs C8051
 
-As metioned above, C8051 series MCU from Silicon Labs requires [8-bit USB Debug Adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) to program and debug. these MCUs support either JTAG or C2 protocol. you need to acquire such a device first and wire it up before you continue reading this section .
+As metioned above, C8051 series MCU from Silicon Labs requires [8-bit USB Debug Adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) to program and debug. these MCUs support either JTAG (few models) or C2 protocol. you need to acquire such a device first and wire it up before you continue reading this section .
 
 ### with flash8051 from silicon labs
 
-There are [official linux utils from Silicon Labs](https://github.com/cjacker/siliconlabs-c8051-efm8-utils), include `device8051` to detect device, `flash8051` work with usb debug adapter. Part of these utils are open-sourced.
+There are [official linux utils from Silicon Labs](https://github.com/cjacker/siliconlabs-c8051-efm8-utils), include `device8051` to inspect device, `flash8051` to program. Part of these utils are open-sourced.
 
 Take C8051F320 as example, to detect the adapter and target device infomation:
 
@@ -513,11 +508,11 @@ sudo flash8051 -sn EC60000B878 -tif c2 -erasemode full -upload filename.hex
 
 ### with ec2-new
 
-[ec2-new](https://github.com/paragonRobotics/ec2-new) is a fork of [e2drv](http://ec2drv.sourceforge.net/), an opensource project to support Silicon Labs [USB Debug Adapter (UDA)](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter). It contain a lot of programs for device detection and programming, and newcdb is the text-based interactive debugger, which can be used to debug programs (if device supported).
+[ec2-new](https://github.com/paragonRobotics/ec2-new) is a fork of [e2drv](http://ec2drv.sourceforge.net/), an opensource project to support Silicon Labs [USB Debug Adapter (UDA)](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter). It contain a lot of programs for device detection and programming, and newcdb is the text-based interactive debugger, which can be used to debug programs.
 
 By the way, there are a lot of USB Debug Adapter clones you can buy, The official UDA does **NOT** provide 3.3v voltage output, but some clones called 'U-EC6' provide 3.3v voltage output.
 
-As I verified, the ToolStick debugger, [official EC6 USB debug adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) and other clones (no matter U-EC3 or U-EC6) works very well. if you encounter any issue, please try to reset the firmware with official [USB Reset Utility](https://www.silabs.com/documents/login/software/USB_Reset_Utility.zip).
+As I verified, the [ToolStick](https://www.silabs.com/development-tools/mcu/8-bit/toolstick-base-adapter) debugger, the [official EC6 USB debug adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) and other clones (no matter U-EC3 or U-EC6) works very well. if you encounter any issue, please try to reset the firmware with official [USB Reset Utility](https://www.silabs.com/documents/login/software/USB_Reset_Utility.zip).
 
 There is different version of 'USB Reset Utility':
 ```
@@ -528,7 +523,7 @@ There is different version of 'USB Reset Utility':
   USB Reset Utility Version 1.1 - September 12, 2006
 ```
 
-Some UDA clones called 'U-EC6' can only use 'USB Reset Utility Version 1.3' to reset the firmware. But the official UDA can use latest 1.7 version to reset.
+Some UDA clones called 'U-EC6' can only use 'USB Reset Utility Version 1.3' to reset the firmware. But the official UDA can use the latest 1.7 version.
 
 I make a fork of 'ec2-new' to fix some bugs and add ToolStick support, and more C8051f models and some EFM8 devices support, also include heavy improvments to newcdb debugger. 
 
@@ -559,21 +554,21 @@ sudo ec2writeflash --port USB --hex xxx.hex --run
 
 ## for Silicon Labs EFM8
 
-EFM8 can be programmed with C2 protocol or with UART bootloader.
+EFM8 can be programmed with C2 protocol or with factory UART bootloader.
 
 ### with C2
 
-There is no good and confirm-to-work opensource utilities to program EFM8 with C2 protocol except ['ec2-new'](https://github.com/paragonrobotics/ec2-new.git) with [my improvements](https://github.com/cjacker/ec2-new.git) to add EFM8 support. Although there are some other opensource projects trying to implement C2 protocols with GPIO or arduino, but all of them don't work as expected or have very limited device support.
+There is no good and confirm-to-work opensource utilities to program EFM8 with C2 protocol except ['ec2-new'](https://github.com/paragonrobotics/ec2-new.git) with [my improvements](https://github.com/cjacker/ec2-new.git) to add EFM8 support.
 
 You can use ['ec2-new'](https://github.com/cjacker/ec2-new.git) with UDA/ToolStick to program some EFM8 models. 
 
 For usage of 'ec2-new', please refer to above 'C8051F' section.
 
-Silicon Labs also officially provided [linux utils to program C8051 and EFM8](https://github.com/cjacker/siliconlabs-c8051-efm8-utils), as mentioned in 'C8051' section, it includes `device8051` to detect device, `flash8051` with usb debug adapter and `flashefm8` with jlink.
+Silicon Labs also officially provided [linux utils to program C8051 and EFM8](https://github.com/cjacker/siliconlabs-c8051-efm8-utils), as mentioned in 'C8051' section, it includes `device8051` to detect device, `flash8051`/`flashefm8` to program.
 
-If you have EFM8 breakout board without any Debugger on-board, you can use [8-bit USB Debug Adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) to program it.
+If you have EFM8 breakout board without any debugger integrated, you can use [8-bit USB Debug Adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) to program it.
 
-If you use official starter kit or old toolstick development platform, usually there is a debugger on board, either toolstick or jlink. For example, I have an [EFM8BB1-LCK](https://www.silabs.com/development-tools/mcu/8-bit/efm8bb1lck-starter-kit) board with 'Toolstick F330 DC' debugger on board, this toolstick debugger can not be supported by 'ec2-new' up to now, you have to use `flash8051` to program it.
+If you use official starter kit or old toolstick development platform, usually there is a debugger on board, either toolstick or jlink. For example, I have an [EFM8BB1-LCK](https://www.silabs.com/development-tools/mcu/8-bit/efm8bb1lck-starter-kit) board with 'Toolstick F330 DC' debugger on board.
 
 To detect device:
 
@@ -608,7 +603,7 @@ device (LCK0081654) {
 To program:
 
 ```
-# sn and tif can be detect with device8051
+# sn and tif can be detect by device8051
 # change the 'sn' according to your UDA
 sudo flash8051 -sn LCK0081654 -tif c2 -erasemode full -upload firmware.hex
 ```
@@ -620,7 +615,7 @@ Most of EFM8 devices are factory programmed with a bootloader. Below table indic
  
 ![screenshot-2022-06-09-10-35-25](https://user-images.githubusercontent.com/1625340/172752098-91b125cb-dc5f-4124-9da9-dd89c1406590.png)
 
-Take EFM8BB1-LCK Starter Kit as example, since [EFM8BB1-LCK has NO UART bootloader by default](https://community.silabs.com/s/question/0D58Y00008K6xfoSAB/efm8bb1lck-board-and-onchip-uart-bootloader?language=en_US), the customer firmware wiped the pre-installed UART bootloader, we need to program it back.
+Use EFM8BB1-LCK Starter Kit as example, since [EFM8BB1-LCK has NO UART bootloader by default](https://community.silabs.com/s/question/0D58Y00008K6xfoSAB/efm8bb1lck-board-and-onchip-uart-bootloader?language=en_US), the customer firmware wiped the pre-installed UART bootloader, we need to program it back.
 
 **NOTE**, ec2-new still have some issues to program EFM8 bootloader due to the hex layout, you have to use official utility up to now.
 
@@ -708,11 +703,12 @@ For more information of EZ-USB FX2 development, please refer to [EZ-USB FX2 Manu
 
 
 ## for Atmel AT89S5x (now MicroChip)
-AT89S51/52 can be programmed with avrdude using USBASP adapter. Relative to AVR, the RESET signal of 8051 MCU are inverted, which means that you reset the chip by connecting the RESET pin to VCC, Therefore you need to invert the RESET signal from the USBASP programmer. I use 74HC04 to invert the RESET signal and use 8051 board for DIP40 51MCU, it works very well. you can also use a NPN triode to invert signal like:
+
+AT89S51/52 can be programmed with `avrdude` and USBASP adapter. Relative to AVR, the RESET signal of 8051 MCU are inverted, which means that you reset the chip by connecting the RESET pin to VCC, Therefore you need to invert the RESET signal of USBASP programmer. I use 74HC04 to invert the RESET signal, it works very well. you can also use a NPN triode to invert signal like:
 
 ![inverters](https://user-images.githubusercontent.com/1625340/171430169-860e4ff4-b8b0-43b1-bca1-c37a98e004e8.jpg)
 
-If you use breadboard to setup a minimum system, be careful with the POWER ON RESET circuit. Usually, the POR circuit should be 'VCC->10uf capacitor->RESET->10k resistor->GND'. and the EA pin should connect to VCC if there is no external storage.
+If you use breadboard to setup a minimum system, be careful with the 'POWER ON RESET' circuit. Usually, the POR circuit should be 'VCC->10uf capacitor->RESET->10k resistor->GND'. and the EA pin should connect to VCC if there is no external storage.
 
 And you should connect the inverted RESET signal directly to RESET pin of AT89S5x.
 
@@ -784,7 +780,6 @@ According to the datasheet and user guide (MAXIM AN4833), the 430/450 8051 MCU h
 
 ![screenshot-2022-05-31-10-36-13](https://user-images.githubusercontent.com/1625340/171081748-59f380c5-009e-4f47-a2af-6ff41873b18a.png)
 
-
 To test this MCU, I made a minimum system board:
 
 ![ds89](https://user-images.githubusercontent.com/1625340/171080894-59e53658-707c-483d-9788-21aad9d22834.jpg)
@@ -817,13 +812,11 @@ You can find more information about bootloader commands from the user guide (AN4
 
 After programming finished, power off and leave RESET and PSEN float and connect EA pin to VCC, then power on, the MCU will run in normal mode.
 
-
 There is a recommended circuit with 74HC125 in USER GUIDE:
 
 <img src="https://user-images.githubusercontent.com/1625340/172283230-e5c4b373-9c6f-439e-b55a-2f3aeeb7d283.png" width="50%"/>
 
 You can use 'DTR' from a ch340 serial adapter with a 74HC125 to control RESET/EA and PSEN at the same time.
-
 
 ## for Philips P89C51Rx (now NXP)
 Here has a very good article about how to program P89C51Rx: https://www.dos4ever.com/isp/isp.html
@@ -849,11 +842,7 @@ A monitor firmware need to program to MCU first. good examples of monitors are [
 
 An ICE device is usually a little bit expensive. for Silicon Labs C8051Fx series, you can use UDA with `newcdb` to debug program for supported device. 
 
-And you can always use UART 'printf', this is the most common debug way we usually use.
-
-Most of time I do NOT use debugger, especially to communicate with peripherals, since various protocols is timing critical and can not be set breakpoint, logic analyzer may be more useful than software debugger.
-
-Anyway, here is a brief introduction about how to use newcdb to debug C8051 program. Make sure your device is supported by newcdb and use '--debug' arg with 'sdcc' to generate the debug information, take 'blink' example in this repo as reference, after build successfully, a 'firmware.cdb' will be generated.
+Here is a brief introduction about how to use newcdb to debug C8051 program. Make sure your device is supported by newcdb and use '--debug' arg with 'sdcc' to generate the debug information, take 'blink' example in this repo as reference, after build successfully, a 'firmware.cdb' will be generated.
 
 now in current dir, run:
 
