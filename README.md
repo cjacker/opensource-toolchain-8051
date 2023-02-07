@@ -42,19 +42,19 @@ Today there are hundreds of companies (Such as Silicon Labs, Maxim, STC, Nuvoton
 # Hardware prerequist
 
 * 8051 board
-  + STC 8051 series, Silicon Labs C8051 or EFM8 series or Nuvoton N76E series are recommended.
-  + You can use any 8051 board from any vendor, this tutorial covers a lot of common models from different vendors, if your 8051 MCU not mentioned here, please provide some information to improve this tutorial.
+  + STC 8051 series, AT89Cxx, Silicon Labs C8051/EFM8 series or Nuvoton N76E series are recommended.
+  + You can use any 8051 parts from any vendor, this tutorial covers a lot of common models from different vendors, if your 8051 MCU not mentioned here, please provide some information to improve this tutorial.
  
 **NOTE**:
-* for C8051/EFM8 series from Silicon Labs, you need [8-bit USB Debug Adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) with jtag and c2 protocol support to program and debug.
-* for N76E series from Nuvoton, you need Nu-Link adatper (or Nu-Link-Me integrated with the official EVB) to program (lack of opensource debugging support now).
+* for C8051/EFM8 series from Silicon Labs, you need a [8-bit USB Debug Adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) or toolstick with jtag or c2 protocol support to program and debug. only few early models usy JTAG protocol, most latest models only support C2 protocol.
+* for N76E series from Nuvoton, you need Nu-Link adatper (or Nu-Link-Me integrated with official EVB) to program (lack of opensource debugging support now).
 
 # Toolchain overview
 
 * Compiler: 
   - naken_asm or as31 for ASM
   - SDCC for C
-* SDK: include files for each MCU model.
+* SDK: include files for each model.
 * Emulator: emu8051, edsim51
 * Programming tool: various tools, different for each manufactor.
 * Debugger: various way, different for each manufactor.
@@ -510,7 +510,7 @@ sudo flash8051 -sn EC60000B878 -tif c2 -erasemode full -upload filename.hex
 
 [ec2-new](https://github.com/paragonRobotics/ec2-new) is a fork of [e2drv](http://ec2drv.sourceforge.net/), an opensource project to support Silicon Labs [USB Debug Adapter (UDA)](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter). It contain a lot of programs for device detection and programming, and newcdb is the text-based interactive debugger, which can be used to debug programs.
 
-By the way, there are a lot of USB Debug Adapter clones you can buy, The official UDA does **NOT** provide 3.3v voltage output, but some clones called 'U-EC6' provide 3.3v voltage output.
+By the way, there are a lot of USB Debug Adapter clones, The official UDA does **NOT** provide 3.3v voltage output, but some clones called 'U-EC6' provide 3.3v voltage output.
 
 As I verified, the [ToolStick](https://www.silabs.com/development-tools/mcu/8-bit/toolstick-base-adapter) debugger, the [official EC6 USB debug adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) and other clones (no matter U-EC3 or U-EC6) works very well. if you encounter any issue, please try to reset the firmware with official [USB Reset Utility](https://www.silabs.com/documents/login/software/USB_Reset_Utility.zip).
 
