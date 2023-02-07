@@ -525,7 +525,7 @@ There is different version of 'USB Reset Utility':
 
 Some UDA clones called 'U-EC6' can only use 'USB Reset Utility Version 1.3' to reset the firmware. But the official UDA can use the latest 1.7 version.
 
-I make a fork of 'ec2-new' to fix some bugs and add ToolStick support, and more C8051f models and some EFM8 devices support, also include heavy improvments to newcdb debugger. 
+I make a fork of 'ec2-new' to fix some bugs and add ToolStick and more C8051F/EFM8 parts support, also include heavy improvments to newcdb debugger. 
 
 **Build and Installation:**
 
@@ -558,9 +558,9 @@ EFM8 can be programmed with C2 protocol or with factory UART bootloader.
 
 ### with C2
 
-There is no good and confirm-to-work opensource utilities to program EFM8 with C2 protocol except ['ec2-new'](https://github.com/paragonrobotics/ec2-new.git) with [my improvements](https://github.com/cjacker/ec2-new.git) to add EFM8 support.
+There is no good and confirm-to-work opensource utilities to program EFM8 with C2 protocol except ['ec2-new'](https://github.com/paragonrobotics/ec2-new.git) with [my improvements](https://github.com/cjacker/ec2-new.git) to add EFM8 parts support.
 
-You can use ['ec2-new'](https://github.com/cjacker/ec2-new.git) with UDA/ToolStick to program some EFM8 models. 
+You can use ['ec2-new'](https://github.com/cjacker/ec2-new.git) with UDA/ToolStick to program most EFM8 models. 
 
 For usage of 'ec2-new', please refer to above 'C8051F' section.
 
@@ -617,22 +617,34 @@ Most of EFM8 devices are factory programmed with a bootloader. Below table indic
 
 Use EFM8BB1-LCK Starter Kit as example, since [EFM8BB1-LCK has NO UART bootloader by default](https://community.silabs.com/s/question/0D58Y00008K6xfoSAB/efm8bb1lck-board-and-onchip-uart-bootloader?language=en_US), the customer firmware wiped the pre-installed UART bootloader, we need to program it back.
 
-**NOTE**, ec2-new still have some issues to program EFM8 bootloader due to the hex layout, you have to use official utility up to now.
+The bootloader file 'EFM8BB10F8G_QSOP24.hex' for EFM8BB1-LCK EVB can be found in [AN945SW](https://www.silabs.com/documents/public/example-code/AN945SW.zip) (the EFM8 Factory Bootloader package), located at 'ProductionDeviceHexfiles/EFM8BB1/EFM8BB10F8G_QSOP24.hex'. 
 
-The bootloader file 'EFM8BB10F8G_QSOP24.hex' for EFM8BB1-LCK board can be found in [AN945SW](https://www.silabs.com/documents/public/example-code/AN945SW.zip), the EFM8 Factory Bootloader package, the file located at 'ProductionDeviceHexfiles/EFM8BB1/EFM8BB10F8G_QSOP24.hex'. 
+It can be programmed either with `flash8051` or `ec2-new` with my improvements.
 
 ```
 # change the 'sn' according to your Debugger
 sudo flash8051 -sn LCK0081654 -tif c2 -erasemode full -upload EFM8BB10F8G_QSOP24.hex
 ```
+or
+```
+ec2writeflash --port USB --mode=C2 --eraseall --hex EFM8BB10F8G_QSOP24.hex
+```
 
-If you use a simple breakout board without usb debug adapter on-board, you may need a standalone 8bit usb debug adapter from silicon labs.
+If you use a simple breakout board without usb debug adapter integrated, you may need a standalone 8-bit usb debug adapter or toolstick from silicon labs.
 
-After bootloader programmed, you can use a serial adapter to connect to the RX (P0.5, connect to TX of serial adapter) and TX (P0.4, connect to RX of serial adapter ). Empty chips will enter the bootloader on every start. Once they have a firmware uploaded, **the bootloader needs to be activated by pulling C2D low (on this chip, connect P2.0 to GND).**
+After bootloader programmed, connect a serial adapter as:
 
-Before power on the target device, please check the datasheet to make sure whether it use 5v or 3.3v voltage and check your power supply.
+```
+P0.5(RX) -> TX of serial adapter
+P0.4(TX) -> RX of serial adapter
+GND      -> GND of serial adapter
+VDD      -> 3.3v or 5v of serial adapter
+```
+Before power on the target device, please check the datasheet to make sure whether it use 5v or 3.3v voltage and check your power supply carefully.
 
-The related programming utilities work with EFM8 UART bootloader can be downloaded from my [efm8load](https://github.com/cjacker/efm8load) repo.
+Empty EFM8 chips will enter the bootloader on every start. Once it have a firmware uploaded, **the bootloader can be activated again by pulling C2D low (connect the C2D pin to GND) and power on.**
+
+The programming utilities to work with EFM8 UART bootloader can be downloaded from my [efm8load](https://github.com/cjacker/efm8load) repo.
 
 ```
 $ git clone https://github.com/cjacker/efmload.git
