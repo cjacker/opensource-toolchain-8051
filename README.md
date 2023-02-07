@@ -42,7 +42,7 @@ Today there are hundreds of companies (Such as Silicon Labs, Maxim, STC, Nuvoton
 # Hardware prerequist
 
 * 8051 board
-  + STC 8051 series, AT89Cxx, Silicon Labs C8051/EFM8 series or Nuvoton N76E series are recommended.
+  + STC 8051 series or Silicon Labs C8051/EFM8 series are recommended.
   + You can use any 8051 parts from any vendor, this tutorial covers a lot of common models from different vendors, if your 8051 MCU not mentioned here, please provide some information to improve this tutorial.
  
 **NOTE**:
