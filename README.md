@@ -19,7 +19,7 @@ Today there are hundreds of companies (Such as Silicon Labs, Maxim, STC, Nuvoton
   + [pre-defined headers](https://github.com/cjacker/opensource-toolchain-8051#pre-defined-headers)
     - [For naken_asm](https://github.com/cjacker/opensource-toolchain-8051#for-naken_asm-1)
     - [For SDCC](https://github.com/cjacker/opensource-toolchain-8051#for-sdcc-1)
-- [Emulator](https://github.com/cjacker/opensource-toolchain-8051#emulator)
+- [Simulator](https://github.com/cjacker/opensource-toolchain-8051#simulator)
 - [Programming](https://github.com/cjacker/opensource-toolchain-8051#programming)
   + [for STC8051 (from STC)](https://github.com/cjacker/opensource-toolchain-8051#for-stc8051-from-stc)
     - [stcgal](https://github.com/cjacker/opensource-toolchain-8051#stcgal)
@@ -42,11 +42,13 @@ Today there are hundreds of companies (Such as Silicon Labs, Maxim, STC, Nuvoton
 # Hardware prerequist
 
 * 8051 board
-  + STC 8051 series or Silicon Labs C8051/EFM8 series are recommended.
+  + STC 8051 series or Silicon Labs C8051/EFM8 series are recommended. 
+    * STC 8051 series are very easy to use, but lack of opensource debugging solution.
+    * Most C8051F/EFM8 parts and official EVB board (such as EFM8BB1LCK EVB) can be supported very well by `ec2-new` include debugging.
   + You can use any 8051 parts from any vendor, this tutorial covers a lot of common models from different vendors, if your 8051 MCU not mentioned here, please provide some information to improve this tutorial.
- 
+
 **NOTE**:
-* for C8051/EFM8 series from Silicon Labs, you need a [8-bit USB Debug Adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) or toolstick with jtag or c2 protocol support to program and debug. only few early models usy JTAG protocol, most latest models only support C2 protocol.
+* for C8051/EFM8 series from Silicon Labs, you need a [8-bit USB Debug Adapter](https://www.silabs.com/development-tools/mcu/8-bit/8-bit-usb-debug-adapter) or toolstick with jtag or c2 protocol support to program and debug. only few early models use JTAG protocol, most latest models only support C2 protocol.
 * for N76E series from Nuvoton, you need Nu-Link adatper (or Nu-Link-Me integrated with official EVB) to program (lack of opensource debugging support now).
 
 # Toolchain overview
@@ -341,15 +343,13 @@ void main()
 }
 ```
 
-**NOTE**, every model may have some special registers, please refer to the DATASHEET before starting write the codes. and the blink example in this repos covers a lot of models from different vendors, you can take it as reference.
+**NOTE**, every model may have some special registers, please read the DATASHEET before writing codes. The blink example in this repos covers a lot of models from different vendors, you can take it as reference.
 
-# Emulator
+# Simulator
 
-There are various 8051 emulators you can use, such as `edsim51`(free but not opensource), `mcu8051ide`, `ucsim_51`(shipped with SDCC).
+There are various 8051 simulators you can use, such as `emu8051`, `edsim51`(free but not opensource), `mcu8051ide`, `ucsim_51`(shipped with SDCC).
 
-I prefer to use `emu8051` as emulator to watch how code works and help debugging.
-
-The upstream url is https://github.com/jarikomppa/emu8051.
+I prefer using `emu8051`, the upstream url is https://github.com/jarikomppa/emu8051.
 
 And there are some fixes not upstreamed, you'd better use my fork:
 ```
@@ -366,7 +366,7 @@ Another good choice is `edsim51`, free but not opensource, it is also worth a tr
 
 ## for STC8051 (from STC)
 
-Every STC MCU have a bootloader(BSL) which support UART programming, as we know **the P3.0 pin is RX and P3.1 pin is TX**, most development board already have a USB to UART chip integrated, you just need to use a USB cable to connect it to Linux PC. 
+Every STC MCU have factory bootloader(BSL) which support UART programming, as we know **the P3.0 pin is RX and P3.1 pin is TX**, most development board already have a USB to UART chip integrated, you just need to use a USB cable to connect it to Linux PC. 
 
 The official close source isp tool for windows is 'STC-ISP'. It can be run with wine under Linux. you need install wine and use `winetricks -q mfc42` to install the mfc dll. you may also need to link '/dev/ttyUSB0' or '/dev/ttyACM0' (depending on the USB/UART adapter) to '~/.wine/dosdevices/com1', then the COM device can be used by STC-ISP to find the USB/UART adaper. The STC-ISP tool is useful if you want to adjust some config options which not supported by opensource utilities.
 
